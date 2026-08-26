@@ -1,12 +1,325 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <!-- This instantly redirects to your Discord server -->
-    <meta http-equiv="refresh" content="0; URL='https://discord.gg/8qCDcjFH7c'">
-    <title>Redirecting to Discord...</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Court's Collection</title>
+    
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <style>
+        /* ─── RESET ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #1a1a1a;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ─── AMBIENT GLOW ORBS ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(100, 180, 255, 0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(167, 139, 250, 0.06) 0%, transparent 50%);
+            animation: ambientDrift 25s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes ambientDrift {
+            0% { transform: translate(0%, 0%) rotate(0deg) scale(1); }
+            50% { transform: translate(3%, 2%) rotate(2deg) scale(1.05); }
+            100% { transform: translate(-2%, 4%) rotate(-2deg) scale(0.95); }
+        }
+
+        /* ─── FLOATING ORBS ─── */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 12s ease-in-out infinite alternate;
+        }
+
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(108, 196, 255, 0.4), transparent);
+        }
+
+        .orb-2 {
+            width: 250px;
+            height: 250px;
+            bottom: -80px;
+            left: -80px;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.3), transparent);
+            animation-delay: -4s;
+        }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 30px) scale(1.3); }
+        }
+
+        /* ─── MAIN CARD ─── */
+        .card {
+            position: relative;
+            z-index: 1;
+            background: rgba(26, 26, 26, 0.7);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-radius: 48px;
+            padding: 70px 50px 80px;
+            max-width: 580px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.8),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        }
+
+        /* ─── TYPEWRITER TITLE ─── */
+        .title-wrapper {
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        #typewriter {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -1.5px;
+            text-shadow: 0 0 60px rgba(255, 255, 255, 0.05);
+            line-height: 1.1;
+            position: relative;
+        }
+
+        #typewriter .cursor {
+            display: inline-block;
+            width: 4px;
+            height: 0.8em;
+            background: linear-gradient(180deg, #6cc4ff, #a78bfa);
+            margin-left: 6px;
+            border-radius: 2px;
+            animation: blink 0.8s step-end infinite;
+            box-shadow: 0 0 30px rgba(108, 196, 255, 0.3);
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ─── ANIMATED GRADIENT BUTTON ─── */
+        .btn-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .btn-browse {
+            position: relative;
+            display: inline-block;
+            padding: 22px 60px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #6cc4ff, #7c8cff, #a78bfa, #6cc4ff);
+            background-size: 300% 300%;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 40px rgba(108, 196, 255, 0.3);
+            letter-spacing: 0.5px;
+            overflow: hidden;
+            animation: gradientShift 5s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 0% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ─── BUTTON GLOW RING ─── */
+        .btn-browse::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 64px;
+            background: linear-gradient(135deg, rgba(108, 196, 255, 0.4), rgba(167, 139, 250, 0.4));
+            filter: blur(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+
+        .btn-browse:hover::before {
+            opacity: 1;
+            filter: blur(30px);
+            animation: pulseGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* ─── BUTTON INNER SHINE ─── */
+        .btn-browse::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 60px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 50%, rgba(255, 255, 255, 0.05));
+            pointer-events: none;
+        }
+
+        /* ─── HOVER: BOUNCE + GLOW ─── */
+        .btn-browse:hover {
+            transform: scale(1.1) translateY(-8px);
+            box-shadow: 0 20px 60px rgba(108, 196, 255, 0.5),
+                        0 0 100px rgba(108, 196, 255, 0.15);
+            animation-play-state: paused;
+        }
+
+        /* ─── CLICK: SQUASH ─── */
+        .btn-browse:active {
+            transform: scale(0.92) translateY(0px);
+            box-shadow: 0 4px 20px rgba(108, 196, 255, 0.2);
+            transition-duration: 0.1s;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 480px) {
+            .card {
+                padding: 40px 24px 50px;
+                border-radius: 32px;
+            }
+
+            #typewriter {
+                font-size: 2.4rem;
+            }
+
+            .btn-browse {
+                padding: 18px 40px;
+                font-size: 1rem;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 380px) {
+            #typewriter {
+                font-size: 1.8rem;
+            }
+            .btn-browse {
+                padding: 16px 28px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Redirecting you to Discord...</h1>
-    <p>If you are not redirected automatically, <a href="https://discord.gg/8qCDcjFH7c">click here</a></p>
+
+    <!-- ─── AMBIENT ORBS ─── -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- ─── MAIN CARD ─── -->
+    <div class="card">
+
+        <!-- Typewriter Title -->
+        <div class="title-wrapper">
+            <h1 id="typewriter">
+                <span id="typed-text"></span><span class="cursor"></span>
+            </h1>
+        </div>
+
+        <!-- Animated Gradient Button -->
+        <div class="btn-wrapper">
+            <a href="https://discord.gg/8qCDcjFH7c" class="btn-browse" target="_blank">
+                Browse Product's
+            </a>
+        </div>
+
+    </div>
+
+    <!-- ─── JAVASCRIPT ─── -->
+    <script>
+        // ──────────────────────────────────────────────
+        //  1. TELEGRAM MINI APP INIT
+        // ──────────────────────────────────────────────
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        // ──────────────────────────────────────────────
+        //  2. TYPEWRITER EFFECT (types & erases)
+        // ──────────────────────────────────────────────
+        const textElement = document.getElementById('typed-text');
+        const words = ['Court\'s', 'Court\'s Collection', 'Court\'s'];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let speed = 120;
+
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            const currentText = textElement.textContent;
+
+            if (!isDeleting) {
+                // ── TYPING ──
+                textElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+
+                if (charIndex === currentWord.length) {
+                    isDeleting = true;
+                    speed = 1000;
+                    setTimeout(() => { speed = 50; }, 1000);
+                }
+            } else {
+                // ── ERASING ──
+                textElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                    speed = 100;
+                }
+            }
+
+            setTimeout(typeEffect, speed);
+        }
+
+        setTimeout(typeEffect, 500);
+    </script>
+
 </body>
 </html>
