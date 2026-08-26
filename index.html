@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Court's Collection</title>
+    <title>Court's</title>
     
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -22,10 +22,248 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #1a1a1a;
             padding: 20px;
             overflow: hidden;
             position: relative;
+            background: linear-gradient(135deg, #87CEEB, #4A90D9, #1E5FAF, #87CEEB, #4A90D9);
+            background-size: 600% 600%;
+            animation: skyGradient 12s ease-in-out infinite;
+        }
+
+        @keyframes skyGradient {
+            0% { background-position: 0% 50%; }
+            20% { background-position: 50% 100%; }
+            40% { background-position: 100% 50%; }
+            60% { background-position: 50% 0%; }
+            80% { background-position: 0% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ─── CLOUDS ─── */
+        .clouds {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .cloud {
+            position: absolute;
+            border-radius: 1000px;
+            animation: cloudFloat linear infinite;
+            will-change: transform;
+        }
+
+        /* Cloud 1 - Large fluffy */
+        .cloud-1 {
+            width: 400px;
+            height: 90px;
+            top: 5%;
+            left: -450px;
+            animation-duration: 35s;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.2);
+        }
+        .cloud-1::before {
+            content: '';
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            top: -80px;
+            left: 40px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+        .cloud-1::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 180px;
+            top: -90px;
+            left: 120px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+
+        /* Cloud 2 - Medium */
+        .cloud-2 {
+            width: 300px;
+            height: 70px;
+            top: 20%;
+            left: -350px;
+            animation-duration: 40s;
+            animation-delay: -8s;
+            background: rgba(255, 255, 255, 0.55);
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.15);
+        }
+        .cloud-2::before {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            top: -60px;
+            left: 30px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+        .cloud-2::after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 140px;
+            top: -70px;
+            left: 90px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+
+        /* Cloud 3 - Small */
+        .cloud-3 {
+            width: 220px;
+            height: 55px;
+            top: 45%;
+            left: -270px;
+            animation-duration: 45s;
+            animation-delay: -15s;
+            background: rgba(255, 255, 255, 0.45);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+        }
+        .cloud-3::before {
+            content: '';
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            top: -45px;
+            left: 20px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+        .cloud-3::after {
+            content: '';
+            position: absolute;
+            width: 110px;
+            height: 100px;
+            top: -50px;
+            left: 65px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+
+        /* Cloud 4 - Large low */
+        .cloud-4 {
+            width: 450px;
+            height: 100px;
+            bottom: 15%;
+            left: -500px;
+            animation-duration: 50s;
+            animation-delay: -5s;
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 0 70px rgba(255, 255, 255, 0.1);
+        }
+        .cloud-4::before {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            top: -90px;
+            left: 50px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+        .cloud-4::after {
+            content: '';
+            position: absolute;
+            width: 220px;
+            height: 200px;
+            top: -100px;
+            left: 150px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+
+        /* Cloud 5 - Medium high */
+        .cloud-5 {
+            width: 280px;
+            height: 65px;
+            top: 8%;
+            left: -320px;
+            animation-duration: 38s;
+            animation-delay: -20s;
+            background: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 45px rgba(255, 255, 255, 0.12);
+        }
+        .cloud-5::before {
+            content: '';
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            top: -55px;
+            left: 25px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+        .cloud-5::after {
+            content: '';
+            position: absolute;
+            width: 130px;
+            height: 120px;
+            top: -60px;
+            left: 80px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+
+        /* Cloud 6 - Tiny */
+        .cloud-6 {
+            width: 160px;
+            height: 40px;
+            top: 60%;
+            left: -200px;
+            animation-duration: 55s;
+            animation-delay: -12s;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+        }
+        .cloud-6::before {
+            content: '';
+            position: absolute;
+            width: 65px;
+            height: 65px;
+            top: -32px;
+            left: 15px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+        .cloud-6::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 75px;
+            top: -38px;
+            left: 50px;
+            border-radius: 50%;
+            background: inherit;
+            box-shadow: inherit;
+        }
+
+        @keyframes cloudFloat {
+            0% { transform: translateX(0px); }
+            100% { transform: translateX(calc(100vw + 600px)); }
         }
 
         /* ─── AMBIENT GLOW ORBS ─── */
@@ -36,8 +274,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(ellipse at 30% 50%, rgba(100, 180, 255, 0.08) 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 80%, rgba(167, 139, 250, 0.06) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
             animation: ambientDrift 25s ease-in-out infinite alternate;
             z-index: 0;
         }
@@ -48,54 +286,21 @@
             100% { transform: translate(-2%, 4%) rotate(-2deg) scale(0.95); }
         }
 
-        /* ─── FLOATING ORBS ─── */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.25;
-            pointer-events: none;
-            z-index: 0;
-            animation: orbFloat 12s ease-in-out infinite alternate;
-        }
-
-        .orb-1 {
-            width: 300px;
-            height: 300px;
-            top: -100px;
-            right: -100px;
-            background: radial-gradient(circle, rgba(108, 196, 255, 0.4), transparent);
-        }
-
-        .orb-2 {
-            width: 250px;
-            height: 250px;
-            bottom: -80px;
-            left: -80px;
-            background: radial-gradient(circle, rgba(167, 139, 250, 0.3), transparent);
-            animation-delay: -4s;
-        }
-
-        @keyframes orbFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, 30px) scale(1.3); }
-        }
-
-        /* ─── MAIN CARD ─── */
+        /* ─── GLASS BOX ─── */
         .card {
             position: relative;
-            z-index: 1;
-            background: rgba(26, 26, 26, 0.7);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
+            z-index: 2;
+            background: rgba(10, 10, 10, 0.08);
+            backdrop-filter: blur(80px);
+            -webkit-backdrop-filter: blur(80px);
             border-radius: 48px;
-            padding: 70px 50px 80px;
+            padding: 70px 50px 50px;
             max-width: 580px;
             width: 100%;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.8),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
         }
 
         /* ─── TYPEWRITER TITLE ─── */
@@ -104,7 +309,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         #typewriter {
@@ -112,7 +317,8 @@
             font-weight: 700;
             color: #ffffff;
             letter-spacing: -1.5px;
-            text-shadow: 0 0 60px rgba(255, 255, 255, 0.05);
+            text-shadow: 0 0 60px rgba(255, 255, 255, 0.2),
+                         0 4px 20px rgba(0, 0, 0, 0.3);
             line-height: 1.1;
             position: relative;
         }
@@ -133,54 +339,62 @@
             50% { opacity: 0; }
         }
 
-        /* ─── ANIMATED GRADIENT BUTTON ─── */
+        /* ─── BUTTON WRAPPER ─── */
         .btn-wrapper {
             position: relative;
             display: inline-block;
+            width: 100%;
+            margin-bottom: 12px;
         }
 
-        .btn-browse {
+        .btn-wrapper:last-of-type {
+            margin-bottom: 0;
+        }
+
+        /* ─── GITHUB BUTTON ─── */
+        .btn-github {
             position: relative;
-            display: inline-block;
-            padding: 22px 60px;
-            font-size: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 56px;
+            font-size: 1.15rem;
             font-weight: 600;
             color: #ffffff;
-            background: linear-gradient(135deg, #6cc4ff, #7c8cff, #a78bfa, #6cc4ff);
+            background: linear-gradient(135deg, #2b2b2b, #1a1a1a, #0d0d0d, #2b2b2b);
             background-size: 300% 300%;
             border: none;
             border-radius: 60px;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 40px rgba(108, 196, 255, 0.3);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
             letter-spacing: 0.5px;
             overflow: hidden;
-            animation: gradientShift 5s ease-in-out infinite;
+            animation: githubGradient 8s ease-in-out infinite;
+            width: 100%;
         }
 
-        @keyframes gradientShift {
+        @keyframes githubGradient {
             0% { background-position: 0% 50%; }
-            25% { background-position: 100% 50%; }
             50% { background-position: 100% 50%; }
-            75% { background-position: 0% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* ─── BUTTON GLOW RING ─── */
-        .btn-browse::before {
+        .btn-github::before {
             content: '';
             position: absolute;
             inset: -4px;
             border-radius: 64px;
-            background: linear-gradient(135deg, rgba(108, 196, 255, 0.4), rgba(167, 139, 250, 0.4));
+            background: linear-gradient(135deg, rgba(43, 43, 43, 0.6), rgba(13, 13, 13, 0.6));
             filter: blur(20px);
             opacity: 0;
             transition: all 0.6s ease;
             z-index: -1;
         }
 
-        .btn-browse:hover::before {
+        .btn-github:hover::before {
             opacity: 1;
             filter: blur(30px);
             animation: pulseGlow 1.5s ease-in-out infinite;
@@ -191,8 +405,91 @@
             50% { transform: scale(1.1); opacity: 1; }
         }
 
-        /* ─── BUTTON INNER SHINE ─── */
-        .btn-browse::after {
+        .btn-github::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 60px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 50%, rgba(255, 255, 255, 0.03));
+            pointer-events: none;
+        }
+
+        .btn-github:hover {
+            transform: scale(1.05) translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                        0 0 100px rgba(0, 0, 0, 0.2);
+            animation-play-state: paused;
+        }
+
+        .btn-github:active {
+            transform: scale(0.94) translateY(0px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition-duration: 0.1s;
+        }
+
+        .github-icon {
+            width: 28px;
+            height: 28px;
+            fill: #ffffff;
+            display: block;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .btn-github:hover .github-icon {
+            transform: scale(1.1) rotate(-3deg);
+        }
+
+        /* ─── DISCORD BUTTON ─── */
+        .btn-discord {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 56px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #5865F2, #4752C4, #3B45A5, #5865F2);
+            background-size: 300% 300%;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 40px rgba(88, 101, 242, 0.4);
+            letter-spacing: 0.5px;
+            overflow: hidden;
+            animation: discordGradient 8s ease-in-out infinite;
+            width: 100%;
+        }
+
+        @keyframes discordGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .btn-discord::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 64px;
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.5), rgba(59, 69, 165, 0.5));
+            filter: blur(20px);
+            opacity: 0;
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+
+        .btn-discord:hover::before {
+            opacity: 1;
+            filter: blur(30px);
+            animation: pulseGlow 1.5s ease-in-out infinite;
+        }
+
+        .btn-discord::after {
             content: '';
             position: absolute;
             inset: 0;
@@ -201,57 +498,149 @@
             pointer-events: none;
         }
 
-        /* ─── HOVER: BOUNCE + GLOW ─── */
-        .btn-browse:hover {
-            transform: scale(1.1) translateY(-8px);
-            box-shadow: 0 20px 60px rgba(108, 196, 255, 0.5),
-                        0 0 100px rgba(108, 196, 255, 0.15);
+        .btn-discord:hover {
+            transform: scale(1.05) translateY(-4px);
+            box-shadow: 0 20px 60px rgba(88, 101, 242, 0.5),
+                        0 0 100px rgba(88, 101, 242, 0.2);
             animation-play-state: paused;
         }
 
-        /* ─── CLICK: SQUASH ─── */
-        .btn-browse:active {
-            transform: scale(0.92) translateY(0px);
-            box-shadow: 0 4px 20px rgba(108, 196, 255, 0.2);
+        .btn-discord:active {
+            transform: scale(0.94) translateY(0px);
+            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.2);
             transition-duration: 0.1s;
+        }
+
+        .discord-icon {
+            width: 28px;
+            height: 28px;
+            fill: #ffffff;
+            display: block;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .btn-discord:hover .discord-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        /* ─── BUTTONS CONTAINER ─── */
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .mail-icon {
+            width: 18px;
+            height: 18px;
+            fill: rgba(255, 255, 255, 0.25);
+            transition: fill 0.3s ease, transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .footer:hover .mail-icon {
+            fill: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+
+        .footer-text {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.5px;
+            font-weight: 300;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 480px) {
             .card {
-                padding: 40px 24px 50px;
+                padding: 40px 24px 40px;
                 border-radius: 32px;
+                background: rgba(10, 10, 10, 0.12);
+                backdrop-filter: blur(60px);
+                -webkit-backdrop-filter: blur(60px);
             }
 
             #typewriter {
                 font-size: 2.4rem;
             }
 
-            .btn-browse {
-                padding: 18px 40px;
+            .btn-github, .btn-discord {
+                padding: 16px 24px;
                 font-size: 1rem;
-                width: 100%;
+                gap: 10px;
             }
+
+            .github-icon, .discord-icon {
+                width: 22px;
+                height: 22px;
+            }
+
+            .mail-icon {
+                width: 16px;
+                height: 16px;
+            }
+
+            .footer-text {
+                font-size: 0.6rem;
+            }
+
+            .cloud-1 { width: 250px; height: 60px; left: -280px; }
+            .cloud-1::before { width: 100px; height: 100px; top: -50px; left: 25px; }
+            .cloud-1::after { width: 120px; height: 110px; top: -55px; left: 75px; }
+            
+            .cloud-2 { width: 200px; height: 50px; left: -220px; }
+            .cloud-2::before { width: 80px; height: 80px; top: -40px; left: 20px; }
+            .cloud-2::after { width: 90px; height: 85px; top: -42px; left: 55px; }
+            
+            .cloud-3, .cloud-4, .cloud-5, .cloud-6 { display: none; }
         }
 
         @media (max-width: 380px) {
             #typewriter {
                 font-size: 1.8rem;
             }
-            .btn-browse {
-                padding: 16px 28px;
-                font-size: 0.9rem;
+            .btn-github, .btn-discord {
+                padding: 14px 16px;
+                font-size: 0.85rem;
+                gap: 8px;
+            }
+            .github-icon, .discord-icon {
+                width: 18px;
+                height: 18px;
+            }
+            .mail-icon {
+                width: 14px;
+                height: 14px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ─── AMBIENT ORBS ─── -->
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
+    <!-- ─── CLOUDS ─── -->
+    <div class="clouds">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+        <div class="cloud cloud-6"></div>
+    </div>
 
-    <!-- ─── MAIN CARD ─── -->
+    <!-- ─── GLASS BOX ─── -->
     <div class="card">
 
         <!-- Typewriter Title -->
@@ -261,11 +650,37 @@
             </h1>
         </div>
 
-        <!-- Animated Gradient Button -->
-        <div class="btn-wrapper">
-            <a href="https://discord.gg/8qCDcjFH7c" class="btn-browse" target="_blank">
-                Browse Product's
-            </a>
+        <!-- Buttons Container -->
+        <div class="buttons-container">
+            <!-- GitHub Sign Up Button -->
+            <div class="btn-wrapper">
+                <button class="btn-github" onclick="signUpWithGitHub()">
+                    <!-- GitHub SVG Icon -->
+                    <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                    </svg>
+                    Sign Up
+                </button>
+            </div>
+
+            <!-- Discord Button -->
+            <div class="btn-wrapper">
+                <a href="https://discord.gg/8qCDcjFH7c" class="btn-discord" target="_blank">
+                    <!-- Discord SVG Icon -->
+                    <svg class="discord-icon" viewBox="0 0 127.14 96.36" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S53.9,46,53.9,53,48.77,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.21,60,73.21,53s5-12.74,11.44-12.74S96.12,46,96.12,53,91,65.69,84.69,65.69Z"/>
+                    </svg>
+                    Browse Product's
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer: Mail Icon ABOVE the email text -->
+        <div class="footer">
+            <svg class="mail-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z"/>
+            </svg>
+            <span class="footer-text">thycourt@proton.me</span>
         </div>
 
     </div>
@@ -280,38 +695,36 @@
         tg.expand();
 
         // ──────────────────────────────────────────────
-        //  2. TYPEWRITER EFFECT (types & erases)
+        //  2. TYPEWRITER EFFECT
         // ──────────────────────────────────────────────
         const textElement = document.getElementById('typed-text');
-        const words = ['Court\'s', 'Court\'s Collection', 'Court\'s'];
+        const words = ['Court\'s'];
         let wordIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
-        let speed = 120;
+        let speed = 200;
 
         function typeEffect() {
             const currentWord = words[wordIndex];
             const currentText = textElement.textContent;
 
             if (!isDeleting) {
-                // ── TYPING ──
                 textElement.textContent = currentWord.substring(0, charIndex + 1);
                 charIndex++;
 
                 if (charIndex === currentWord.length) {
                     isDeleting = true;
-                    speed = 1000;
-                    setTimeout(() => { speed = 50; }, 1000);
+                    speed = 2000;
+                    setTimeout(() => { speed = 100; }, 2000);
                 }
             } else {
-                // ── ERASING ──
                 textElement.textContent = currentWord.substring(0, charIndex - 1);
                 charIndex--;
 
                 if (charIndex === 0) {
                     isDeleting = false;
                     wordIndex = (wordIndex + 1) % words.length;
-                    speed = 100;
+                    speed = 150;
                 }
             }
 
@@ -319,6 +732,23 @@
         }
 
         setTimeout(typeEffect, 500);
+
+        // ──────────────────────────────────────────────
+        //  3. GITHUB SIGN UP FUNCTION
+        // ──────────────────────────────────────────────
+        function signUpWithGitHub() {
+            // GitHub OAuth URL
+            const clientId = 'YOUR_GITHUB_CLIENT_ID';
+            const redirectUri = 'YOUR_REDIRECT_URI';
+            const scope = 'user:email';
+            const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+            
+            // Open in new window
+            window.open(authUrl, '_blank', 'width=800,height=600');
+            
+            // For Telegram Mini App, you can also use tg.openLink()
+            // tg.openLink(authUrl);
+        }
     </script>
 
 </body>
