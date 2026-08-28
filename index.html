@@ -8,7 +8,7 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- Botpress Webchat Scripts (UPDATED) -->
+    <!-- Botpress Webchat Scripts -->
     <script src="https://cdn.botpress.cloud/webchat/v3.7/inject.js"></script>
     <script src="https://files.bpcontent.cloud/2026/08/28/21/20260828213322-F1IPJ1GG.js" defer></script>
     
@@ -32,6 +32,13 @@
             background: linear-gradient(135deg, #87CEEB, #4A90D9, #1E5FAF, #87CEEB, #4A90D9);
             background-size: 600% 600%;
             animation: skyGradient 12s ease-in-out infinite;
+            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body.night-mode {
+            background: linear-gradient(135deg, #0a0e1a, #141b2b, #1a2340, #0d1225, #0a0e1a);
+            background-size: 600% 600%;
+            animation: nightGradient 15s ease-in-out infinite;
         }
 
         @keyframes skyGradient {
@@ -40,6 +47,14 @@
             40% { background-position: 100% 50%; }
             60% { background-position: 50% 0%; }
             80% { background-position: 0% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes nightGradient {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 100%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 0%; }
             100% { background-position: 0% 50%; }
         }
 
@@ -53,6 +68,7 @@
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
+            transition: opacity 1.2s ease;
         }
 
         .cloud {
@@ -60,6 +76,18 @@
             border-radius: 1000px;
             animation: cloudFloat linear infinite;
             will-change: transform;
+            transition: background 1.2s ease, box-shadow 1.2s ease;
+        }
+
+        .night-mode .cloud {
+            background: rgba(200, 210, 255, 0.15) !important;
+            box-shadow: 0 0 60px rgba(150, 180, 255, 0.05) !important;
+        }
+
+        .night-mode .cloud::before,
+        .night-mode .cloud::after {
+            background: inherit !important;
+            box-shadow: inherit !important;
         }
 
         .cloud-1 {
@@ -276,6 +304,13 @@
                         radial-gradient(ellipse at 70% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
             animation: ambientDrift 25s ease-in-out infinite alternate;
             z-index: 0;
+            transition: opacity 1.2s ease;
+        }
+
+        .night-mode body::before {
+            opacity: 0.3;
+            background: radial-gradient(ellipse at 30% 50%, rgba(100, 150, 255, 0.15) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(150, 100, 255, 0.1) 0%, transparent 50%);
         }
 
         @keyframes ambientDrift {
@@ -300,10 +335,36 @@
             box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.2),
                         inset 0 1px 0 rgba(255, 255, 255, 0.15);
             display: block;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .night-mode #mainPage {
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.6),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            background: rgba(10, 10, 20, 0.15);
         }
 
         #mainPage.hidden {
             display: none;
+        }
+
+        #mainPage.slide-out {
+            animation: mainSlideOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        #mainPage.slide-in {
+            animation: mainSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes mainSlideOut {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.95) translateY(-20px); }
+        }
+
+        @keyframes mainSlideIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         /* ─── TYPEWRITER TITLE ─── */
@@ -324,6 +385,12 @@
                          0 4px 20px rgba(0, 0, 0, 0.3);
             line-height: 1.1;
             position: relative;
+            transition: text-shadow 1.2s ease;
+        }
+
+        .night-mode #typewriter {
+            text-shadow: 0 0 80px rgba(100, 150, 255, 0.15),
+                         0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         #typewriter .cursor {
@@ -335,6 +402,12 @@
             border-radius: 2px;
             animation: blink 0.8s step-end infinite;
             box-shadow: 0 0 30px rgba(108, 196, 255, 0.3);
+            transition: background 1.2s ease, box-shadow 1.2s ease;
+        }
+
+        .night-mode #typewriter .cursor {
+            background: linear-gradient(180deg, #6c8cff, #a78bfa);
+            box-shadow: 0 0 30px rgba(100, 150, 255, 0.2);
         }
 
         @keyframes blink {
@@ -354,7 +427,35 @@
             margin-bottom: 0;
         }
 
-        /* ─── VIEW PLANS BUTTON (BLACK GRADIENT) ─── */
+        /* ─── MAGNETIC BUTTON EFFECT ─── */
+        .magnetic-btn {
+            transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        box-shadow 0.3s ease,
+                        background 0.3s ease;
+            will-change: transform;
+            position: relative;
+            z-index: 1;
+        }
+
+        .magnetic-btn::after {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 68px;
+            background: rgba(255, 255, 255, 0);
+            filter: blur(20px);
+            transition: all 0.4s ease;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .magnetic-btn:hover::after {
+            background: rgba(255, 255, 255, 0.05);
+            filter: blur(30px);
+            transform: scale(1.1);
+        }
+
+        /* ─── VIEW PLANS BUTTON ─── */
         .btn-plans {
             position: relative;
             display: inline-flex;
@@ -371,12 +472,14 @@
             border-radius: 60px;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        background-position 8s ease-in-out;
             box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
             letter-spacing: 0.5px;
             overflow: hidden;
             animation: plansGradient 8s ease-in-out infinite;
             width: 100%;
+            will-change: transform;
         }
 
         @keyframes plansGradient {
@@ -462,12 +565,14 @@
             border-radius: 60px;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        background-position 8s ease-in-out;
             box-shadow: 0 8px 40px rgba(88, 101, 242, 0.4);
             letter-spacing: 0.5px;
             overflow: hidden;
             animation: discordGradient 8s ease-in-out infinite;
             width: 100%;
+            will-change: transform;
         }
 
         @keyframes discordGradient {
@@ -573,6 +678,14 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
+        .night-mode .mail-icon {
+            fill: rgba(200, 210, 255, 0.6);
+        }
+
+        .night-mode .footer-text {
+            color: rgba(200, 210, 255, 0.5);
+        }
+
         /* ─── PLANS PAGE ─── */
         #plansPage {
             display: none;
@@ -589,10 +702,32 @@
             padding: 40px 20px;
             justify-content: center;
             align-items: flex-start;
+            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .night-mode #plansPage {
+            background: linear-gradient(135deg, #0a0e1a, #141b2b, #1a2340, #0d1225, #0a0e1a);
+            background-size: 600% 600%;
+            animation: nightGradient 15s ease-in-out infinite;
         }
 
         #plansPage.active {
             display: flex;
+            animation: pageSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        #plansPage.exit {
+            animation: pageSlideOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes pageSlideIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes pageSlideOut {
+            0% { opacity: 1; transform: scale(1) translateY(0); }
+            100% { opacity: 0; transform: scale(0.95) translateY(20px); }
         }
 
         .plans-container {
@@ -612,6 +747,12 @@
                          0 4px 20px rgba(0, 0, 0, 0.3);
             margin-bottom: 50px;
             letter-spacing: -1.5px;
+            transition: text-shadow 1.2s ease;
+        }
+
+        .night-mode .plans-title {
+            text-shadow: 0 0 80px rgba(100, 150, 255, 0.15),
+                         0 4px 20px rgba(0, 0, 0, 0.5);
         }
 
         .plans-grid {
@@ -632,11 +773,18 @@
             box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.3),
                         inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        box-shadow 0.4s ease;
+                        box-shadow 0.4s ease,
+                        border-color 1.2s ease,
+                        background 1.2s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             min-height: 160px;
+        }
+
+        .night-mode .plan-box {
+            border-color: rgba(255, 255, 255, 0.08);
+            background: rgba(10, 10, 20, 0.2);
         }
 
         .plan-box:hover {
@@ -655,6 +803,11 @@
             justify-content: center;
             gap: 10px;
             margin-bottom: 20px;
+            transition: text-shadow 1.2s ease;
+        }
+
+        .night-mode .plan-box h3 {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
         }
 
         .plan-box .btn-github {
@@ -669,7 +822,7 @@
             color: #ffffff;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
             display: inline-flex;
             align-items: center;
@@ -681,6 +834,7 @@
             margin-top: auto;
             flex-shrink: 0;
             font-family: 'Inter', sans-serif;
+            will-change: transform;
         }
 
         @keyframes githubGradient {
@@ -744,11 +898,12 @@
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 60px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             margin: 0 auto;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             width: 100%;
             max-width: 300px;
+            will-change: transform;
         }
 
         .back-btn:hover {
@@ -790,1070 +945,55 @@
             will-change: transform;
         }
 
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 480px) {
-            #mainPage {
-                padding: 40px 24px 40px;
-                border-radius: 32px;
-                background: rgba(10, 10, 10, 0.12);
-                backdrop-filter: blur(60px);
-                -webkit-backdrop-filter: blur(60px);
-            }
-
-            #typewriter {
-                font-size: 2.4rem;
-            }
-
-            .btn-plans, .btn-discord {
-                padding: 16px 24px;
-                font-size: 1rem;
-                gap: 10px;
-            }
-
-            .globe-icon, .discord-icon {
-                width: 22px;
-                height: 22px;
-            }
-
-            .mail-icon {
-                width: 16px;
-                height: 16px;
-            }
-
-            .footer-text {
-                font-size: 0.6rem;
-            }
-
-            .cloud-1 { width: 250px; height: 60px; left: -280px; }
-            .cloud-1::before { width: 100px; height: 100px; top: -50px; left: 25px; }
-            .cloud-1::after { width: 120px; height: 110px; top: -55px; left: 75px; }
-            
-            .cloud-2 { width: 200px; height: 50px; left: -220px; }
-            .cloud-2::before { width: 80px; height: 80px; top: -40px; left: 20px; }
-            .cloud-2::after { width: 90px; height: 85px; top: -42px; left: 55px; }
-            
-            .cloud-3, .cloud-4, .cloud-5, .cloud-6 { display: none; }
-
-            .plans-title {
-                font-size: 2rem;
-            }
-
-            .plans-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .plan-box {
-                padding: 30px 20px 20px;
-                min-height: 130px;
-            }
-
-            .plan-box h3 {
-                font-size: 1.2rem;
-                min-height: 40px;
-                margin-bottom: 15px;
-            }
-
-            .plans-container {
-                padding: 20px 15px;
-            }
-
-            .back-btn {
-                padding: 10px 24px;
-                font-size: 0.85rem;
-                max-width: 100%;
-            }
-
-            .back-row {
-                gap: 10px;
-            }
-        }
-
-        @media (max-width: 380px) {
-            #typewriter {
-                font-size: 1.8rem;
-            }
-            .btn-plans, .btn-discord {
-                padding: 14px 16px;
-                font-size: 0.85rem;
-                gap: 8px;
-            }
-            .globe-icon, .discord-icon {
-                width: 18px;
-                height: 18px;
-            }
-            .mail-icon {
-                width: 14px;
-                height: 14px;
-            }
-
-            .plans-title {
-                font-size: 1.6rem;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- ─── CLOUDS ─── -->
-    <div class="clouds">
-        <div class="cloud cloud-1"></div>
-        <div class="cloud cloud-2"></div>
-        <div class="cloud cloud-3"></div>
-        <div class="cloud cloud-4"></div>
-        <div class="cloud cloud-5"></div>
-        <div class="cloud cloud-6"></div>
-    </div>
-
-    <!-- ─── MAIN PAGE ─── -->
-    <div id="mainPage">
-
-        <!-- Typewriter Title -->
-        <div class="title-wrapper">
-            <h1 id="typewriter">
-                <span id="typed-text"></span><span class="cursor"></span>
-            </h1>
-        </div>
-
-        <!-- Buttons Container -->
-        <div class="buttons-container">
-            <!-- View Plans Button - Black Gradient -->
-            <div class="btn-wrapper">
-                <button class="btn-plans" onclick="showPlans()">
-                    <!-- Globe SVG Icon -->
-                    <svg class="globe-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="2" y1="12" x2="22" y2="12"/>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                    </svg>
-                    View Plans
-                </button>
-            </div>
-
-            <!-- Discord Button -->
-            <div class="btn-wrapper">
-                <a href="https://discord.gg/8qCDcjFH7c" class="btn-discord" target="_blank">
-                    <!-- Discord SVG Icon -->
-                    <svg class="discord-icon" viewBox="0 0 127.14 96.36" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S53.9,46,53.9,53,48.77,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.21,60,73.21,53s5-12.74,11.44-12.74S96.12,46,96.12,53,91,65.69,84.69,65.69Z"/>
-                    </svg>
-                    Join The Discord
-                </a>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-            <svg class="mail-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6ZM20 6L12 11L4 6H20ZM20 18H4V8L12 13L20 8V18Z"/>
-            </svg>
-            <span class="footer-text">thycourt@proton.me</span>
-        </div>
-
-    </div>
-
-    <!-- ─── PLANS PAGE ─── -->
-    <div id="plansPage">
-        <div class="plans-clouds">
-            <div class="cloud cloud-1"></div>
-            <div class="cloud cloud-2"></div>
-            <div class="cloud cloud-3"></div>
-            <div class="cloud cloud-4"></div>
-            <div class="cloud cloud-5"></div>
-            <div class="cloud cloud-6"></div>
-        </div>
-
-        <div class="plans-container">
-            <h1 class="plans-title">Court's Plans</h1>
-
-            <div class="plans-grid">
-                <!-- Plan 1 - Free -->
-                <div class="plan-box">
-                    <h3>☁️ Cloud Hosting</h3>
-                    <a href="https://t.me/CourtsPlansBot" target="_blank" class="btn-github">
-                        <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                        </svg>
-                        Free
-                    </a>
-                </div>
-
-                <!-- Plan 2 - Court's Exclusive -->
-                <div class="plan-box">
-                    <h3>☁️ Court's Exclusive</h3>
-                    <a href="https://t.me/CourtsPlansBot" target="_blank" class="btn-github">
-                        <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                        </svg>
-                        <span class="strikethrough">$1.99</span> $0.99
-                    </a>
-                </div>
-
-                <!-- Plan 3 - Court's AI Powered -->
-                <div class="plan-box">
-                    <h3>☁️ Court's AI Powered</h3>
-                    <a href="https://t.me/CourtsPlansBot" target="_blank" class="btn-github">
-                        <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                        </svg>
-                        $2.99
-                    </a>
-                </div>
-            </div>
-
-            <!-- Back Button -->
-            <div class="back-row">
-                <button class="back-btn" onclick="hidePlans()">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                    </svg>
-                    Back to Home
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ─── JAVASCRIPT ─── -->
-    <script>
-        // ──────────────────────────────────────────────
-        //  1. TELEGRAM MINI APP INIT
-        // ──────────────────────────────────────────────
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-
-        // ──────────────────────────────────────────────
-        //  2. TYPEWRITER EFFECT
-        // ──────────────────────────────────────────────
-        const textElement = document.getElementById('typed-text');
-        const words = ['Court\'s'];
-        let wordIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let speed = 200;
-
-        function typeEffect() {
-            const currentWord = words[wordIndex];
-            const currentText = textElement.textContent;
-
-            if (!isDeleting) {
-                textElement.textContent = currentWord.substring(0, charIndex + 1);
-                charIndex++;
-
-                if (charIndex === currentWord.length) {
-                    isDeleting = true;
-                    speed = 2000;
-                    setTimeout(() => { speed = 100; }, 2000);
-                }
-            } else {
-                textElement.textContent = currentWord.substring(0, charIndex - 1);
-                charIndex--;
-
-                if (charIndex === 0) {
-                    isDeleting = false;
-                    wordIndex = (wordIndex + 1) % words.length;
-                    speed = 150;
-                }
-            }
-
-            setTimeout(typeEffect, speed);
-        }
-
-        setTimeout(typeEffect, 500);
-
-        // ──────────────────────────────────────────────
-        //  3. SHOW/HIDE PLANS PAGE
-        // ──────────────────────────────────────────────
-        function showPlans() {
-            document.getElementById('mainPage').classList.add('hidden');
-            document.getElementById('plansPage').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            tg.expand();
-        }
-
-        function hidePlans() {
-            document.getElementById('mainPage').classList.remove('hidden');
-            document.getElementById('plansPage').classList.remove('active');
-            document.body.style.overflow = '';
-            tg.expand();
-        }
-    </script>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Court's</title>
-    
-    <!-- Telegram Web App SDK -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
-    <!-- Botpress Webchat Scripts (UPDATED) -->
-    <script src="https://cdn.botpress.cloud/webchat/v3.7/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2026/08/28/21/20260828213322-F1IPJ1GG.js" defer></script>
-    
-    <style>
-        /* ─── RESET ─── */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: hidden;
-            position: relative;
-            background: linear-gradient(135deg, #87CEEB, #4A90D9, #1E5FAF, #87CEEB, #4A90D9);
-            background-size: 600% 600%;
-            animation: skyGradient 12s ease-in-out infinite;
-        }
-
-        @keyframes skyGradient {
-            0% { background-position: 0% 50%; }
-            20% { background-position: 50% 100%; }
-            40% { background-position: 100% 50%; }
-            60% { background-position: 50% 0%; }
-            80% { background-position: 0% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* ─── CLOUDS ─── */
-        .clouds {
+        /* ─── NIGHT MODE TOGGLE ─── */
+        .theme-toggle {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .cloud {
-            position: absolute;
-            border-radius: 1000px;
-            animation: cloudFloat linear infinite;
+            top: 20px;
+            right: 20px;
+            z-index: 999;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             will-change: transform;
         }
 
-        .cloud-1 {
-            width: 400px;
-            height: 90px;
-            top: 5%;
-            left: -450px;
-            animation-duration: 35s;
-            background: rgba(255, 255, 255, 0.7);
-            box-shadow: 0 0 60px rgba(255, 255, 255, 0.2);
-        }
-        .cloud-1::before {
-            content: '';
-            position: absolute;
-            width: 160px;
-            height: 160px;
-            top: -80px;
-            left: 40px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-1::after {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 180px;
-            top: -90px;
-            left: 120px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        .cloud-2 {
-            width: 300px;
-            height: 70px;
-            top: 20%;
-            left: -350px;
-            animation-duration: 40s;
-            animation-delay: -8s;
-            background: rgba(255, 255, 255, 0.55);
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.15);
-        }
-        .cloud-2::before {
-            content: '';
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            top: -60px;
-            left: 30px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-2::after {
-            content: '';
-            position: absolute;
-            width: 150px;
-            height: 140px;
-            top: -70px;
-            left: 90px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        .cloud-3 {
-            width: 220px;
-            height: 55px;
-            top: 45%;
-            left: -270px;
-            animation-duration: 45s;
-            animation-delay: -15s;
-            background: rgba(255, 255, 255, 0.45);
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
-        }
-        .cloud-3::before {
-            content: '';
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            top: -45px;
-            left: 20px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-3::after {
-            content: '';
-            position: absolute;
-            width: 110px;
-            height: 100px;
-            top: -50px;
-            left: 65px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        .cloud-4 {
-            width: 450px;
-            height: 100px;
-            bottom: 15%;
-            left: -500px;
-            animation-duration: 50s;
-            animation-delay: -5s;
-            background: rgba(255, 255, 255, 0.35);
-            box-shadow: 0 0 70px rgba(255, 255, 255, 0.1);
-        }
-        .cloud-4::before {
-            content: '';
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            top: -90px;
-            left: 50px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-4::after {
-            content: '';
-            position: absolute;
-            width: 220px;
-            height: 200px;
-            top: -100px;
-            left: 150px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        .cloud-5 {
-            width: 280px;
-            height: 65px;
-            top: 8%;
-            left: -320px;
-            animation-duration: 38s;
-            animation-delay: -20s;
-            background: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 0 45px rgba(255, 255, 255, 0.12);
-        }
-        .cloud-5::before {
-            content: '';
-            position: absolute;
-            width: 110px;
-            height: 110px;
-            top: -55px;
-            left: 25px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-5::after {
-            content: '';
-            position: absolute;
-            width: 130px;
-            height: 120px;
-            top: -60px;
-            left: 80px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        .cloud-6 {
-            width: 160px;
-            height: 40px;
-            top: 60%;
-            left: -200px;
-            animation-duration: 55s;
-            animation-delay: -12s;
-            background: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
-        }
-        .cloud-6::before {
-            content: '';
-            position: absolute;
-            width: 65px;
-            height: 65px;
-            top: -32px;
-            left: 15px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-6::after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 75px;
-            top: -38px;
-            left: 50px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        @keyframes cloudFloat {
-            0% { transform: translateX(0px); }
-            100% { transform: translateX(calc(100vw + 600px)); }
-        }
-
-        /* ─── AMBIENT GLOW ORBS ─── */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
-            animation: ambientDrift 25s ease-in-out infinite alternate;
-            z-index: 0;
-        }
-
-        @keyframes ambientDrift {
-            0% { transform: translate(0%, 0%) rotate(0deg) scale(1); }
-            50% { transform: translate(3%, 2%) rotate(2deg) scale(1.05); }
-            100% { transform: translate(-2%, 4%) rotate(-2deg) scale(0.95); }
-        }
-
-        /* ─── MAIN PAGE ─── */
-        #mainPage {
-            position: relative;
-            z-index: 2;
-            background: rgba(10, 10, 10, 0.08);
-            backdrop-filter: blur(80px);
-            -webkit-backdrop-filter: blur(80px);
-            border-radius: 48px;
-            padding: 70px 50px 50px;
-            max-width: 580px;
-            width: 100%;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-            display: block;
-        }
-
-        #mainPage.hidden {
-            display: none;
-        }
-
-        /* ─── TYPEWRITER TITLE ─── */
-        .title-wrapper {
-            min-height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        #typewriter {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: -1.5px;
-            text-shadow: 0 0 60px rgba(255, 255, 255, 0.2),
-                         0 4px 20px rgba(0, 0, 0, 0.3);
-            line-height: 1.1;
-            position: relative;
-        }
-
-        #typewriter .cursor {
-            display: inline-block;
-            width: 4px;
-            height: 0.8em;
-            background: linear-gradient(180deg, #6cc4ff, #a78bfa);
-            margin-left: 6px;
-            border-radius: 2px;
-            animation: blink 0.8s step-end infinite;
-            box-shadow: 0 0 30px rgba(108, 196, 255, 0.3);
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* ─── BUTTON WRAPPER ─── */
-        .btn-wrapper {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-            margin-bottom: 12px;
-        }
-
-        .btn-wrapper:last-of-type {
-            margin-bottom: 0;
-        }
-
-        /* ─── VIEW PLANS BUTTON (BLACK GRADIENT) ─── */
-        .btn-plans {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 20px 56px;
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #ffffff;
-            background: linear-gradient(135deg, #2b2b2b, #1a1a1a, #0d0d0d, #2b2b2b);
-            background-size: 300% 300%;
-            border: none;
-            border-radius: 60px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-            letter-spacing: 0.5px;
-            overflow: hidden;
-            animation: plansGradient 8s ease-in-out infinite;
-            width: 100%;
-        }
-
-        @keyframes plansGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .btn-plans::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 64px;
-            background: linear-gradient(135deg, rgba(43, 43, 43, 0.5), rgba(13, 13, 13, 0.5));
-            filter: blur(20px);
-            opacity: 0;
-            transition: all 0.6s ease;
-            z-index: -1;
-        }
-
-        .btn-plans:hover::before {
-            opacity: 1;
-            filter: blur(30px);
-            animation: pulseGlow 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); opacity: 0.6; }
-            50% { transform: scale(1.1); opacity: 1; }
-        }
-
-        .btn-plans::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 60px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 50%, rgba(255, 255, 255, 0.03));
-            pointer-events: none;
-        }
-
-        .btn-plans:hover {
-            transform: scale(1.05) translateY(-4px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
-                        0 0 100px rgba(0, 0, 0, 0.2);
-            animation-play-state: paused;
-        }
-
-        .btn-plans:active {
-            transform: scale(0.94) translateY(0px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            transition-duration: 0.1s;
-        }
-
-        .globe-icon {
-            width: 28px;
-            height: 28px;
-            fill: none;
-            stroke: #ffffff;
-            stroke-width: 2;
-            display: block;
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .btn-plans:hover .globe-icon {
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        /* ─── DISCORD BUTTON ─── */
-        .btn-discord {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 20px 56px;
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #ffffff;
-            background: linear-gradient(135deg, #5865F2, #4752C4, #3B45A5, #5865F2);
-            background-size: 300% 300%;
-            border: none;
-            border-radius: 60px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 40px rgba(88, 101, 242, 0.4);
-            letter-spacing: 0.5px;
-            overflow: hidden;
-            animation: discordGradient 8s ease-in-out infinite;
-            width: 100%;
-        }
-
-        @keyframes discordGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .btn-discord::before {
-            content: '';
-            position: absolute;
-            inset: -4px;
-            border-radius: 64px;
-            background: linear-gradient(135deg, rgba(88, 101, 242, 0.5), rgba(59, 69, 165, 0.5));
-            filter: blur(20px);
-            opacity: 0;
-            transition: all 0.6s ease;
-            z-index: -1;
-        }
-
-        .btn-discord:hover::before {
-            opacity: 1;
-            filter: blur(30px);
-            animation: pulseGlow 1.5s ease-in-out infinite;
-        }
-
-        .btn-discord::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 60px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 50%, rgba(255, 255, 255, 0.05));
-            pointer-events: none;
-        }
-
-        .btn-discord:hover {
-            transform: scale(1.05) translateY(-4px);
-            box-shadow: 0 20px 60px rgba(88, 101, 242, 0.5),
-                        0 0 100px rgba(88, 101, 242, 0.2);
-            animation-play-state: paused;
-        }
-
-        .btn-discord:active {
-            transform: scale(0.94) translateY(0px);
-            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.2);
-            transition-duration: 0.1s;
-        }
-
-        .discord-icon {
-            width: 28px;
-            height: 28px;
-            fill: #ffffff;
-            display: block;
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .btn-discord:hover .discord-icon {
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        /* ─── BUTTONS CONTAINER ─── */
-        .buttons-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
-        }
-
-        /* ─── FOOTER ─── */
-        .footer {
-            margin-top: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .mail-icon {
-            width: 18px;
-            height: 18px;
-            fill: rgba(255, 255, 255, 0.8);
-            transition: fill 0.3s ease, transform 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .footer:hover .mail-icon {
-            fill: #ffffff;
+        .theme-toggle:hover {
             transform: scale(1.1);
-        }
-
-        .footer-text {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.7);
-            letter-spacing: 0.5px;
-            font-weight: 300;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            transition: color 0.3s ease;
-        }
-
-        .footer:hover .footer-text {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* ─── PLANS PAGE ─── */
-        #plansPage {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 100;
-            background: linear-gradient(135deg, #87CEEB, #4A90D9, #1E5FAF, #87CEEB, #4A90D9);
-            background-size: 600% 600%;
-            animation: skyGradient 12s ease-in-out infinite;
-            overflow-y: auto;
-            padding: 40px 20px;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        #plansPage.active {
-            display: flex;
-        }
-
-        .plans-container {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            width: 100%;
-            padding: 40px 30px;
-        }
-
-        .plans-title {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-align: center;
-            text-shadow: 0 0 60px rgba(255, 255, 255, 0.2),
-                         0 4px 20px rgba(0, 0, 0, 0.3);
-            margin-bottom: 50px;
-            letter-spacing: -1.5px;
-        }
-
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-bottom: 30px;
-        }
-
-        .plan-box {
-            background: rgba(10, 10, 10, 0.15);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border-radius: 32px;
-            padding: 40px 30px 30px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        box-shadow 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 160px;
-        }
-
-        .plan-box:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.4);
-        }
-
-        .plan-box h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .plan-box .btn-github {
-            width: 100%;
-            padding: 14px 24px;
-            font-size: 0.95rem;
-            background: linear-gradient(135deg, #2b2b2b, #1a1a1a, #0d0d0d, #2b2b2b);
-            background-size: 300% 300%;
-            animation: githubGradient 8s ease-in-out infinite;
-            border: none;
-            border-radius: 60px;
-            color: #ffffff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            margin-top: auto;
-            flex-shrink: 0;
-            font-family: 'Inter', sans-serif;
-        }
-
-        @keyframes githubGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .plan-box .btn-github::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 63px;
-            background: linear-gradient(135deg, rgba(43, 43, 43, 0.5), rgba(13, 13, 13, 0.5));
-            filter: blur(15px);
-            opacity: 0;
-            transition: all 0.6s ease;
-            z-index: -1;
-        }
-
-        .plan-box .btn-github:hover::before {
-            opacity: 1;
-            filter: blur(20px);
-        }
-
-        .plan-box .btn-github:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .plan-box .btn-github:active {
-            transform: scale(0.94);
-        }
-
-        .plan-box .btn-github .github-icon {
-            width: 20px;
-            height: 20px;
-            fill: #ffffff;
-        }
-
-        .plan-box .btn-github .strikethrough {
-            text-decoration: line-through;
-            text-decoration-color: #ff4444;
-            text-decoration-thickness: 2px;
-            margin-right: 4px;
-            opacity: 0.7;
-        }
-
-        /* ─── BACK BUTTON ─── */
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 32px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 0 auto;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .back-btn:hover {
             background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
-        .back-btn svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
+        .theme-toggle svg {
+            width: 24px;
+            height: 24px;
+            fill: rgba(255, 255, 255, 0.8);
+            transition: fill 0.4s ease, transform 0.4s ease;
         }
 
-        .back-row {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin-top: 10px;
+        .theme-toggle:hover svg {
+            fill: #ffffff;
+            transform: rotate(20deg);
         }
 
-        .plans-clouds {
+        .night-mode .theme-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .night-mode .theme-toggle svg {
+            fill: rgba(200, 210, 255, 0.6);
+        }
+
+        /* ─── STARS (Night Mode) ─── */
+        .stars {
             position: fixed;
             top: 0;
             left: 0;
@@ -1861,14 +1001,26 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            overflow: hidden;
+            opacity: 0;
+            transition: opacity 1.5s ease;
         }
 
-        .plans-clouds .cloud {
+        .night-mode .stars {
+            opacity: 1;
+        }
+
+        .star {
             position: absolute;
-            border-radius: 1000px;
-            animation: cloudFloat linear infinite;
-            will-change: transform;
+            width: 2px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
         }
 
         /* ─── RESPONSIVE ─── */
@@ -1947,6 +1099,18 @@
             .back-row {
                 gap: 10px;
             }
+
+            .theme-toggle {
+                top: 16px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .theme-toggle svg {
+                width: 20px;
+                height: 20px;
+            }
         }
 
         @media (max-width: 380px) {
@@ -1975,6 +1139,9 @@
 </head>
 <body>
 
+    <!-- ─── STARS ─── -->
+    <div class="stars" id="stars"></div>
+
     <!-- ─── CLOUDS ─── -->
     <div class="clouds">
         <div class="cloud cloud-1"></div>
@@ -1984,6 +1151,14 @@
         <div class="cloud cloud-5"></div>
         <div class="cloud cloud-6"></div>
     </div>
+
+    <!-- ─── NIGHT MODE TOGGLE ─── -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle night mode">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
+            <path d="M12 5v2M12 17v2M5 12H3M7 12H5M19 12h2M17 12h2M7.05 7.05L5.64 5.64M18.36 18.36l-1.41-1.41M16.95 7.05l1.41-1.41M5.64 18.36l1.41-1.41"/>
+        </svg>
+    </button>
 
     <!-- ─── MAIN PAGE ─── -->
     <div id="mainPage">
@@ -1997,10 +1172,8 @@
 
         <!-- Buttons Container -->
         <div class="buttons-container">
-            <!-- View Plans Button - Black Gradient -->
             <div class="btn-wrapper">
-                <button class="btn-plans" onclick="showPlans()">
-                    <!-- Globe SVG Icon -->
+                <button class="btn-plans magnetic-btn" onclick="showPlans()" id="viewPlansBtn">
                     <svg class="globe-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="12" cy="12" r="10"/>
                         <line x1="2" y1="12" x2="22" y2="12"/>
@@ -2010,10 +1183,8 @@
                 </button>
             </div>
 
-            <!-- Discord Button -->
             <div class="btn-wrapper">
-                <a href="https://discord.gg/8qCDcjFH7c" class="btn-discord" target="_blank">
-                    <!-- Discord SVG Icon -->
+                <a href="https://discord.gg/8qCDcjFH7c" class="btn-discord magnetic-btn" target="_blank" id="discordBtn">
                     <svg class="discord-icon" viewBox="0 0 127.14 96.36" xmlns="http://www.w3.org/2000/svg">
                         <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S53.9,46,53.9,53,48.77,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.21,60,73.21,53s5-12.74,11.44-12.74S96.12,46,96.12,53,91,65.69,84.69,65.69Z"/>
                     </svg>
@@ -2050,7 +1221,7 @@
                 <!-- Plan 1 - Free -->
                 <div class="plan-box">
                     <h3>☁️ Cloud Hosting</h3>
-                    <a href="https://t.me/CourtsPlansBot" target="_blank" class="btn-github">
+                    <a href="https://t.me/thycourt" target="_blank" class="btn-github magnetic-btn">
                         <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                         </svg>
@@ -2061,7 +1232,7 @@
                 <!-- Plan 2 - Court's Exclusive -->
                 <div class="plan-box">
                     <h3>☁️ Court's Exclusive</h3>
-                    <a href="https://t.me/CourtsPlansBot" target="_blank" class="btn-github">
+                    <a href="https://t.me/thycourt" target="_blank" class="btn-github magnetic-btn">
                         <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                         </svg>
@@ -2072,7 +1243,7 @@
                 <!-- Plan 3 - Court's AI Powered -->
                 <div class="plan-box">
                     <h3>☁️ Court's AI Powered</h3>
-                    <a href="https://t.me/CourtsPlansBot" target="_blank" class="btn-github">
+                    <a href="https://t.me/thycourt" target="_blank" class="btn-github magnetic-btn">
                         <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                         </svg>
@@ -2083,7 +1254,7 @@
 
             <!-- Back Button -->
             <div class="back-row">
-                <button class="back-btn" onclick="hidePlans()">
+                <button class="back-btn magnetic-btn" onclick="hidePlans()" id="backBtn">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
                     </svg>
@@ -2145,18 +1316,225 @@
         //  3. SHOW/HIDE PLANS PAGE
         // ──────────────────────────────────────────────
         function showPlans() {
-            document.getElementById('mainPage').classList.add('hidden');
-            document.getElementById('plansPage').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            tg.expand();
+            const mainPage = document.getElementById('mainPage');
+            const plansPage = document.getElementById('plansPage');
+            
+            playClickSound();
+            
+            mainPage.classList.remove('slide-in');
+            mainPage.classList.add('slide-out');
+            
+            setTimeout(() => {
+                mainPage.classList.add('hidden');
+                mainPage.classList.remove('slide-out');
+                
+                plansPage.style.display = 'flex';
+                plansPage.classList.remove('exit');
+                plansPage.classList.add('active');
+                tg.expand();
+            }, 500);
         }
 
         function hidePlans() {
-            document.getElementById('mainPage').classList.remove('hidden');
-            document.getElementById('plansPage').classList.remove('active');
-            document.body.style.overflow = '';
-            tg.expand();
+            const mainPage = document.getElementById('mainPage');
+            const plansPage = document.getElementById('plansPage');
+            
+            playClickSound();
+            
+            plansPage.classList.remove('active');
+            plansPage.classList.add('exit');
+            
+            setTimeout(() => {
+                plansPage.classList.remove('exit');
+                plansPage.style.display = 'none';
+                
+                mainPage.classList.remove('hidden');
+                mainPage.classList.add('slide-in');
+                
+                setTimeout(() => {
+                    mainPage.classList.remove('slide-in');
+                }, 600);
+                
+                tg.expand();
+            }, 500);
         }
+
+        // ──────────────────────────────────────────────
+        //  4. NIGHT MODE TOGGLE
+        // ──────────────────────────────────────────────
+        let isNightMode = false;
+
+        function toggleTheme() {
+            isNightMode = !isNightMode;
+            document.body.classList.toggle('night-mode');
+            
+            const toggleBtn = document.getElementById('themeToggle');
+            const svg = toggleBtn.querySelector('svg');
+            
+            if (isNightMode) {
+                svg.innerHTML = `
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
+                    <path d="M12 5v2M12 17v2M5 12H3M7 12H5M19 12h2M17 12h2M7.05 7.05L5.64 5.64M18.36 18.36l-1.41-1.41M16.95 7.05l1.41-1.41M5.64 18.36l1.41-1.41"/>
+                    <circle cx="12" cy="12" r="3"/>
+                `;
+            } else {
+                svg.innerHTML = `
+                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
+                    <path d="M12 5v2M12 17v2M5 12H3M7 12H5M19 12h2M17 12h2M7.05 7.05L5.64 5.64M18.36 18.36l-1.41-1.41M16.95 7.05l1.41-1.41M5.64 18.36l1.41-1.41"/>
+                `;
+            }
+            
+            playToggleSound();
+        }
+
+        // ──────────────────────────────────────────────
+        //  5. STARS GENERATION
+        // ──────────────────────────────────────────────
+        function generateStars() {
+            const container = document.getElementById('stars');
+            const count = 150;
+            
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = (Math.random() * 3 + 1) + 'px';
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(star);
+            }
+        }
+        generateStars();
+
+        // ──────────────────────────────────────────────
+        //  6. SOUND EFFECTS
+        // ──────────────────────────────────────────────
+        function playClickSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.1);
+            } catch (e) {}
+        }
+
+        function playToggleSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                oscillator.frequency.value = isNightMode ? 600 : 1000;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+                
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.15);
+            } catch (e) {}
+        }
+
+        // ──────────────────────────────────────────────
+        //  7. MAGNETIC BUTTON EFFECT (Enhanced)
+        // ──────────────────────────────────────────────
+        document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                const intensity = 16;
+                const rotateX = -(y / rect.height) * intensity;
+                const rotateY = (x / rect.width) * intensity;
+                const scale = 1.04;
+                
+                this.style.transform = `
+                    perspective(600px) 
+                    rotateX(${rotateX}deg) 
+                    rotateY(${rotateY}deg) 
+                    scale(${scale})
+                    translateY(-4px)
+                `;
+                this.style.boxShadow = `
+                    0 20px 60px rgba(0,0,0,0.3),
+                    0 0 80px rgba(255,255,255,0.05)
+                `;
+                this.style.transition = 'transform 0.08s ease-out, box-shadow 0.3s ease';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0px)';
+                this.style.boxShadow = '';
+                this.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease';
+            });
+        });
+
+        // ──────────────────────────────────────────────
+        //  8. MOUSE TRACKING
+        // ──────────────────────────────────────────────
+        document.addEventListener('mousemove', function(e) {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            const clouds = document.querySelectorAll('.cloud');
+            clouds.forEach((cloud, index) => {
+                const speed = 0.02 + (index * 0.005);
+                cloud.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+
+        // ──────────────────────────────────────────────
+        //  9. DEVICE TILT SUPPORT
+        // ──────────────────────────────────────────────
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', function(e) {
+                const x = (e.gamma || 0) / 10;
+                const y = (e.beta || 0) / 10 - 5;
+                
+                const clouds = document.querySelectorAll('.cloud');
+                clouds.forEach((cloud, index) => {
+                    const speed = 0.02 + (index * 0.005);
+                    cloud.style.transform = `translate(${x * speed * 2}px, ${y * speed * 2}px)`;
+                });
+            });
+        }
+
+        // ──────────────────────────────────────────────
+        //  10. KEYBOARD SHORTCUTS
+        // ──────────────────────────────────────────────
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'n' || e.key === 'N') {
+                toggleTheme();
+            }
+            if (e.key === 'Escape') {
+                if (document.getElementById('plansPage').classList.contains('active')) {
+                    hidePlans();
+                }
+            }
+        });
+
+        console.log('✨ Court\'s Website Loaded!');
+        console.log('🌙 Press "N" for Night Mode');
+        console.log('⌨️ Press "ESC" to close Plans');
+        console.log('🧲 Buttons have enhanced magnetic hover effect!');
+        console.log('📱 GitHub buttons link to @thycourt on Telegram');
     </script>
 
 </body>
