@@ -22,7 +22,6 @@ jobs:
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
 
-          # Remove any button/link whose visible markup contains "Molly".
           patterns = [
               r'<button\\b[^>]*>.*?\\bMolly\\b.*?</button\\s*>',
               r'<a\\b[^>]*>.*?\\bMolly\\b.*?</a\\s*>',
@@ -30,7 +29,6 @@ jobs:
           for pattern in patterns:
               s = re.sub(pattern, '', s, flags=re.I | re.S)
 
-          # Make button groups consistently responsive without changing the existing design.
           css = r'''
 
           /* UI grid repair */
@@ -53,8 +51,6 @@ jobs:
           if '/* UI grid repair */' not in s and '</style>' in s:
               s = s.replace('</style>', css + '\n</style>', 1)
 
-          # Runtime fallback: repair the actual parent of groups of 2+ action elements,
-          # covering any custom class name used by the page.
           js = r'''
           <script>
           (() => {
