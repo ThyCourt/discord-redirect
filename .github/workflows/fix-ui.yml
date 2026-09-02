@@ -1,0 +1,94 @@
+name: Fix Discord Redirect UI
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  fix-ui:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove Molly button and fix button grid
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+
+          # Remove any button/link whose visible markup contains "Molly".
+          patterns = [
+              r'<button\\b[^>]*>.*?\\bMolly\\b.*?</button\\s*>',
+              r'<a\\b[^>]*>.*?\\bMolly\\b.*?</a\\s*>',
+          ]
+          for pattern in patterns:
+              s = re.sub(pattern, '', s, flags=re.I | re.S)
+
+          # Make button groups consistently responsive without changing the existing design.
+          css = r'''
+
+          /* UI grid repair */
+          .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
+              display: grid !important;
+              grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+              gap: 14px !important;
+              width: 100%;
+          }
+          .button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
+              width: 100% !important;
+              min-width: 0;
+          }
+          @media (max-width: 520px) {
+              .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
+                  grid-template-columns: 1fr !important;
+              }
+          }
+          '''
+          if '/* UI grid repair */' not in s and '</style>' in s:
+              s = s.replace('</style>', css + '\n</style>', 1)
+
+          # Runtime fallback: repair the actual parent of groups of 2+ action elements,
+          # covering any custom class name used by the page.
+          js = r'''
+          <script>
+          (() => {
+            const repairButtonGrids = () => {
+              document.querySelectorAll('button, a').forEach((el) => {
+                const parent = el.parentElement;
+                if (!parent) return;
+                const actions = [...parent.children].filter((child) =>
+                  child.matches('button, a') && child.offsetParent !== null
+                );
+                if (actions.length >= 2) {
+                  parent.style.display = 'grid';
+                  parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
+                  parent.style.gap = '14px';
+                  actions.forEach((child) => child.style.width = '100%');
+                }
+              });
+            };
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', repairButtonGrids);
+            } else {
+              repairButtonGrids();
+            }
+          })();
+          </script>
+          '''
+          if 'repairButtonGrids' not in s and '</body>' in s:
+              s = s.replace('</body>', js + '\n</body>', 1)
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff --cached --quiet || git commit -m 'Remove Molly button and fix button grid'
+          git push
