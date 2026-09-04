@@ -1419,7 +1419,26 @@
                 cursor: auto !important;
             }
         }
-    </style>
+    
+
+/* UI grid repair */
+.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+    width: 100%;
+}
+.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
+    width: 100% !important;
+    min-width: 0;
+}
+@media (max-width: 520px) {
+    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+</style>
 </head>
 <body class="night-mode">
 
@@ -1944,6 +1963,32 @@
         console.log('🖱️ Custom cursor: Court\'s PNG image (shrinks on click)');
         console.log('🔑 Authorize button opens v86 PC emulator!');
     </script>
+
+
+<script>
+(() => {
+  const repairButtonGrids = () => {
+    document.querySelectorAll('button, a').forEach((el) => {
+      const parent = el.parentElement;
+      if (!parent) return;
+      const actions = [...parent.children].filter((child) =>
+        child.matches('button, a') && child.offsetParent !== null
+      );
+      if (actions.length >= 2) {
+        parent.style.display = 'grid';
+        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
+        parent.style.gap = '14px';
+        actions.forEach((child) => child.style.width = '100%');
+      }
+    });
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', repairButtonGrids);
+  } else {
+    repairButtonGrids();
+  }
+})();
+</script>
 
 </body>
 </html>
