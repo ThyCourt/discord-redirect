@@ -62,7 +62,6 @@
             background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493, #ff69b4, #ffb6c1);
             background-size: 600% 600%;
             animation: pinkGradient 15s ease-in-out infinite;
-            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes pinkGradient {
@@ -508,14 +507,15 @@
         }
 
         .merch-icon {
-            width: 32px;
-            height: 32px;
+            width: 40px;
+            height: 40px;
             display: block;
             transition: transform 0.3s ease;
             flex-shrink: 0;
             border-radius: 50%;
             background: url('courts.png') no-repeat center center;
             background-size: contain;
+            image-rendering: auto;
         }
 
         .btn-merch:hover .merch-icon {
@@ -665,7 +665,6 @@
             padding: 40px 20px;
             justify-content: center;
             align-items: flex-start;
-            transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
             background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493, #ff69b4, #ffb6c1);
             background-size: 600% 600%;
             animation: pinkGradient 15s ease-in-out infinite;
@@ -750,6 +749,17 @@
             gap: 10px;
             margin-bottom: 20px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .plan-icon {
+            width: 32px;
+            height: 32px;
+            display: block;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: url('courts.png') no-repeat center center;
+            background-size: contain;
+            image-rendering: auto;
         }
 
         .plan-box .btn-github {
@@ -942,8 +952,8 @@
             }
 
             .merch-icon {
-                width: 28px;
-                height: 28px;
+                width: 32px;
+                height: 32px;
             }
 
             .discord-icon {
@@ -989,6 +999,11 @@
                 margin-bottom: 15px;
             }
 
+            .plan-icon {
+                width: 28px;
+                height: 28px;
+            }
+
             .plans-container {
                 padding: 20px 15px;
             }
@@ -1018,8 +1033,8 @@
                 gap: 8px;
             }
             .merch-icon {
-                width: 24px;
-                height: 24px;
+                width: 28px;
+                height: 28px;
             }
             .discord-icon {
                 width: 18px;
@@ -1032,6 +1047,11 @@
 
             .plans-title {
                 font-size: 1.6rem;
+            }
+
+            .plan-icon {
+                width: 24px;
+                height: 24px;
             }
 
             .custom-cursor {
@@ -1048,26 +1068,7 @@
                 cursor: auto !important;
             }
         }
-    
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
-}
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-</style>
+    </style>
 </head>
 <body>
 
@@ -1142,7 +1143,7 @@
 
             <div class="plans-grid">
                 <div class="plan-box">
-                    <h3>☁️ Cloud Hosting</h3>
+                    <h3><span class="plan-icon"></span> Cloud Hosting</h3>
                     <a href="https://t.me/thycourt" target="_blank" class="btn-github magnetic-btn">
                         <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
@@ -1151,7 +1152,7 @@
                     </a>
                 </div>
                 <div class="plan-box">
-                    <h3>☁️ Court's Exclusive</h3>
+                    <h3><span class="plan-icon"></span> Court's Exclusive</h3>
                     <a href="https://t.me/thycourt" target="_blank" class="btn-github magnetic-btn">
                         <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
@@ -1160,7 +1161,7 @@
                     </a>
                 </div>
                 <div class="plan-box">
-                    <h3>☁️ Court's AI Powered</h3>
+                    <h3><span class="plan-icon"></span> Court's AI Powered</h3>
                     <a href="https://t.me/thycourt" target="_blank" class="btn-github magnetic-btn">
                         <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
@@ -1432,32 +1433,6 @@
         console.log('🖱️ Custom cursor: courts.png');
         console.log('⌨️ Press "ESC" to close Plans');
     </script>
-
-
-<script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
-    });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
-})();
-</script>
 
 </body>
 </html>
