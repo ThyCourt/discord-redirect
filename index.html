@@ -59,235 +59,7 @@
             padding: 20px;
             overflow: hidden;
             position: relative;
-            background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493, #ff69b4, #ffb6c1);
-            background-size: 600% 600%;
-            animation: pinkGradient 15s ease-in-out infinite;
-        }
-
-        @keyframes pinkGradient {
-            0% { background-position: 0% 50%; }
-            20% { background-position: 50% 100%; }
-            40% { background-position: 100% 50%; }
-            60% { background-position: 50% 0%; }
-            80% { background-position: 0% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* ─── CLOUDS ─── */
-        .clouds {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .cloud {
-            position: absolute;
-            border-radius: 1000px;
-            animation: cloudFloat linear infinite;
-            will-change: transform;
-            background: rgba(255, 255, 255, 0.6) !important;
-            box-shadow: 0 0 60px rgba(255, 255, 255, 0.15) !important;
-        }
-
-        .cloud::before,
-        .cloud::after {
-            background: inherit !important;
-            box-shadow: inherit !important;
-        }
-
-        .cloud-1 {
-            width: 400px;
-            height: 90px;
-            top: 5%;
-            left: -450px;
-            animation-duration: 35s;
-        }
-        .cloud-1::before {
-            content: '';
-            position: absolute;
-            width: 160px;
-            height: 160px;
-            top: -80px;
-            left: 40px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-1::after {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 180px;
-            top: -90px;
-            left: 120px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        .cloud-2 {
-            width: 300px;
-            height: 70px;
-            top: 20%;
-            left: -350px;
-            animation-duration: 40s;
-            animation-delay: -8s;
-        }
-        .cloud-2::before {
-            content: '';
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            top: -60px;
-            left: 30px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-2::after {
-            content: '';
-            position: absolute;
-            width: 150px;
-            height: 140px;
-            top: -70px;
-            left: 90px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        .cloud-3 {
-            width: 220px;
-            height: 55px;
-            top: 45%;
-            left: -270px;
-            animation-duration: 45s;
-            animation-delay: -15s;
-        }
-        .cloud-3::before {
-            content: '';
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            top: -45px;
-            left: 20px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-3::after {
-            content: '';
-            position: absolute;
-            width: 110px;
-            height: 100px;
-            top: -50px;
-            left: 65px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        .cloud-4 {
-            width: 450px;
-            height: 100px;
-            bottom: 15%;
-            left: -500px;
-            animation-duration: 50s;
-            animation-delay: -5s;
-        }
-        .cloud-4::before {
-            content: '';
-            position: absolute;
-            width: 180px;
-            height: 180px;
-            top: -90px;
-            left: 50px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-4::after {
-            content: '';
-            position: absolute;
-            width: 220px;
-            height: 200px;
-            top: -100px;
-            left: 150px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        .cloud-5 {
-            width: 280px;
-            height: 65px;
-            top: 8%;
-            left: -320px;
-            animation-duration: 38s;
-            animation-delay: -20s;
-        }
-        .cloud-5::before {
-            content: '';
-            position: absolute;
-            width: 110px;
-            height: 110px;
-            top: -55px;
-            left: 25px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-5::after {
-            content: '';
-            position: absolute;
-            width: 130px;
-            height: 120px;
-            top: -60px;
-            left: 80px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        .cloud-6 {
-            width: 160px;
-            height: 40px;
-            top: 60%;
-            left: -200px;
-            animation-duration: 55s;
-            animation-delay: -12s;
-        }
-        .cloud-6::before {
-            content: '';
-            position: absolute;
-            width: 65px;
-            height: 65px;
-            top: -32px;
-            left: 15px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-        .cloud-6::after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 75px;
-            top: -38px;
-            left: 50px;
-            border-radius: 50%;
-            background: inherit;
-            box-shadow: inherit;
-        }
-
-        @keyframes cloudFloat {
-            0% { transform: translateX(0px); }
-            100% { transform: translateX(calc(100vw + 600px)); }
+            background: #0a0a0a;
         }
 
         /* ─── AMBIENT GLOW ORBS ─── */
@@ -299,10 +71,10 @@
             width: 200%;
             height: 200%;
             z-index: 0;
-            background: radial-gradient(ellipse at 30% 50%, rgba(255, 182, 193, 0.3) 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 80%, rgba(255, 105, 180, 0.2) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 30% 50%, rgba(255, 105, 180, 0.08) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(255, 20, 147, 0.05) 0%, transparent 50%);
             animation: ambientDrift 25s ease-in-out infinite alternate;
-            opacity: 0.8;
+            opacity: 0.6;
         }
 
         @keyframes ambientDrift {
@@ -322,12 +94,12 @@
             text-align: center;
             display: block;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(80px);
             -webkit-backdrop-filter: blur(80px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.2),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         #mainPage.hidden {
@@ -368,8 +140,7 @@
             letter-spacing: -1.5px;
             line-height: 1.1;
             position: relative;
-            text-shadow: 0 0 60px rgba(255, 255, 255, 0.2),
-                         0 4px 20px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0 60px rgba(255, 255, 255, 0.1);
         }
 
         #typewriter .cursor {
@@ -379,7 +150,7 @@
             margin-left: 6px;
             border-radius: 2px;
             background: linear-gradient(180deg, #ff69b4, #ff1493);
-            box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
             animation: blink 0.8s step-end infinite;
         }
 
@@ -513,7 +284,7 @@
             transition: transform 0.3s ease;
             flex-shrink: 0;
             border-radius: 50%;
-            background: url('courts.png') no-repeat center center;
+            background: url('courts2.png') no-repeat center center;
             background-size: contain;
             image-rendering: auto;
         }
@@ -629,9 +400,7 @@
             padding: 40px 20px;
             justify-content: center;
             align-items: flex-start;
-            background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493, #ff69b4, #ffb6c1);
-            background-size: 600% 600%;
-            animation: pinkGradient 15s ease-in-out infinite;
+            background: #0a0a0a;
         }
 
         #plansPage.active {
@@ -664,12 +433,20 @@
         .plans-title {
             font-size: 3rem;
             font-weight: 700;
-            color: #ffffff;
             text-align: center;
             margin-bottom: 50px;
             letter-spacing: -1.5px;
-            text-shadow: 0 0 60px rgba(255, 255, 255, 0.2),
-                         0 4px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493, #ff69b4);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGradient 4s ease-in-out infinite;
+        }
+
+        @keyframes titleGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .plans-grid {
@@ -689,12 +466,12 @@
             flex-direction: column;
             justify-content: space-between;
             min-height: 160px;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .plan-box:hover {
@@ -721,7 +498,7 @@
             display: block;
             flex-shrink: 0;
             border-radius: 50%;
-            background: url('courts.png') no-repeat center center;
+            background: url('courts2.png') no-repeat center center;
             background-size: contain;
             image-rendering: auto;
         }
@@ -817,13 +594,13 @@
             max-width: 300px;
             will-change: transform;
             color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.1);
             color: #ffffff;
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -843,64 +620,12 @@
             margin-top: 10px;
         }
 
-        .plans-clouds {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .plans-clouds .cloud {
-            position: absolute;
-            border-radius: 1000px;
-            animation: cloudFloat linear infinite;
-            will-change: transform;
-            background: rgba(255, 255, 255, 0.6) !important;
-            box-shadow: 0 0 60px rgba(255, 255, 255, 0.15) !important;
-        }
-
-        .plans-clouds .cloud::before,
-        .plans-clouds .cloud::after {
-            background: inherit !important;
-            box-shadow: inherit !important;
-        }
-
-        /* ─── STARS ─── */
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-
-        .star {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #ffffff;
-            border-radius: 50%;
-            animation: twinkle var(--duration) ease-in-out infinite alternate;
-        }
-
-        @keyframes twinkle {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-
         /* ─── RESPONSIVE ─── */
         @media (max-width: 480px) {
             #mainPage {
                 padding: 40px 20px 30px;
                 border-radius: 32px;
-                background: rgba(255, 255, 255, 0.15);
+                background: rgba(255, 255, 255, 0.06);
                 backdrop-filter: blur(60px);
                 -webkit-backdrop-filter: blur(60px);
                 max-width: 100%;
@@ -930,16 +655,6 @@
                 width: 20px;
                 height: 20px;
             }
-
-            .cloud-1 { width: 250px; height: 60px; left: -280px; }
-            .cloud-1::before { width: 100px; height: 100px; top: -50px; left: 25px; }
-            .cloud-1::after { width: 120px; height: 110px; top: -55px; left: 75px; }
-            
-            .cloud-2 { width: 200px; height: 50px; left: -220px; }
-            .cloud-2::before { width: 80px; height: 80px; top: -40px; left: 20px; }
-            .cloud-2::after { width: 90px; height: 85px; top: -42px; left: 55px; }
-            
-            .cloud-3, .cloud-4, .cloud-5, .cloud-6 { display: none; }
 
             .plans-title {
                 font-size: 2rem;
@@ -1025,41 +740,9 @@
                 cursor: auto !important;
             }
         }
-    
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
-}
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-</style>
+    </style>
 </head>
 <body>
-
-    <!-- ─── STARS ─── -->
-    <div class="stars" id="stars"></div>
-
-    <!-- ─── CLOUDS ─── -->
-    <div class="clouds">
-        <div class="cloud cloud-1"></div>
-        <div class="cloud cloud-2"></div>
-        <div class="cloud cloud-3"></div>
-        <div class="cloud cloud-4"></div>
-        <div class="cloud cloud-5"></div>
-        <div class="cloud cloud-6"></div>
-    </div>
 
     <!-- ─── CUSTOM CURSOR ─── -->
     <div class="custom-cursor" id="customCursor"></div>
@@ -1097,17 +780,8 @@
 
     <!-- ─── PLANS PAGE ─── -->
     <div id="plansPage">
-        <div class="plans-clouds">
-            <div class="cloud cloud-1"></div>
-            <div class="cloud cloud-2"></div>
-            <div class="cloud cloud-3"></div>
-            <div class="cloud cloud-4"></div>
-            <div class="cloud cloud-5"></div>
-            <div class="cloud cloud-6"></div>
-        </div>
-
         <div class="plans-container">
-            <h1 class="plans-title">Court's Merch</h1>
+            <h1 class="plans-title">Merchandise</h1>
 
             <div class="plans-grid">
                 <div class="plan-box">
@@ -1260,28 +934,7 @@
         }
 
         // ──────────────────────────────────────────────
-        //  5. STARS GENERATION
-        // ──────────────────────────────────────────────
-        function generateStars() {
-            const container = document.getElementById('stars');
-            const count = 150;
-            
-            for (let i = 0; i < count; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = (Math.random() * 3 + 1) + 'px';
-                star.style.height = star.style.width;
-                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-                star.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(star);
-            }
-        }
-        generateStars();
-
-        // ──────────────────────────────────────────────
-        //  6. CUSTOM CURSOR
+        //  5. CUSTOM CURSOR
         // ──────────────────────────────────────────────
         const cursor = document.getElementById('customCursor');
 
@@ -1312,7 +965,7 @@
         });
 
         // ──────────────────────────────────────────────
-        //  7. MAGNETIC BUTTON EFFECT
+        //  6. MAGNETIC BUTTON EFFECT
         // ──────────────────────────────────────────────
         document.querySelectorAll('.magnetic-btn').forEach(btn => {
             btn.addEventListener('mousemove', function(e) {
@@ -1347,37 +1000,7 @@
         });
 
         // ──────────────────────────────────────────────
-        //  8. MOUSE TRACKING
-        // ──────────────────────────────────────────────
-        document.addEventListener('mousemove', function(e) {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-            
-            const clouds = document.querySelectorAll('.cloud');
-            clouds.forEach((cloud, index) => {
-                const speed = 0.02 + (index * 0.005);
-                cloud.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-            });
-        });
-
-        // ──────────────────────────────────────────────
-        //  9. DEVICE TILT SUPPORT
-        // ──────────────────────────────────────────────
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener('deviceorientation', function(e) {
-                const x = (e.gamma || 0) / 10;
-                const y = (e.beta || 0) / 10 - 5;
-                
-                const clouds = document.querySelectorAll('.cloud');
-                clouds.forEach((cloud, index) => {
-                    const speed = 0.02 + (index * 0.005);
-                    cloud.style.transform = `translate(${x * speed * 2}px, ${y * speed * 2}px)`;
-                });
-            });
-        }
-
-        // ──────────────────────────────────────────────
-        //  10. KEYBOARD SHORTCUTS
+        //  7. KEYBOARD SHORTCUTS
         // ──────────────────────────────────────────────
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
@@ -1388,36 +1011,10 @@
         });
 
         console.log('✨ Court\'s Website Loaded!');
-        console.log('🩷 Pink theme with floating clouds');
+        console.log('🖤 Black theme with pink accents');
         console.log('🖱️ Custom cursor: courts.png');
         console.log('⌨️ Press "ESC" to close Merch');
     </script>
-
-
-<script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
-    });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
-})();
-</script>
 
 </body>
 </html>
