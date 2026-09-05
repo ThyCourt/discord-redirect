@@ -89,7 +89,7 @@
             z-index: 2;
             border-radius: 48px;
             padding: 60px 40px 40px;
-            max-width: 520px;
+            max-width: 480px;
             width: 100%;
             text-align: center;
             display: block;
@@ -136,11 +136,20 @@
         #typewriter {
             font-size: 3rem;
             font-weight: 700;
-            color: #ffffff;
             letter-spacing: -1.5px;
             line-height: 1.1;
             position: relative;
-            text-shadow: 0 0 60px rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493, #ff69b4);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleGradient 4s ease-in-out infinite;
+        }
+
+        @keyframes titleGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         #typewriter .cursor {
@@ -152,6 +161,7 @@
             background: linear-gradient(180deg, #ff69b4, #ff1493);
             box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
             animation: blink 0.8s step-end infinite;
+            -webkit-text-fill-color: initial;
         }
 
         @keyframes blink {
@@ -169,6 +179,15 @@
 
         .btn-wrapper:last-of-type {
             margin-bottom: 0;
+        }
+
+        /* ─── BUTTONS CONTAINER ─── */
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
         }
 
         /* ─── MAGNETIC BUTTON EFFECT ─── */
@@ -205,8 +224,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 14px 40px;
+            gap: 12px;
+            padding: 12px 28px;
             font-size: 1rem;
             font-weight: 600;
             color: #ffffff;
@@ -222,7 +241,8 @@
             letter-spacing: 0.5px;
             overflow: hidden;
             animation: merchGradient 8s ease-in-out infinite;
-            width: 100%;
+            width: auto;
+            min-width: 200px;
             will-change: transform;
         }
 
@@ -278,13 +298,13 @@
         }
 
         .merch-icon {
-            width: 32px;
-            height: 32px;
+            width: 44px;
+            height: 44px;
             display: block;
             transition: transform 0.3s ease;
             flex-shrink: 0;
             border-radius: 50%;
-            background: url('courts2.png') no-repeat center center;
+            background: url('courts3.png') no-repeat center center;
             background-size: contain;
             image-rendering: auto;
         }
@@ -300,7 +320,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 14px 40px;
+            padding: 12px 28px;
             font-size: 1rem;
             font-weight: 600;
             color: #ffffff;
@@ -316,7 +336,8 @@
             letter-spacing: 0.5px;
             overflow: hidden;
             animation: discordGradient 8s ease-in-out infinite;
-            width: 100%;
+            width: auto;
+            min-width: 200px;
             will-change: transform;
         }
 
@@ -379,14 +400,6 @@
             transform: scale(1.1) rotate(-5deg);
         }
 
-        /* ─── BUTTONS CONTAINER ─── */
-        .buttons-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 100%;
-        }
-
         /* ─── PLANS PAGE ─── */
         #plansPage {
             display: none;
@@ -441,12 +454,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: titleGradient 4s ease-in-out infinite;
-        }
-
-        @keyframes titleGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         .plans-grid {
@@ -644,11 +651,12 @@
                 padding: 12px 20px;
                 font-size: 0.9rem;
                 gap: 8px;
+                min-width: 160px;
             }
 
             .merch-icon {
-                width: 28px;
-                height: 28px;
+                width: 36px;
+                height: 36px;
             }
 
             .discord-icon {
@@ -707,10 +715,11 @@
                 padding: 10px 16px;
                 font-size: 0.8rem;
                 gap: 6px;
+                min-width: 140px;
             }
             .merch-icon {
-                width: 24px;
-                height: 24px;
+                width: 32px;
+                height: 32px;
             }
             .discord-icon {
                 width: 18px;
@@ -740,26 +749,7 @@
                 cursor: auto !important;
             }
         }
-    
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
-}
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-</style>
+    </style>
 </head>
 <body>
 
@@ -1034,32 +1024,6 @@
         console.log('🖱️ Custom cursor: courts.png');
         console.log('⌨️ Press "ESC" to close Merch');
     </script>
-
-
-<script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
-    });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
-})();
-</script>
 
 </body>
 </html>
