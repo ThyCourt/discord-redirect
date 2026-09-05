@@ -8,10 +8,6 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- Botpress Webchat Scripts -->
-    <script src="https://cdn.botpress.cloud/webchat/v3.7/inject.js"></script>
-    <script src="https://files.bpcontent.cloud/2026/08/28/21/20260828213322-F1IPJ1GG.js" defer></script>
-    
     <style>
         /* ─── CUSTOM CURSOR ─── */
         * {
@@ -27,7 +23,7 @@
             transform: translate(-50%, -50%);
             transition: width 0.12s ease, height 0.12s ease, opacity 0.3s ease;
             will-change: transform, left, top;
-            background: url('Courts.png') no-repeat center center;
+            background: url('courts.png') no-repeat center center;
             background-size: contain;
             image-rendering: auto;
         }
@@ -63,38 +59,18 @@
             padding: 20px;
             overflow: hidden;
             position: relative;
-            background: linear-gradient(135deg, #0a0e1a, #141b2b, #1a2340, #0d1225, #0a0e1a);
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493, #ff69b4, #ffb6c1);
             background-size: 600% 600%;
-            animation: nightGradient 15s ease-in-out infinite;
+            animation: pinkGradient 15s ease-in-out infinite;
             transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        body.day-mode {
-            background: linear-gradient(135deg, #87CEEB, #4A90D9, #1E5FAF, #87CEEB, #4A90D9);
-            background-size: 600% 600%;
-            animation: dayGradient 12s ease-in-out infinite;
-        }
-
-        body.night-mode {
-            background: linear-gradient(135deg, #0a0e1a, #141b2b, #1a2340, #0d1225, #0a0e1a);
-            background-size: 600% 600%;
-            animation: nightGradient 15s ease-in-out infinite;
-        }
-
-        @keyframes dayGradient {
+        @keyframes pinkGradient {
             0% { background-position: 0% 50%; }
             20% { background-position: 50% 100%; }
             40% { background-position: 100% 50%; }
             60% { background-position: 50% 0%; }
             80% { background-position: 0% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes nightGradient {
-            0% { background-position: 0% 50%; }
-            25% { background-position: 50% 100%; }
-            50% { background-position: 100% 50%; }
-            75% { background-position: 50% 0%; }
             100% { background-position: 0% 50%; }
         }
 
@@ -108,7 +84,6 @@
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
-            transition: opacity 1.2s ease;
         }
 
         .cloud {
@@ -116,27 +91,12 @@
             border-radius: 1000px;
             animation: cloudFloat linear infinite;
             will-change: transform;
-            transition: background 1.2s ease, box-shadow 1.2s ease;
-        }
-
-        .night-mode .cloud {
-            background: rgba(200, 210, 255, 0.15) !important;
-            box-shadow: 0 0 60px rgba(150, 180, 255, 0.05) !important;
-        }
-
-        .night-mode .cloud::before,
-        .night-mode .cloud::after {
-            background: inherit !important;
-            box-shadow: inherit !important;
-        }
-
-        .day-mode .cloud {
-            background: rgba(255, 255, 255, 0.5) !important;
+            background: rgba(255, 255, 255, 0.6) !important;
             box-shadow: 0 0 60px rgba(255, 255, 255, 0.15) !important;
         }
 
-        .day-mode .cloud::before,
-        .day-mode .cloud::after {
+        .cloud::before,
+        .cloud::after {
             background: inherit !important;
             box-shadow: inherit !important;
         }
@@ -340,21 +300,10 @@
             width: 200%;
             height: 200%;
             z-index: 0;
-            transition: opacity 1.2s ease, background 1.2s ease;
-        }
-
-        .night-mode::before {
-            background: radial-gradient(ellipse at 30% 50%, rgba(100, 150, 255, 0.15) 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 80%, rgba(150, 100, 255, 0.1) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 30% 50%, rgba(255, 182, 193, 0.3) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(255, 105, 180, 0.2) 0%, transparent 50%);
             animation: ambientDrift 25s ease-in-out infinite alternate;
-            opacity: 0.3;
-        }
-
-        .day-mode::before {
-            background: radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.12) 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
-            animation: ambientDrift 25s ease-in-out infinite alternate;
-            opacity: 1;
+            opacity: 0.8;
         }
 
         @keyframes ambientDrift {
@@ -374,19 +323,7 @@
             text-align: center;
             display: block;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .night-mode #mainPage {
-            background: rgba(10, 10, 20, 0.15);
-            backdrop-filter: blur(80px);
-            -webkit-backdrop-filter: blur(80px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.6),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-        }
-
-        .day-mode #mainPage {
-            background: rgba(10, 10, 10, 0.08);
+            background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(80px);
             -webkit-backdrop-filter: blur(80px);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -432,15 +369,6 @@
             letter-spacing: -1.5px;
             line-height: 1.1;
             position: relative;
-            transition: text-shadow 1.2s ease;
-        }
-
-        .night-mode #typewriter {
-            text-shadow: 0 0 80px rgba(100, 150, 255, 0.15),
-                         0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .day-mode #typewriter {
             text-shadow: 0 0 60px rgba(255, 255, 255, 0.2),
                          0 4px 20px rgba(0, 0, 0, 0.3);
         }
@@ -451,18 +379,9 @@
             height: 0.8em;
             margin-left: 6px;
             border-radius: 2px;
+            background: linear-gradient(180deg, #ff69b4, #ff1493);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
             animation: blink 0.8s step-end infinite;
-            transition: background 1.2s ease, box-shadow 1.2s ease;
-        }
-
-        .night-mode #typewriter .cursor {
-            background: linear-gradient(180deg, #6c8cff, #a78bfa);
-            box-shadow: 0 0 30px rgba(100, 150, 255, 0.2);
-        }
-
-        .day-mode #typewriter .cursor {
-            background: linear-gradient(180deg, #6cc4ff, #a78bfa);
-            box-shadow: 0 0 30px rgba(108, 196, 255, 0.3);
         }
 
         @keyframes blink {
@@ -510,8 +429,8 @@
             transform: scale(1.1);
         }
 
-        /* ─── BROWSE PLANS BUTTON ─── */
-        .btn-plans {
+        /* ─── MERCHANDISE BUTTON ─── */
+        .btn-merch {
             position: relative;
             display: inline-flex;
             align-items: center;
@@ -532,18 +451,18 @@
             box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
             letter-spacing: 0.5px;
             overflow: hidden;
-            animation: plansGradient 8s ease-in-out infinite;
+            animation: merchGradient 8s ease-in-out infinite;
             width: 100%;
             will-change: transform;
         }
 
-        @keyframes plansGradient {
+        @keyframes merchGradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        .btn-plans::before {
+        .btn-merch::before {
             content: '';
             position: absolute;
             inset: -4px;
@@ -555,7 +474,7 @@
             z-index: -1;
         }
 
-        .btn-plans:hover::before {
+        .btn-merch:hover::before {
             opacity: 1;
             filter: blur(30px);
             animation: pulseGlow 1.5s ease-in-out infinite;
@@ -566,7 +485,7 @@
             50% { transform: scale(1.1); opacity: 1; }
         }
 
-        .btn-plans::after {
+        .btn-merch::after {
             content: '';
             position: absolute;
             inset: 0;
@@ -575,31 +494,31 @@
             pointer-events: none;
         }
 
-        .btn-plans:hover {
+        .btn-merch:hover {
             transform: scale(1.05) translateY(-4px);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
                         0 0 100px rgba(0, 0, 0, 0.2);
             animation-play-state: paused;
         }
 
-        .btn-plans:active {
+        .btn-merch:active {
             transform: scale(0.94) translateY(0px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             transition-duration: 0.1s;
         }
 
-        .globe-icon {
-            width: 28px;
-            height: 28px;
-            fill: none;
-            stroke: #ffffff;
-            stroke-width: 2;
+        .merch-icon {
+            width: 32px;
+            height: 32px;
             display: block;
             transition: transform 0.3s ease;
             flex-shrink: 0;
+            border-radius: 50%;
+            background: url('courts.png') no-repeat center center;
+            background-size: contain;
         }
 
-        .btn-plans:hover .globe-icon {
+        .btn-merch:hover .merch-icon {
             transform: scale(1.1) rotate(-5deg);
         }
 
@@ -710,16 +629,9 @@
         .mail-icon {
             width: 18px;
             height: 18px;
+            fill: rgba(255, 255, 255, 0.8);
             transition: fill 0.3s ease, transform 0.3s ease;
             flex-shrink: 0;
-        }
-
-        .night-mode .mail-icon {
-            fill: rgba(200, 210, 255, 0.6);
-        }
-
-        .day-mode .mail-icon {
-            fill: rgba(255, 255, 255, 0.8);
         }
 
         .footer:hover .mail-icon {
@@ -729,18 +641,11 @@
 
         .footer-text {
             font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.7);
             letter-spacing: 0.5px;
             font-weight: 300;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             transition: color 0.3s ease;
-        }
-
-        .night-mode .footer-text {
-            color: rgba(200, 210, 255, 0.5);
-        }
-
-        .day-mode .footer-text {
-            color: rgba(255, 255, 255, 0.7);
         }
 
         .footer:hover .footer-text {
@@ -761,18 +666,9 @@
             justify-content: center;
             align-items: flex-start;
             transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .night-mode #plansPage {
-            background: linear-gradient(135deg, #0a0e1a, #141b2b, #1a2340, #0d1225, #0a0e1a);
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493, #ff69b4, #ffb6c1);
             background-size: 600% 600%;
-            animation: nightGradient 15s ease-in-out infinite;
-        }
-
-        .day-mode #plansPage {
-            background: linear-gradient(135deg, #87CEEB, #4A90D9, #1E5FAF, #87CEEB, #4A90D9);
-            background-size: 600% 600%;
-            animation: dayGradient 12s ease-in-out infinite;
+            animation: pinkGradient 15s ease-in-out infinite;
         }
 
         #plansPage.active {
@@ -809,15 +705,6 @@
             text-align: center;
             margin-bottom: 50px;
             letter-spacing: -1.5px;
-            transition: text-shadow 1.2s ease;
-        }
-
-        .night-mode .plans-title {
-            text-shadow: 0 0 80px rgba(100, 150, 255, 0.15),
-                         0 4px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .day-mode .plans-title {
             text-shadow: 0 0 60px rgba(255, 255, 255, 0.2),
                          0 4px 20px rgba(0, 0, 0, 0.3);
         }
@@ -834,26 +721,12 @@
             padding: 40px 30px 30px;
             text-align: center;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        box-shadow 0.4s ease,
-                        border-color 1.2s ease,
-                        background 1.2s ease;
+                        box-shadow 0.4s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             min-height: 160px;
-        }
-
-        .night-mode .plan-box {
-            background: rgba(10, 10, 20, 0.2);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .day-mode .plan-box {
-            background: rgba(10, 10, 10, 0.15);
+            background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             border: 1px solid rgba(255, 255, 255, 0.15);
@@ -876,14 +749,6 @@
             justify-content: center;
             gap: 10px;
             margin-bottom: 20px;
-            transition: text-shadow 1.2s ease;
-        }
-
-        .night-mode .plan-box h3 {
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-        }
-
-        .day-mode .plan-box h3 {
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
@@ -977,16 +842,6 @@
             width: 100%;
             max-width: 300px;
             will-change: transform;
-        }
-
-        .night-mode .back-btn {
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .day-mode .back-btn {
             color: rgba(255, 255, 255, 0.7);
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
@@ -1014,200 +869,30 @@
             margin-top: 10px;
         }
 
-        /* ─── NIGHT MODE TOGGLE ─── */
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 999;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            backdrop-filter: blur(20px);
-            cursor: none !important;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            will-change: transform;
-        }
-
-        .night-mode .theme-toggle {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .day-mode .theme-toggle {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .theme-toggle svg {
-            width: 24px;
-            height: 24px;
-            transition: fill 0.4s ease, transform 0.4s ease;
-        }
-
-        .night-mode .theme-toggle svg {
-            fill: rgba(200, 210, 255, 0.6);
-        }
-
-        .day-mode .theme-toggle svg {
-            fill: rgba(255, 255, 255, 0.8);
-        }
-
-        .theme-toggle:hover svg {
-            fill: #ffffff;
-            transform: rotate(20deg);
-        }
-
-        /* ─── AUTHORIZE BUTTON ─── */
-        .authorize-btn {
-            position: fixed;
-            top: 20px;
-            right: 76px;
-            z-index: 999;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            backdrop-filter: blur(20px);
-            cursor: none !important;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            will-change: transform;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .authorize-btn:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .authorize-btn svg {
-            width: 24px;
-            height: 24px;
-            fill: rgba(200, 210, 255, 0.6);
-            transition: fill 0.4s ease, transform 0.4s ease;
-        }
-
-        .authorize-btn:hover svg {
-            fill: #ffffff;
-            transform: rotate(20deg);
-        }
-
-        /* ─── AUTHORIZE OVERLAY ─── */
-        #authorizeOverlay {
-            display: none;
+        .plans-clouds {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 200;
-            background: linear-gradient(135deg, #0a0e1a, #141b2b, #1a2340, #0d1225, #0a0e1a);
-            background-size: 600% 600%;
-            animation: nightGradient 15s ease-in-out infinite;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            padding: 40px 20px;
-            overflow-y: auto;
-        }
-
-        #authorizeOverlay.active {
-            display: flex;
-        }
-
-        .authorize-container {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            width: 100%;
-            background: rgba(10, 10, 20, 0.25);
-            backdrop-filter: blur(60px);
-            -webkit-backdrop-filter: blur(60px);
-            border-radius: 48px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.6);
-            text-align: center;
-        }
-
-        .authorize-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
-            text-shadow: 0 0 60px rgba(100, 150, 255, 0.15);
-            letter-spacing: -1px;
-        }
-
-        .authorize-subtitle {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.35);
-            margin-bottom: 30px;
-            letter-spacing: 0.5px;
-        }
-
-        .authorize-iframe-container {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            z-index: 0;
+            pointer-events: none;
             overflow: hidden;
-            margin-bottom: 24px;
-            position: relative;
         }
 
-        .authorize-iframe-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .plans-clouds .cloud {
+            position: absolute;
+            border-radius: 1000px;
+            animation: cloudFloat linear infinite;
+            will-change: transform;
+            background: rgba(255, 255, 255, 0.6) !important;
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.15) !important;
         }
 
-        .authorize-back-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 14px 40px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 60px;
-            cursor: none !important;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            margin: 0 auto;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 300px;
-        }
-
-        .authorize-back-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .authorize-back-btn svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
+        .plans-clouds .cloud::before,
+        .plans-clouds .cloud::after {
+            background: inherit !important;
+            box-shadow: inherit !important;
         }
 
         /* ─── STARS ─── */
@@ -1219,15 +904,7 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            transition: opacity 1.5s ease;
-        }
-
-        .night-mode .stars {
-            opacity: 1;
-        }
-
-        .day-mode .stars {
-            opacity: 0;
+            opacity: 0.3;
         }
 
         .star {
@@ -1249,16 +926,7 @@
             #mainPage {
                 padding: 40px 24px 40px;
                 border-radius: 32px;
-            }
-
-            .night-mode #mainPage {
-                background: rgba(10, 10, 20, 0.2);
-                backdrop-filter: blur(60px);
-                -webkit-backdrop-filter: blur(60px);
-            }
-
-            .day-mode #mainPage {
-                background: rgba(10, 10, 10, 0.12);
+                background: rgba(255, 255, 255, 0.15);
                 backdrop-filter: blur(60px);
                 -webkit-backdrop-filter: blur(60px);
             }
@@ -1267,13 +935,18 @@
                 font-size: 2.4rem;
             }
 
-            .btn-plans, .btn-discord {
+            .btn-merch, .btn-discord {
                 padding: 16px 24px;
                 font-size: 1rem;
                 gap: 10px;
             }
 
-            .globe-icon, .discord-icon {
+            .merch-icon {
+                width: 28px;
+                height: 28px;
+            }
+
+            .discord-icon {
                 width: 22px;
                 height: 22px;
             }
@@ -1330,52 +1003,8 @@
                 gap: 10px;
             }
 
-            .theme-toggle {
-                top: 16px;
-                right: 16px;
-                width: 40px;
-                height: 40px;
-            }
-
-            .theme-toggle svg {
-                width: 20px;
-                height: 20px;
-            }
-
-            .authorize-btn {
-                top: 16px;
-                right: 64px;
-                width: 40px;
-                height: 40px;
-            }
-
-            .authorize-btn svg {
-                width: 20px;
-                height: 20px;
-            }
-
             .custom-cursor {
                 display: none !important;
-            }
-
-            .authorize-title {
-                font-size: 1.8rem;
-            }
-
-            .authorize-container {
-                padding: 30px 20px;
-                border-radius: 32px;
-            }
-
-            .authorize-iframe-container {
-                aspect-ratio: 4/3;
-                border-radius: 16px;
-            }
-
-            .authorize-back-btn {
-                padding: 12px 24px;
-                font-size: 0.85rem;
-                max-width: 100%;
             }
         }
 
@@ -1383,12 +1012,16 @@
             #typewriter {
                 font-size: 1.8rem;
             }
-            .btn-plans, .btn-discord {
+            .btn-merch, .btn-discord {
                 padding: 14px 16px;
                 font-size: 0.85rem;
                 gap: 8px;
             }
-            .globe-icon, .discord-icon {
+            .merch-icon {
+                width: 24px;
+                height: 24px;
+            }
+            .discord-icon {
                 width: 18px;
                 height: 18px;
             }
@@ -1404,10 +1037,6 @@
             .custom-cursor {
                 display: none !important;
             }
-
-            .authorize-title {
-                font-size: 1.5rem;
-            }
         }
 
         /* ─── HIDE CUSTOM CURSOR ON TOUCH DEVICES ─── */
@@ -1419,28 +1048,9 @@
                 cursor: auto !important;
             }
         }
-    
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
-}
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-</style>
+    </style>
 </head>
-<body class="night-mode">
+<body>
 
     <!-- ─── STARS ─── -->
     <div class="stars" id="stars"></div>
@@ -1458,20 +1068,6 @@
     <!-- ─── CUSTOM CURSOR ─── -->
     <div class="custom-cursor" id="customCursor"></div>
 
-    <!-- ─── TOP RIGHT BUTTONS ─── -->
-    <button class="authorize-btn" id="authorizeBtn" onclick="showAuthorize()" aria-label="Authorize with GitHub">
-        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-        </svg>
-    </button>
-
-    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle day/night mode">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
-            <path d="M12 5v2M12 17v2M5 12H3M7 12H5M19 12h2M17 12h2M7.05 7.05L5.64 5.64M18.36 18.36l-1.41-1.41M16.95 7.05l1.41-1.41M5.64 18.36l1.41-1.41"/>
-        </svg>
-    </button>
-
     <!-- ─── MAIN PAGE ─── -->
     <div id="mainPage">
 
@@ -1485,13 +1081,9 @@
         <!-- Buttons Container -->
         <div class="buttons-container">
             <div class="btn-wrapper">
-                <button class="btn-plans magnetic-btn" onclick="showPlans()" id="viewPlansBtn">
-                    <svg class="globe-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="10"/>
-                        <line x1="2" y1="12" x2="22" y2="12"/>
-                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                    </svg>
-                    Browse Plans
+                <button class="btn-merch magnetic-btn" onclick="showPlans()" id="viewPlansBtn">
+                    <span class="merch-icon"></span>
+                    Merchandise
                 </button>
             </div>
 
@@ -1567,34 +1159,6 @@
                     Back to Home
                 </button>
             </div>
-        </div>
-    </div>
-
-    <!-- ─── AUTHORIZE OVERLAY ─── -->
-    <div id="authorizeOverlay">
-        <div class="clouds" style="z-index: 0;">
-            <div class="cloud cloud-1"></div>
-            <div class="cloud cloud-2"></div>
-            <div class="cloud cloud-3"></div>
-            <div class="cloud cloud-4"></div>
-            <div class="cloud cloud-5"></div>
-            <div class="cloud cloud-6"></div>
-        </div>
-
-        <div class="authorize-container">
-            <h1 class="authorize-title">GitHub Authorization</h1>
-            <p class="authorize-subtitle">v86 x86 PC Emulator in your browser</p>
-
-            <div class="authorize-iframe-container">
-                <iframe src="https://copy.sh/v86/" allowfullscreen></iframe>
-            </div>
-
-            <button class="authorize-back-btn" onclick="hideAuthorize()">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                </svg>
-                Back to Home
-            </button>
         </div>
     </div>
 
@@ -1694,111 +1258,7 @@
         }
 
         // ──────────────────────────────────────────────
-        //  4. SHOW/HIDE AUTHORIZE PAGE
-        // ──────────────────────────────────────────────
-        function showAuthorize() {
-            const mainPage = document.getElementById('mainPage');
-            const authorizeOverlay = document.getElementById('authorizeOverlay');
-            
-            playClickSound();
-            
-            mainPage.classList.remove('slide-in');
-            mainPage.classList.add('slide-out');
-            
-            setTimeout(() => {
-                mainPage.classList.add('hidden');
-                mainPage.classList.remove('slide-out');
-                
-                authorizeOverlay.classList.add('active');
-                tg.expand();
-            }, 500);
-        }
-
-        function hideAuthorize() {
-            const mainPage = document.getElementById('mainPage');
-            const authorizeOverlay = document.getElementById('authorizeOverlay');
-            
-            playClickSound();
-            
-            authorizeOverlay.classList.remove('active');
-            
-            setTimeout(() => {
-                authorizeOverlay.style.display = 'none';
-                authorizeOverlay.style.display = 'flex';
-                
-                setTimeout(() => {
-                    authorizeOverlay.style.display = '';
-                }, 50);
-                
-                mainPage.classList.remove('hidden');
-                mainPage.classList.add('slide-in');
-                
-                setTimeout(() => {
-                    mainPage.classList.remove('slide-in');
-                }, 600);
-                
-                tg.expand();
-            }, 400);
-        }
-
-        // ──────────────────────────────────────────────
-        //  5. DAY/NIGHT MODE TOGGLE
-        // ──────────────────────────────────────────────
-        let isNightMode = true;
-
-        function toggleTheme() {
-            isNightMode = !isNightMode;
-            
-            document.body.classList.remove('night-mode', 'day-mode');
-            
-            if (isNightMode) {
-                document.body.classList.add('night-mode');
-            } else {
-                document.body.classList.add('day-mode');
-            }
-            
-            const toggleBtn = document.getElementById('themeToggle');
-            const svg = toggleBtn.querySelector('svg');
-            
-            if (isNightMode) {
-                svg.innerHTML = `
-                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
-                    <path d="M12 5v2M12 17v2M5 12H3M7 12H5M19 12h2M17 12h2M7.05 7.05L5.64 5.64M18.36 18.36l-1.41-1.41M16.95 7.05l1.41-1.41M5.64 18.36l1.41-1.41"/>
-                    <circle cx="12" cy="12" r="3"/>
-                `;
-            } else {
-                svg.innerHTML = `
-                    <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z"/>
-                    <path d="M12 5v2M12 17v2M5 12H3M7 12H5M19 12h2M17 12h2M7.05 7.05L5.64 5.64M18.36 18.36l-1.41-1.41M16.95 7.05l1.41-1.41M5.64 18.36l1.41-1.41"/>
-                `;
-            }
-            
-            playToggleSound();
-        }
-
-        // ──────────────────────────────────────────────
-        //  6. STARS GENERATION
-        // ──────────────────────────────────────────────
-        function generateStars() {
-            const container = document.getElementById('stars');
-            const count = 150;
-            
-            for (let i = 0; i < count; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = (Math.random() * 3 + 1) + 'px';
-                star.style.height = star.style.width;
-                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-                star.style.animationDelay = (Math.random() * 5) + 's';
-                container.appendChild(star);
-            }
-        }
-        generateStars();
-
-        // ──────────────────────────────────────────────
-        //  7. SOUND EFFECTS
+        //  4. SOUND EFFECTS
         // ──────────────────────────────────────────────
         function playClickSound() {
             try {
@@ -1820,28 +1280,29 @@
             } catch (e) {}
         }
 
-        function playToggleSound() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                
-                oscillator.frequency.value = isNightMode ? 600 : 1000;
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
-                
-                oscillator.start(audioCtx.currentTime);
-                oscillator.stop(audioCtx.currentTime + 0.15);
-            } catch (e) {}
+        // ──────────────────────────────────────────────
+        //  5. STARS GENERATION
+        // ──────────────────────────────────────────────
+        function generateStars() {
+            const container = document.getElementById('stars');
+            const count = 150;
+            
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = (Math.random() * 3 + 1) + 'px';
+                star.style.height = star.style.width;
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(star);
+            }
         }
+        generateStars();
 
         // ──────────────────────────────────────────────
-        //  8. CUSTOM CURSOR (IMAGE-BASED)
+        //  6. CUSTOM CURSOR
         // ──────────────────────────────────────────────
         const cursor = document.getElementById('customCursor');
 
@@ -1855,7 +1316,7 @@
             cursor.classList.add('hidden');
         });
 
-        document.querySelectorAll('button, a, .magnetic-btn, .theme-toggle, .back-btn, .authorize-btn, .authorize-back-btn').forEach(el => {
+        document.querySelectorAll('button, a, .magnetic-btn, .back-btn').forEach(el => {
             if (!el) return;
             el.addEventListener('mouseenter', function() {
                 cursor.classList.add('hover');
@@ -1864,9 +1325,7 @@
                 cursor.classList.remove('hover');
             });
             el.addEventListener('mousedown', function() {
-                // Shrink on click
                 cursor.classList.add('click');
-                // Remove click class after animation
                 setTimeout(() => {
                     cursor.classList.remove('click');
                 }, 150);
@@ -1874,7 +1333,7 @@
         });
 
         // ──────────────────────────────────────────────
-        //  9. MAGNETIC BUTTON EFFECT
+        //  7. MAGNETIC BUTTON EFFECT
         // ──────────────────────────────────────────────
         document.querySelectorAll('.magnetic-btn').forEach(btn => {
             btn.addEventListener('mousemove', function(e) {
@@ -1909,7 +1368,7 @@
         });
 
         // ──────────────────────────────────────────────
-        //  10. MOUSE TRACKING
+        //  8. MOUSE TRACKING
         // ──────────────────────────────────────────────
         document.addEventListener('mousemove', function(e) {
             const x = (e.clientX / window.innerWidth - 0.5) * 20;
@@ -1923,7 +1382,7 @@
         });
 
         // ──────────────────────────────────────────────
-        //  11. DEVICE TILT SUPPORT
+        //  9. DEVICE TILT SUPPORT
         // ──────────────────────────────────────────────
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function(e) {
@@ -1939,56 +1398,21 @@
         }
 
         // ──────────────────────────────────────────────
-        //  12. KEYBOARD SHORTCUTS
+        //  10. KEYBOARD SHORTCUTS
         // ──────────────────────────────────────────────
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'n' || e.key === 'N') {
-                toggleTheme();
-            }
             if (e.key === 'Escape') {
                 if (document.getElementById('plansPage').classList.contains('active')) {
                     hidePlans();
-                }
-                if (document.getElementById('authorizeOverlay').classList.contains('active')) {
-                    hideAuthorize();
                 }
             }
         });
 
         console.log('✨ Court\'s Website Loaded!');
-        console.log('🌙 Night mode is default - Click the toggle button or press "N" to switch');
-        console.log('⌨️ Press "ESC" to close Plans or Authorize');
-        console.log('🧲 Buttons have enhanced magnetic hover effect!');
-        console.log('📱 GitHub buttons link to @thycourt on Telegram');
-        console.log('🖱️ Custom cursor: Court\'s PNG image (shrinks on click)');
-        console.log('🔑 Authorize button opens v86 PC emulator!');
+        console.log('🩷 Pink theme with floating clouds');
+        console.log('🖱️ Custom cursor: courts.png');
+        console.log('⌨️ Press "ESC" to close Plans');
     </script>
-
-
-<script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
-    });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
-})();
-</script>
 
 </body>
 </html>
