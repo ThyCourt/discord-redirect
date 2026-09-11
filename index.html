@@ -92,7 +92,7 @@
             aspect-ratio: 3 / 2;
         }
 
-        /* ─── MAIN PAGE (NO BLACK BOX) ─── */
+        /* ─── MAIN PAGE ─── */
         #mainPage {
             position: relative;
             z-index: 2;
@@ -104,8 +104,6 @@
             display: block;
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             background: transparent;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
             border: none;
             box-shadow: none;
         }
@@ -432,53 +430,66 @@
             100% { opacity: 0; transform: scale(0.95) translateY(20px); }
         }
 
-        /* ─── SHARK GIFS (BEHIND PLAN BOXES) ─── */
+        /* ─── TITLE AREA (HOLDS THE GIFS BEHIND THE TITLE) ─── */
+        .plans-title-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 50px;
+            min-height: 200px;
+        }
+
+        /* ─── SHARK GIFS (BEHIND THE TITLE) ─── */
         .shark-gif {
-            position: fixed;
-            z-index: 1;
+            position: absolute;
+            z-index: 0;
             pointer-events: none;
             image-rendering: auto;
             opacity: 0.8;
         }
 
-        /* sharks2.gif — behind the Base Client (right, above) */
+        /* sharks2.gif — right side, behind the title */
         .shark-gif-left {
             width: 420px;
             height: auto;
-            top: 18%;
-            right: 4%;
-            left: auto;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
         }
 
-        /* sharks3.gif — left side, above */
+        /* sharks3.gif — left side, behind the title */
         .shark-gif-right {
             width: 420px;
             height: auto;
-            top: 18%;
-            left: 4%;
-            right: auto;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
         }
 
-        /* ─── PLANS CONTAINER (ABOVE THE GIFS) ─── */
-        .plans-container {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            width: 100%;
-            padding: 40px 30px;
-        }
-
+        /* ─── PLANS TITLE (ABOVE THE GIFS) ─── */
         .plans-title {
+            position: relative;
+            z-index: 1;
             font-size: 3rem;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 50px;
             letter-spacing: -1.5px;
             background: linear-gradient(135deg, #00649b, #0086c9, #00a0e5, #0086c9);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: titleGradient 4s ease-in-out infinite;
+        }
+
+        /* ─── PLANS CONTAINER ─── */
+        .plans-container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            width: 100%;
+            padding: 40px 30px;
         }
 
         .plans-grid {
@@ -696,18 +707,22 @@
                 height: 20px;
             }
 
+            .plans-title-wrapper {
+                min-height: 140px;
+                margin-bottom: 30px;
+            }
+
             .shark-gif-left,
             .shark-gif-right {
-                width: 220px;
-                top: 12%;
+                width: 200px;
             }
 
             .shark-gif-left {
-                right: 2%;
+                right: 0;
             }
 
             .shark-gif-right {
-                left: 2%;
+                left: 0;
             }
 
             .plans-title {
@@ -785,7 +800,7 @@
 
             .shark-gif-left,
             .shark-gif-right {
-                width: 160px;
+                width: 140px;
             }
 
             .plans-title {
@@ -811,26 +826,7 @@
                 cursor: auto !important;
             }
         }
-    
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
-}
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-</style>
+    </style>
 </head>
 <body>
 
@@ -873,12 +869,14 @@
 
     <!-- ─── PLANS PAGE ─── -->
     <div id="plansPage">
-        <!-- ─── SHARK GIFS (BEHIND THE BOXES) ─── -->
-        <img src="sharks3.gif" class="shark-gif shark-gif-right" alt="Shark 3" />
-        <img src="sharks2.gif" class="shark-gif shark-gif-left" alt="Shark 2" />
-
         <div class="plans-container">
-            <h1 class="plans-title">Subscriptions</h1>
+
+            <!-- ─── TITLE AREA WITH GIFS BEHIND ─── -->
+            <div class="plans-title-wrapper">
+                <img src="sharks3.gif" class="shark-gif shark-gif-right" alt="Shark 3" />
+                <img src="sharks2.gif" class="shark-gif shark-gif-left" alt="Shark 2" />
+                <h1 class="plans-title">Subscriptions</h1>
+            </div>
 
             <div class="plans-grid">
                 <!-- ─── COURT'S BASE MONTHLY SUBSCRIPTION ─── -->
@@ -1132,37 +1130,11 @@
         });
 
         console.log('✨ Court\'s Website Loaded!');
-        console.log('🖤 Black theme with Sharks blue accents');
+        console.log('🦈 Shark GIFs now playing behind the Subscriptions title');
         console.log('🖱️ Custom cursor: courts.png');
         console.log('🎲 Easter eggs active: 10% Gamble, 5% Servers unavailable');
         console.log('⌨️ Press "ESC" to close Subscriptions');
     </script>
-
-
-<script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
-    });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
-})();
-</script>
 
 </body>
 </html>
