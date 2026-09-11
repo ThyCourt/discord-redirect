@@ -62,7 +62,7 @@
             background: #0a0a0a;
         }
 
-        /* ─── AMBIENT GLOW ORBS ─── */
+        /* ─── SAN JOSE SHARKS THEME ─── */
         body::before {
             content: '';
             position: fixed;
@@ -71,16 +71,31 @@
             width: 200%;
             height: 200%;
             z-index: 0;
-            background: radial-gradient(ellipse at 30% 50%, rgba(255, 105, 180, 0.08) 0%, transparent 60%),
-                        radial-gradient(ellipse at 70% 80%, rgba(255, 20, 147, 0.05) 0%, transparent 50%);
+            background: radial-gradient(ellipse at 30% 50%, rgba(0, 110, 170, 0.12) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 80%, rgba(0, 70, 120, 0.08) 0%, transparent 50%);
             animation: ambientDrift 25s ease-in-out infinite alternate;
-            opacity: 0.6;
+            opacity: 0.8;
         }
 
         @keyframes ambientDrift {
             0% { transform: translate(0%, 0%) rotate(0deg) scale(1); }
             50% { transform: translate(3%, 2%) rotate(2deg) scale(1.05); }
             100% { transform: translate(-2%, 4%) rotate(-2deg) scale(0.95); }
+        }
+
+        /* ─── FLAG (TOP LEFT, GRID-ALIGNED) ─── */
+        .flag {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 140px;
+            height: auto;
+            z-index: 1000;
+            pointer-events: none;
+            background: url('flag.png') no-repeat center center;
+            background-size: contain;
+            image-rendering: auto;
         }
 
         /* ─── MAIN PAGE ─── */
@@ -139,7 +154,7 @@
             letter-spacing: -1.5px;
             line-height: 1.1;
             position: relative;
-            background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493, #ff69b4);
+            background: linear-gradient(135deg, #00649b, #0086c9, #00a0e5, #0086c9);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -158,8 +173,8 @@
             height: 0.8em;
             margin-left: 6px;
             border-radius: 2px;
-            background: linear-gradient(180deg, #ff69b4, #ff1493);
-            box-shadow: 0 0 30px rgba(255, 105, 180, 0.2);
+            background: linear-gradient(180deg, #0086c9, #00649b);
+            box-shadow: 0 0 30px rgba(0, 134, 201, 0.3);
             animation: blink 0.8s step-end infinite;
             -webkit-text-fill-color: initial;
         }
@@ -213,12 +228,12 @@
         }
 
         .magnetic-btn:hover::after {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 134, 201, 0.08);
             filter: blur(30px);
             transform: scale(1.1);
         }
 
-        /* ─── MERCHANDISE BUTTON ─── */
+        /* ─── PRODUCTS BUTTON ─── */
         .btn-merch {
             position: relative;
             display: inline-flex;
@@ -229,7 +244,7 @@
             font-size: 1rem;
             font-weight: 600;
             color: #ffffff;
-            background: linear-gradient(135deg, #2b2b2b, #1a1a1a, #0d0d0d, #2b2b2b);
+            background: linear-gradient(135deg, #00649b, #0086c9, #00a0e5, #0086c9);
             background-size: 300% 300%;
             border: none;
             border-radius: 60px;
@@ -237,7 +252,7 @@
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
                         background-position 8s ease-in-out;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 8px 30px rgba(0, 100, 155, 0.4);
             letter-spacing: 0.5px;
             overflow: hidden;
             animation: merchGradient 8s ease-in-out infinite;
@@ -257,7 +272,7 @@
             position: absolute;
             inset: -3px;
             border-radius: 63px;
-            background: linear-gradient(135deg, rgba(43, 43, 43, 0.5), rgba(13, 13, 13, 0.5));
+            background: linear-gradient(135deg, rgba(0, 100, 155, 0.5), rgba(0, 160, 229, 0.5));
             filter: blur(20px);
             opacity: 0;
             transition: all 0.6s ease;
@@ -286,14 +301,14 @@
 
         .btn-merch:hover {
             transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5),
-                        0 0 80px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 50px rgba(0, 100, 155, 0.5),
+                        0 0 80px rgba(0, 134, 201, 0.2);
             animation-play-state: paused;
         }
 
         .btn-merch:active {
             transform: scale(0.94) translateY(0px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 100, 155, 0.3);
             transition-duration: 0.1s;
         }
 
@@ -304,7 +319,7 @@
             transition: transform 0.3s ease;
             flex-shrink: 0;
             border-radius: 50%;
-            background: url('courts3.png') no-repeat center center;
+            background: url('sharks.png') no-repeat center center;
             background-size: contain;
             image-rendering: auto;
         }
@@ -449,7 +464,7 @@
             text-align: center;
             margin-bottom: 50px;
             letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ff1493, #ff69b4);
+            background: linear-gradient(135deg, #00649b, #0086c9, #00a0e5, #0086c9);
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -505,7 +520,7 @@
             display: block;
             flex-shrink: 0;
             border-radius: 50%;
-            background: url('courts2.png') no-repeat center center;
+            background: url('sharks.png') no-repeat center center;
             background-size: contain;
             image-rendering: auto;
         }
@@ -514,7 +529,7 @@
             width: 100%;
             padding: 14px 24px;
             font-size: 0.95rem;
-            background: linear-gradient(135deg, #2b2b2b, #1a1a1a, #0d0d0d, #2b2b2b);
+            background: linear-gradient(135deg, #00649b, #0086c9, #00a0e5, #0086c9);
             background-size: 300% 300%;
             animation: githubGradient 8s ease-in-out infinite;
             border: none;
@@ -523,7 +538,7 @@
             font-weight: 600;
             cursor: none !important;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 100, 155, 0.3);
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -548,7 +563,7 @@
             position: absolute;
             inset: -3px;
             border-radius: 63px;
-            background: linear-gradient(135deg, rgba(43, 43, 43, 0.5), rgba(13, 13, 13, 0.5));
+            background: linear-gradient(135deg, rgba(0, 100, 155, 0.5), rgba(0, 160, 229, 0.5));
             filter: blur(15px);
             opacity: 0;
             transition: all 0.6s ease;
@@ -562,7 +577,7 @@
 
         .plan-box .btn-github:hover {
             transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 15px 40px rgba(0, 100, 155, 0.4);
         }
 
         .plan-box .btn-github:active {
@@ -629,6 +644,10 @@
 
         /* ─── RESPONSIVE ─── */
         @media (max-width: 480px) {
+            .flag {
+                width: 100px;
+            }
+
             #mainPage {
                 padding: 40px 20px 30px;
                 border-radius: 32px;
@@ -708,6 +727,10 @@
         }
 
         @media (max-width: 380px) {
+            .flag {
+                width: 80px;
+            }
+
             #typewriter {
                 font-size: 1.8rem;
             }
@@ -749,28 +772,12 @@
                 cursor: auto !important;
             }
         }
-    
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
-}
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
-</style>
+    </style>
 </head>
 <body>
+
+    <!-- ─── FLAG (TOP LEFT) ─── -->
+    <div class="flag"></div>
 
     <!-- ─── CUSTOM CURSOR ─── -->
     <div class="custom-cursor" id="customCursor"></div>
@@ -790,7 +797,7 @@
             <div class="btn-wrapper">
                 <button class="btn-merch magnetic-btn" onclick="showPlans()" id="viewPlansBtn">
                     <span class="merch-icon"></span>
-                    Merchandise
+                    Products
                 </button>
             </div>
 
@@ -809,20 +816,11 @@
     <!-- ─── PLANS PAGE ─── -->
     <div id="plansPage">
         <div class="plans-container">
-            <h1 class="plans-title">Merchandise</h1>
+            <h1 class="plans-title">Products</h1>
 
             <div class="plans-grid">
                 <div class="plan-box">
-                    <h3><span class="plan-icon"></span> Snicker Doodle's</h3>
-                    <a href="https://t.me/thycourt" target="_blank" class="btn-github magnetic-btn">
-                        <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                        </svg>
-                        $0.99
-                    </a>
-                </div>
-                <div class="plan-box">
-                    <h3><span class="plan-icon"></span> Court's</h3>
+                    <h3><span class="plan-icon"></span> Court's Base (1 month)</h3>
                     <a href="https://t.me/thycourt" target="_blank" class="btn-github magnetic-btn">
                         <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
@@ -1015,7 +1013,7 @@
                 `;
                 this.style.boxShadow = `
                     0 20px 60px rgba(0,0,0,0.3),
-                    0 0 80px rgba(255,255,255,0.05)
+                    0 0 80px rgba(0,134,201,0.08)
                 `;
                 this.style.transition = 'transform 0.08s ease-out, box-shadow 0.3s ease';
             });
@@ -1038,37 +1036,11 @@
             }
         });
 
-        console.log('✨ Court\'s Website Loaded!');
-        console.log('🖤 Black theme with pink accents');
+        console.log('🦈 San Jose Sharks Website Loaded!');
+        console.log('🖤 Black theme with Sharks blue accents');
         console.log('🖱️ Custom cursor: courts.png');
-        console.log('⌨️ Press "ESC" to close Merch');
+        console.log('⌨️ Press "ESC" to close Products');
     </script>
-
-
-<script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
-    });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
-})();
-</script>
 
 </body>
 </html>
