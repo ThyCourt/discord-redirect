@@ -1,1184 +1,871 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Court's</title>
-    
-    <!-- Telegram Web App SDK -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
-    <style>
-        /* ─── CUSTOM CURSOR ─── */
-        * {
-            cursor: none !important;
-        }
-
-        .custom-cursor {
-            position: fixed;
-            pointer-events: none;
-            z-index: 99999;
-            width: 36px;
-            height: 36px;
-            transform: translate(-50%, -50%);
-            transition: width 0.12s ease, height 0.12s ease, opacity 0.3s ease;
-            will-change: transform, left, top;
-            background: url('courts.png') no-repeat center center;
-            background-size: contain;
-            image-rendering: auto;
-        }
-
-        .custom-cursor.click {
-            width: 24px !important;
-            height: 24px !important;
-        }
-
-        .custom-cursor.hover {
-            width: 44px;
-            height: 44px;
-            opacity: 0.9;
-        }
-
-        .custom-cursor.hidden {
-            opacity: 0;
-        }
-
-        /* ─── RESET ─── */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: hidden;
-            position: relative;
-            background: #0a0a0a;
-        }
-
-        /* ─── INTERACTIVE GRADIENT BACKGROUND ─── */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            z-index: 0;
-            background: radial-gradient(ellipse at var(--mouse-x, 30%) var(--mouse-y, 50%), rgba(0, 110, 170, 0.18) 0%, transparent 60%),
-                        radial-gradient(ellipse at calc(100% - var(--mouse-x, 30%)) calc(100% - var(--mouse-y, 50%)), rgba(0, 70, 120, 0.12) 0%, transparent 50%);
-            transition: background 0.3s ease-out;
-            pointer-events: none;
-        }
-
-        /* ─── FLAG (TOP LEFT) ─── */
-        .flag {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 140px;
-            height: auto;
-            z-index: 1000;
-            pointer-events: none;
-            background: url('flag.png') no-repeat left center;
-            background-size: contain;
-            image-rendering: auto;
-            aspect-ratio: 3 / 2;
-        }
-
-        /* ─── MAIN PAGE ─── */
-        #mainPage {
-            position: relative;
-            z-index: 2;
-            border-radius: 48px;
-            padding: 60px 40px 40px;
-            max-width: 480px;
-            width: 100%;
-            text-align: center;
-            display: block;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            background: transparent;
-            border: none;
-            box-shadow: none;
-        }
-
-        #mainPage.hidden {
-            display: none;
-        }
-
-        #mainPage.slide-out {
-            animation: mainSlideOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        #mainPage.slide-in {
-            animation: mainSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes mainSlideOut {
-            0% { opacity: 1; transform: scale(1) translateY(0); }
-            100% { opacity: 0; transform: scale(0.95) translateY(-20px); }
-        }
-
-        @keyframes mainSlideIn {
-            0% { opacity: 0; transform: scale(0.95) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        /* ─── TYPEWRITER TITLE ─── */
-        .title-wrapper {
-            min-height: 80px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        #typewriter {
-            font-size: 3rem;
-            font-weight: 700;
-            letter-spacing: -1.5px;
-            line-height: 1.1;
-            position: relative;
-            background: linear-gradient(135deg, #00649b, #0086c9, #00a0e5, #0086c9);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: titleGradient 4s ease-in-out infinite;
-        }
-
-        @keyframes titleGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        #typewriter .cursor {
-            display: inline-block;
-            width: 4px;
-            height: 0.8em;
-            margin-left: 6px;
-            border-radius: 2px;
-            background: linear-gradient(180deg, #0086c9, #00649b);
-            box-shadow: 0 0 30px rgba(0, 134, 201, 0.3);
-            animation: blink 0.8s step-end infinite;
-            -webkit-text-fill-color: initial;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* ─── BUTTON WRAPPER ─── */
-        .btn-wrapper {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .btn-wrapper:last-of-type {
-            margin-bottom: 0;
-        }
-
-        /* ─── BUTTONS CONTAINER ─── */
-        .buttons-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        /* ─── MAGNETIC BUTTON EFFECT ─── */
-        .magnetic-btn {
-            transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        box-shadow 0.3s ease,
-                        background 0.3s ease;
-            will-change: transform;
-            position: relative;
-            z-index: 1;
-        }
-
-        .magnetic-btn::after {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            border-radius: 68px;
-            background: rgba(255, 255, 255, 0);
-            filter: blur(20px);
-            transition: all 0.4s ease;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        .magnetic-btn:hover::after {
-            background: rgba(0, 134, 201, 0.08);
-            filter: blur(30px);
-            transform: scale(1.1);
-        }
-
-        /* ─── SHARED BUTTON BASE ─── */
-        .btn-merch,
-        .btn-discord {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            height: 68px;
-            padding: 0 28px;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #ffffff;
-            border: none;
-            border-radius: 60px;
-            cursor: none !important;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-            overflow: hidden;
-            width: 240px;
-            max-width: 100%;
-            will-change: transform;
-        }
-
-        /* ─── SUBSCRIPTIONS BUTTON ─── */
-        .btn-merch {
-            background: linear-gradient(135deg, #00649b, #0086c9, #00a0e5, #0086c9);
-            background-size: 300% 300%;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        background-position 8s ease-in-out;
-            box-shadow: 0 8px 30px rgba(0, 100, 155, 0.4);
-            animation: merchGradient 8s ease-in-out infinite;
-        }
-
-        @keyframes merchGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .btn-merch::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 63px;
-            background: linear-gradient(135deg, rgba(0, 100, 155, 0.5), rgba(0, 160, 229, 0.5));
-            filter: blur(20px);
-            opacity: 0;
-            transition: all 0.6s ease;
-            z-index: -1;
-        }
-
-        .btn-merch:hover::before {
-            opacity: 1;
-            filter: blur(25px);
-            animation: pulseGlow 1.5s ease-in-out infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); opacity: 0.6; }
-            50% { transform: scale(1.1); opacity: 1; }
-        }
-
-        .btn-merch::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 60px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 50%, rgba(255, 255, 255, 0.03));
-            pointer-events: none;
-        }
-
-        .btn-merch:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 20px 50px rgba(0, 100, 155, 0.5),
-                        0 0 80px rgba(0, 134, 201, 0.2);
-            animation-play-state: paused;
-        }
-
-        .btn-merch:active {
-            transform: scale(0.94) translateY(0px);
-            box-shadow: 0 4px 20px rgba(0, 100, 155, 0.3);
-            transition-duration: 0.1s;
-        }
-
-        .merch-icon {
-            width: 44px;
-            height: 44px;
-            display: block;
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-            border-radius: 50%;
-            background: url('sharks.png') no-repeat center center;
-            background-size: contain;
-            image-rendering: auto;
-        }
-
-        .btn-merch:hover .merch-icon {
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        /* ─── DISCORD BUTTON ─── */
-        .btn-discord {
-            background: linear-gradient(135deg, #5865F2, #4752C4, #3B45A5, #5865F2);
-            background-size: 300% 300%;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        background-position 8s ease-in-out;
-            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.4);
-            animation: discordGradient 8s ease-in-out infinite;
-        }
-
-        @keyframes discordGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .btn-discord::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 63px;
-            background: linear-gradient(135deg, rgba(88, 101, 242, 0.5), rgba(59, 69, 165, 0.5));
-            filter: blur(20px);
-            opacity: 0;
-            transition: all 0.6s ease;
-            z-index: -1;
-        }
-
-        .btn-discord:hover::before {
-            opacity: 1;
-            filter: blur(25px);
-            animation: pulseGlow 1.5s ease-in-out infinite;
-        }
-
-        .btn-discord::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 60px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 50%, rgba(255, 255, 255, 0.05));
-            pointer-events: none;
-        }
-
-        .btn-discord:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 20px 50px rgba(88, 101, 242, 0.5),
-                        0 0 80px rgba(88, 101, 242, 0.2);
-            animation-play-state: paused;
-        }
-
-        .btn-discord:active {
-            transform: scale(0.94) translateY(0px);
-            box-shadow: 0 4px 20px rgba(88, 101, 242, 0.2);
-            transition-duration: 0.1s;
-        }
-
-        .discord-icon {
-            width: 24px;
-            height: 24px;
-            fill: #ffffff;
-            display: block;
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .btn-discord:hover .discord-icon {
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        /* ─── PLANS PAGE ─── */
-        #plansPage {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 100;
-            overflow-y: auto;
-            padding: 40px 20px;
-            justify-content: center;
-            align-items: flex-start;
-            background: #0a0a0a;
-        }
-
-        #plansPage.active {
-            display: flex;
-            animation: pageSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        #plansPage.exit {
-            animation: pageSlideOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes pageSlideIn {
-            0% { opacity: 0; transform: scale(0.95) translateY(20px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        @keyframes pageSlideOut {
-            0% { opacity: 1; transform: scale(1) translateY(0); }
-            100% { opacity: 0; transform: scale(0.95) translateY(20px); }
-        }
-
-        /* ─── TITLE AREA (HOLDS THE GIFS BEHIND THE TITLE) ─── */
-        .plans-title-wrapper {
-            position: relative;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 50px;
-            min-height: 200px;
-        }
-
-        /* ─── SHARK GIFS (BEHIND THE TITLE) ─── */
-        .shark-gif {
-            position: absolute;
-            z-index: 0;
-            pointer-events: none;
-            image-rendering: auto;
-            opacity: 0.8;
-        }
-
-        /* sharks2.gif — right side, behind the title */
-        .shark-gif-left {
-            width: 420px;
-            height: auto;
-            top: 50%;
-            right: 5%;
-            transform: translateY(-50%);
-        }
-
-        /* sharks3.gif — left side, behind the title */
-        .shark-gif-right {
-            width: 420px;
-            height: auto;
-            top: 50%;
-            left: 5%;
-            transform: translateY(-50%);
-        }
-
-        /* ─── PLANS TITLE (ABOVE THE GIFS) ─── */
-        .plans-title {
-            position: relative;
-            z-index: 1;
-            font-size: 3rem;
-            font-weight: 700;
-            text-align: center;
-            letter-spacing: -1.5px;
-            background: linear-gradient(135deg, #00649b, #0086c9, #00a0e5, #0086c9);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: titleGradient 4s ease-in-out infinite;
-        }
-
-        /* ─── PLANS CONTAINER ─── */
-        .plans-container {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            width: 100%;
-            padding: 40px 30px;
-        }
-
-        .plans-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-bottom: 30px;
-        }
-
-        .plan-box {
-            border-radius: 32px;
-            padding: 40px 30px 30px;
-            text-align: center;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-                        box-shadow 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 160px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.3),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            position: relative;
-            z-index: 2;
-        }
-
-        .plan-box:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.4);
-        }
-
-        .plan-box h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #ffffff;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .plan-icon {
-            width: 48px;
-            height: 48px;
-            display: block;
-            flex-shrink: 0;
-            border-radius: 50%;
-            background: url('sharks.png') no-repeat center center;
-            background-size: contain;
-            image-rendering: auto;
-        }
-
-        /* ─── PLAN BUTTON (Purchase / Download) ─── */
-        .plan-box .btn-github {
-            width: 100%;
-            padding: 14px 24px;
-            font-size: 0.95rem;
-            background: linear-gradient(135deg, #00649b, #0086c9, #00a0e5, #0086c9);
-            background-size: 300% 300%;
-            animation: githubGradient 8s ease-in-out infinite;
-            border: none;
-            border-radius: 60px;
-            color: #ffffff;
-            font-weight: 600;
-            cursor: none !important;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 30px rgba(0, 100, 155, 0.3);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            margin-top: auto;
-            flex-shrink: 0;
-            font-family: 'Inter', sans-serif;
-            will-change: transform;
-        }
-
-        @keyframes githubGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .plan-box .btn-github::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 63px;
-            background: linear-gradient(135deg, rgba(0, 100, 155, 0.5), rgba(0, 160, 229, 0.5));
-            filter: blur(15px);
-            opacity: 0;
-            transition: all 0.6s ease;
-            z-index: -1;
-        }
-
-        .plan-box .btn-github:hover::before {
-            opacity: 1;
-            filter: blur(20px);
-        }
-
-        .plan-box .btn-github:hover {
-            transform: scale(1.05) translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 100, 155, 0.4);
-        }
-
-        .plan-box .btn-github:active {
-            transform: scale(0.94);
-        }
-
-        .plan-box .btn-github .github-icon {
-            width: 20px;
-            height: 20px;
-            fill: #ffffff;
-        }
-
-        .plan-box .btn-github .strikethrough {
-            text-decoration: line-through;
-            text-decoration-color: #ff4444;
-            text-decoration-thickness: 2px;
-            margin-right: 4px;
-            opacity: 0.7;
-        }
-
-        /* ─── BACK BUTTON ─── */
-        .back-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 32px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            border-radius: 60px;
-            cursor: none !important;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            margin: 0 auto;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 300px;
-            will-change: transform;
-            color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .back-btn svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-        }
-
-        .back-row {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 480px) {
-            .flag {
-                width: 90px;
-                top: 12px;
-                left: 12px;
-            }
-
-            #mainPage {
-                padding: 40px 20px 30px;
-                border-radius: 32px;
-            }
-
-            #typewriter {
-                font-size: 2.2rem;
-            }
-
-            .title-wrapper {
-                min-height: 60px;
-                margin-bottom: 20px;
-            }
-
-            .btn-merch,
-            .btn-discord {
-                height: 60px;
-                padding: 0 20px;
-                font-size: 0.9rem;
-                gap: 8px;
-                width: 200px;
-            }
-
-            .merch-icon {
-                width: 36px;
-                height: 36px;
-            }
-
-            .discord-icon {
-                width: 20px;
-                height: 20px;
-            }
-
-            .plans-title-wrapper {
-                min-height: 140px;
-                margin-bottom: 30px;
-            }
-
-            .shark-gif-left,
-            .shark-gif-right {
-                width: 200px;
-            }
-
-            .shark-gif-left {
-                right: 0;
-            }
-
-            .shark-gif-right {
-                left: 0;
-            }
-
-            .plans-title {
-                font-size: 2rem;
-            }
-
-            .plans-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .plan-box {
-                padding: 30px 20px 20px;
-                min-height: 130px;
-            }
-
-            .plan-box h3 {
-                font-size: 1.1rem;
-                min-height: 40px;
-                margin-bottom: 15px;
-            }
-
-            .plan-icon {
-                width: 40px;
-                height: 40px;
-            }
-
-            .plans-container {
-                padding: 20px 15px;
-            }
-
-            .back-btn {
-                padding: 10px 24px;
-                font-size: 0.85rem;
-                max-width: 100%;
-            }
-
-            .back-row {
-                gap: 10px;
-            }
-
-            .custom-cursor {
-                display: none !important;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .flag {
-                width: 70px;
-                top: 10px;
-                left: 10px;
-            }
-
-            #typewriter {
-                font-size: 1.8rem;
-            }
-
-            .btn-merch,
-            .btn-discord {
-                height: 54px;
-                padding: 0 16px;
-                font-size: 0.8rem;
-                gap: 6px;
-                width: 180px;
-            }
-
-            .merch-icon {
-                width: 32px;
-                height: 32px;
-            }
-
-            .discord-icon {
-                width: 18px;
-                height: 18px;
-            }
-
-            .shark-gif-left,
-            .shark-gif-right {
-                width: 140px;
-            }
-
-            .plans-title {
-                font-size: 1.6rem;
-            }
-
-            .plan-icon {
-                width: 36px;
-                height: 36px;
-            }
-
-            .custom-cursor {
-                display: none !important;
-            }
-        }
-
-        /* ─── HIDE CUSTOM CURSOR ON TOUCH DEVICES ─── */
-        @media (hover: none) and (pointer: coarse) {
-            .custom-cursor {
-                display: none !important;
-            }
-            * {
-                cursor: auto !important;
-            }
-        }
-    
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cleetus</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;cursor:none !important;}
+
+body{
+    font-family:'Tahoma','Segoe UI',sans-serif;
+    min-height:100vh;
+    display:flex;justify-content:center;align-items:center;
+    padding:20px;overflow:hidden;position:relative;
+    background:#0a1220;
 }
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
+
+/* ─── LAYERED DEEP BACKGROUND ─── */
+body::before{
+    content:'';position:fixed;inset:-20%;z-index:0;
+    background:
+        radial-gradient(circle at var(--mouse-x,30%) var(--mouse-y,50%),rgba(0,140,255,0.35) 0%,transparent 40%),
+        radial-gradient(circle at calc(100% - var(--mouse-x,30%)) calc(100% - var(--mouse-y,50%)),rgba(80,200,255,0.25) 0%,transparent 45%),
+        radial-gradient(circle at 50% 50%,rgba(10,30,80,0.9) 0%,#050812 80%);
+    animation:bgBreath 10s ease-in-out infinite alternate;
+    transition:background 0.4s ease-out;
+    pointer-events:none;
 }
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
+
+@keyframes bgBreath{
+    0%{transform:scale(1);}
+    100%{transform:scale(1.06);}
+}
+
+/* ─── MOVING AURORA STRIPES ─── */
+body::after{
+    content:'';position:fixed;inset:0;z-index:0;
+    background:
+        linear-gradient(115deg,
+            transparent 20%,
+            rgba(0,140,255,0.06) 35%,
+            rgba(120,220,255,0.12) 45%,
+            rgba(0,140,255,0.06) 55%,
+            transparent 70%);
+    background-size:300% 300%;
+    animation:auroraSweep 12s linear infinite;
+    pointer-events:none;
+    mix-blend-mode:screen;
+}
+
+@keyframes auroraSweep{
+    0%{background-position:0% 0%;}
+    100%{background-position:200% 100%;}
+}
+
+/* ─── CURSOR ─── */
+.custom-cursor{
+    position:fixed;pointer-events:none;z-index:99999;
+    width:32px;height:32px;transform:translate(-50%,-50%);
+    transition:width .15s ease,height .15s ease,opacity .3s ease,filter .3s ease;
+    will-change:transform,left,top;
+    background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='b' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%23FFFFFF'/><stop offset='100%' stop-color='%23E0E0E0'/></linearGradient></defs><path d='M4 2 L4 24 L10 18 L14 28 L18 26 L14 16 L22 16 Z' fill='url(%23b)' stroke='%23000' stroke-width='1.2' stroke-linejoin='round'/></svg>") no-repeat center center;
+    background-size:contain;
+}
+
+.custom-cursor.click{width:22px !important;height:22px !important;}
+.custom-cursor.hover{
+    width:42px;height:42px;opacity:1;
+    filter:drop-shadow(0 0 14px rgba(120,200,255,1)) drop-shadow(0 0 30px rgba(80,180,255,0.6));
+}
+.custom-cursor.hidden{opacity:0;}
+
+/* ─── FLAG ─── */
+.flag{
+    position:fixed;top:20px;left:20px;width:140px;height:auto;
+    z-index:1000;pointer-events:none;
+    background:url('flag.png') no-repeat left center;
+    background-size:contain;aspect-ratio:3/2;
+    animation:flagWave 4s ease-in-out infinite alternate;
+    filter:drop-shadow(0 4px 12px rgba(0,0,0,0.6));
+}
+
+@keyframes flagWave{
+    0%{transform:rotate(-1deg) translateY(0);}
+    100%{transform:rotate(1deg) translateY(-4px);}
+}
+
+/* ─── MAIN WINDOW ─── */
+#mainPage{
+    position:relative;z-index:2;border-radius:10px;
+    padding:0;max-width:480px;width:100%;text-align:center;
+    background:#ECE9D8;
+    border:3px solid #0054E3;
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.6),
+        0 0 80px rgba(0,140,255,0.5),
+        0 0 140px rgba(0,140,255,0.25),
+        inset 0 0 0 1px rgba(255,255,255,0.5);
+    overflow:hidden;
+    animation:windowGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes windowGlow{
+    0%{
+        box-shadow:
+            0 20px 60px rgba(0,0,0,0.6),
+            0 0 60px rgba(0,140,255,0.4),
+            0 0 100px rgba(0,140,255,0.2),
+            inset 0 0 0 1px rgba(255,255,255,0.5);
+    }
+    100%{
+        box-shadow:
+            0 25px 70px rgba(0,0,0,0.7),
+            0 0 120px rgba(0,140,255,0.7),
+            0 0 200px rgba(0,140,255,0.4),
+            inset 0 0 0 1px rgba(255,255,255,0.5);
     }
 }
 
+/* ─── TITLE BAR ─── */
+.window-titlebar{
+    display:flex;align-items:center;justify-content:flex-end;
+    height:30px;padding:0 4px;
+    background:linear-gradient(180deg,#0058EE 0%,#3593FF 8%,#288EFF 40%,#0054E3 88%,#0046CA 100%);
+    border-bottom:1px solid #003BB3;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(0,0,0,.15);
+    position:relative;user-select:none;
+}
+
+.window-titlebar::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(255,255,255,.35) 0%,rgba(255,255,255,0) 50%);
+    pointer-events:none;
+}
+
+.window-controls{
+    display:flex;align-items:center;gap:3px;
+    position:relative;z-index:1;
+}
+
+.window-btn{
+    width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:3px;
+    border:1px solid rgba(255,255,255,.75);
+    background:linear-gradient(180deg,#4A9BFF 0%,#1470D9 50%,#0C5BBE 100%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 1px 3px rgba(0,0,0,.35);
+    color:#FFF;
+    font-family:'Tahoma',sans-serif;font-size:11px;font-weight:700;
+    line-height:1;padding:0 0 2px 0;
+    text-shadow:0 1px 1px rgba(0,0,0,.5);
+    position:relative;overflow:hidden;
+    transition:all .25s cubic-bezier(.34,1.56,.64,1);
+    pointer-events:auto !important;
+    z-index:10;
+}
+
+.window-btn::after{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.7),transparent 70%);
+    opacity:0;transition:opacity .3s ease;
+}
+
+.window-btn:hover{
+    background:linear-gradient(180deg,#7CC0FF 0%,#2988F0 50%,#1668CC 100%);
+    border-color:#FFF;
+    transform:scale(1.2) translateY(-1px);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 4px 14px rgba(0,140,255,.9);
+}
+
+.window-btn:hover::after{opacity:1;}
+
+.window-btn:active{
+    background:linear-gradient(180deg,#0C5BBE 0%,#1470D9 50%,#4A9BFF 100%);
+    transform:scale(.9);
+}
+
+.window-btn.close{
+    background:linear-gradient(180deg,#FF6B5A 0%,#E8361E 50%,#C72C17 100%);
+    border-color:#FFB5AA;
+}
+.window-btn.close:hover{
+    background:linear-gradient(180deg,#FF9A8A 0%,#F5482F 50%,#D4361E 100%);
+    border-color:#FFF;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 4px 16px rgba(255,60,30,.9);
+}
+
+.main-content{padding:45px 40px 40px;}
+#mainPage.hidden{display:none;}
+#mainPage.slide-out{animation:mainSlideOut .5s cubic-bezier(.4,0,.2,1) forwards;}
+#mainPage.slide-in{animation:mainSlideIn .7s cubic-bezier(.34,1.56,.64,1) forwards;}
+
+@keyframes mainSlideOut{
+    0%{opacity:1;transform:scale(1) translateY(0);}
+    100%{opacity:0;transform:scale(.92) translateY(-30px);}
+}
+@keyframes mainSlideIn{
+    0%{opacity:0;transform:scale(.92) translateY(30px);}
+    100%{opacity:1;transform:scale(1) translateY(0);}
+}
+
+/* ─── TYPEWRITER ─── */
+.title-wrapper{
+    min-height:80px;display:flex;justify-content:center;align-items:center;
+    margin-bottom:30px;position:relative;
+}
+
+#typewriter{
+    font-size:2.5rem;font-weight:700;letter-spacing:-.5px;line-height:1.1;
+    background:linear-gradient(180deg,#0A246A,#0088FF,#0A246A);
+    background-size:100% 200%;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    font-family:'Tahoma',sans-serif;
+    animation:titleGradientShift 4s ease-in-out infinite;
+    filter:drop-shadow(0 0 12px rgba(0,140,255,.6));
+}
+
+@keyframes titleGradientShift{
+    0%,100%{background-position:0% 0%;}
+    50%{background-position:0% 100%;}
+}
+
+#typewriter .cursor{
+    display:inline-block;width:3px;height:.8em;margin-left:4px;
+    background:#0088FF;
+    box-shadow:0 0 14px rgba(0,140,255,1);
+    animation:blink .8s step-end infinite;
+    -webkit-text-fill-color:initial;
+}
+
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* ─── BUTTONS ─── */
+.btn-wrapper{
+    position:relative;display:flex;justify-content:center;
+    width:100%;margin-bottom:12px;
+}
+
+.buttons-container{
+    display:flex;flex-direction:column;align-items:center;
+    gap:12px;width:100%;
+}
+
+.btn-merch,.btn-discord{
+    position:relative;
+    display:inline-flex;align-items:center;justify-content:center;
+    gap:10px;height:54px;padding:0 26px;
+    font-size:.92rem;font-weight:700;color:#000;
+    border:2px outset #ECE9D8;border-radius:6px;
+    text-decoration:none;letter-spacing:.6px;
+    overflow:hidden;width:260px;max-width:100%;
+    font-family:'Tahoma',sans-serif;
+    background:linear-gradient(180deg,#FFFFFF,#E8E4D8 45%,#D4D0C8);
+    box-shadow:
+        1px 1px 0 #FFFFFF inset,
+        -1px -1px 0 #808080 inset,
+        0 4px 12px rgba(0,0,0,.25);
+    transition:all .35s cubic-bezier(.34,1.56,.64,1);
+}
+
+/* Main shimmer sweep */
+.btn-merch::before,.btn-discord::before{
+    content:'';position:absolute;
+    top:0;left:-120%;width:100%;height:100%;
+    background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.9) 50%,transparent 100%);
+    transition:left .9s cubic-bezier(.4,0,.2,1);
+    z-index:1;
+}
+
+/* Neon halo */
+.btn-merch::after,.btn-discord::after{
+    content:'';position:absolute;
+    inset:-4px;border-radius:8px;
+    background:radial-gradient(ellipse at center,rgba(0,180,255,.9),rgba(0,80,220,.4) 50%,transparent 80%);
+    opacity:0;
+    transition:opacity .4s ease;
+    z-index:-1;
+    filter:blur(12px);
+}
+
+.btn-merch:hover::before,.btn-discord:hover::before{left:120%;}
+.btn-merch:hover::after,.btn-discord:hover::after{opacity:1;}
+
+.btn-merch:hover,.btn-discord:hover{
+    background:linear-gradient(180deg,#FFFFFF,#F4F0E2 45%,#E4E0D0);
+    transform:translateY(-5px) scale(1.06);
+    border-color:#00A8FF;
+    box-shadow:
+        1px 1px 0 #FFFFFF inset,
+        -1px -1px 0 #808080 inset,
+        0 14px 32px rgba(0,140,255,.55),
+        0 0 60px rgba(0,180,255,.5);
+}
+
+.btn-merch:active,.btn-discord:active{
+    border:2px inset #ECE9D8;
+    transform:translateY(-1px) scale(.96);
+    box-shadow:
+        -1px -1px 0 #FFFFFF inset,
+        1px 1px 0 #808080 inset,
+        0 2px 6px rgba(0,0,0,.4);
+}
+
+.btn-merch .btn-text,.btn-discord .btn-text{
+    position:relative;z-index:2;
+}
+
+.discord-icon{
+    width:22px;height:22px;fill:#5865F2;
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+    flex-shrink:0;position:relative;z-index:2;
+}
+
+.btn-discord:hover .discord-icon{
+    transform:scale(1.3) rotate(-12deg);
+    filter:drop-shadow(0 0 8px rgba(88,101,242,1));
+}
+
+/* ─── PLANS PAGE ─── */
+#plansPage{
+    display:none;position:fixed;top:0;left:0;
+    width:100%;height:100%;z-index:100;
+    overflow-y:auto;padding:40px 20px;
+    justify-content:center;align-items:flex-start;
+    background:#0a1220;
+}
+
+#plansPage::before{
+    content:'';position:absolute;inset:0;
+    background:
+        radial-gradient(circle at 25% 30%,rgba(0,140,255,0.2) 0%,transparent 45%),
+        radial-gradient(circle at 75% 70%,rgba(80,200,255,0.15) 0%,transparent 45%);
+    pointer-events:none;
+    animation:plansGlow 8s ease-in-out infinite alternate;
+}
+
+@keyframes plansGlow{
+    0%{opacity:0.8;transform:scale(1);}
+    100%{opacity:1;transform:scale(1.05);}
+}
+
+#plansPage.active{
+    display:flex;
+    animation:pageSlideIn .8s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+
+#plansPage.exit{
+    animation:pageSlideOut .5s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+@keyframes pageSlideIn{
+    0%{opacity:0;transform:scale(.88) translateY(50px);}
+    100%{opacity:1;transform:scale(1) translateY(0);}
+}
+@keyframes pageSlideOut{
+    0%{opacity:1;transform:scale(1) translateY(0);}
+    100%{opacity:0;transform:scale(.94) translateY(30px);}
+}
+
+.plans-container{
+    position:relative;z-index:2;max-width:900px;width:100%;
+    padding:40px 30px;
+}
+
+.plans-title-wrapper{
+    position:relative;width:100%;display:flex;
+    justify-content:center;align-items:center;
+    margin-bottom:50px;min-height:120px;
+}
+
+.plans-title{
+    font-size:2.8rem;font-weight:700;text-align:center;
+    letter-spacing:-.6px;
+    background:linear-gradient(180deg,#00B4FF,#0088FF,#0A246A,#0088FF,#00B4FF);
+    background-size:100% 300%;
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    font-family:'Tahoma',sans-serif;
+    animation:plansTitleGradient 5s ease-in-out infinite;
+    filter:drop-shadow(0 0 20px rgba(0,140,255,.8));
+}
+
+@keyframes plansTitleGradient{
+    0%,100%{background-position:0% 0%;}
+    50%{background-position:0% 100%;}
+}
+
+.plans-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:24px;margin-bottom:30px;justify-content:center;
+}
+
+/* ─── LIFETIME BOX (FIXED BLUE LIGHT) ─── */
+.plan-box{
+    position:relative;
+    border-radius:12px;
+    padding:34px 28px 28px;
+    text-align:center;
+    display:flex;flex-direction:column;justify-content:space-between;
+    min-height:170px;
+    background:linear-gradient(160deg,#F4F1E8 0%,#ECE9D8 55%,#E4E0D0 100%);
+    border:3px solid #0054E3;
+    max-width:400px;
+    margin:0 auto;
+    z-index:2;
+    transition:all .45s cubic-bezier(.34,1.56,.64,1);
+    animation:planBoxIn .8s cubic-bezier(.34,1.56,.64,1) forwards;
+    overflow:hidden;
+    isolation:isolate;
+    box-shadow:
+        0 6px 14px rgba(0,0,0,.35),
+        0 0 40px rgba(0,140,255,.35),
+        inset 0 0 0 1px rgba(255,255,255,0.6);
+}
+
+/* Fixed smooth pulsing blue light — no glitch */
+.plan-box::before{
+    content:'';position:absolute;
+    inset:-2px;
+    border-radius:14px;
+    background:linear-gradient(135deg,rgba(0,140,255,.65),rgba(120,220,255,.45),rgba(0,140,255,.65));
+    background-size:200% 200%;
+    animation:blueHalo 5s ease-in-out infinite alternate;
+    filter:blur(14px);
+    opacity:0.55;
+    z-index:-2;
+    pointer-events:none;
+}
+
+@keyframes blueHalo{
+    0%{background-position:0% 0%;opacity:0.45;transform:scale(1);}
+    100%{background-position:100% 100%;opacity:0.8;transform:scale(1.02);}
+}
+
+/* Inner glow sweep */
+.plan-box::after{
+    content:'';position:absolute;
+    inset:0;
+    border-radius:12px;
+    background:linear-gradient(120deg,transparent 30%,rgba(120,200,255,0.15) 50%,transparent 70%);
+    background-size:250% 100%;
+    animation:innerSweep 6s linear infinite;
+    pointer-events:none;
+    z-index:0;
+}
+
+@keyframes innerSweep{
+    0%{background-position:-100% 0;}
+    100%{background-position:200% 0;}
+}
+
+@keyframes planBoxIn{
+    0%{opacity:0;transform:translateY(40px) scale(.85);}
+    100%{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.plan-box:hover{
+    transform:translateY(-10px) scale(1.035);
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.5),
+        0 0 80px rgba(0,180,255,.7),
+        inset 0 0 0 1px rgba(255,255,255,0.9);
+    border-color:#00A8FF;
+}
+
+.plan-box h3{
+    font-size:1.18rem;font-weight:700;color:#000;
+    min-height:50px;display:flex;align-items:center;
+    justify-content:center;gap:12px;margin-bottom:22px;
+    font-family:'Tahoma',sans-serif;
+    position:relative;z-index:2;
+}
+
+/* ─── PURCHASE BUTTON ─── */
+.btn-lifetime{
+    width:100%;padding:16px 22px;font-size:1rem;
+    background:linear-gradient(180deg,#5FB4FF 0%,#1470D9 45%,#0A4FB0 100%);
+    border:2px outset #ECE9D8;border-radius:6px;
+    color:#FFF;font-weight:700;
+    display:inline-flex;align-items:center;justify-content:center;
+    gap:12px;text-decoration:none;position:relative;
+    overflow:hidden;margin-top:auto;flex-shrink:0;
+    font-family:'Tahoma',sans-serif;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.7),
+        0 6px 18px rgba(0,84,227,.6),
+        0 0 40px rgba(0,140,255,.3);
+    text-shadow:0 1px 3px rgba(0,0,0,.6);
+    letter-spacing:.7px;
+    transition:all .4s cubic-bezier(.34,1.56,.64,1);
+    z-index:2;
+}
+
+.btn-lifetime::before{
+    content:'';position:absolute;
+    top:0;left:-120%;width:100%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+    transition:left .8s cubic-bezier(.4,0,.2,1);
+    z-index:1;
+}
+
+.btn-lifetime::after{
+    content:'';position:absolute;
+    inset:-6px;border-radius:12px;
+    background:radial-gradient(circle at 50% 50%,rgba(0,180,255,.95),transparent 70%);
+    opacity:0;z-index:-1;filter:blur(16px);
+    transition:opacity .5s ease;
+}
+
+.btn-lifetime:hover::before{left:120%;}
+.btn-lifetime:hover::after{opacity:1;}
+
+.btn-lifetime:hover{
+    background:linear-gradient(180deg,#88C8FF 0%,#2988F0 45%,#1668CC 100%);
+    transform:translateY(-5px) scale(1.05);
+    border-color:#A8D8FF;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.9),
+        0 16px 36px rgba(0,140,255,.85),
+        0 0 80px rgba(100,200,255,.7);
+}
+
+.btn-lifetime:active{
+    border:2px inset #ECE9D8;
+    transform:translateY(-1px) scale(.96);
+    background:linear-gradient(180deg,#0A4FB0 0%,#1470D9 50%,#5FB4FF 100%);
+    box-shadow:
+        inset 0 2px 8px rgba(0,0,0,.5),
+        0 2px 6px rgba(0,0,0,.4);
+}
+
+.btn-lifetime .arrow{
+    width:18px;height:18px;fill:#FFF;
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+    position:relative;z-index:2;
+}
+
+.btn-lifetime:hover .arrow{
+    transform:translateX(8px) scale(1.2);
+    filter:drop-shadow(0 0 6px rgba(255,255,255,0.9));
+}
+
+.btn-lifetime span{
+    position:relative;z-index:2;
+}
+
+/* ─── BACK BUTTON ─── */
+.back-btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    gap:10px;padding:14px 32px;font-size:.92rem;font-weight:700;
+    border-radius:6px;margin:0 auto;width:100%;max-width:330px;
+    color:#000;
+    background:linear-gradient(180deg,#FFFFFF,#E8E4D8 45%,#D4D0C8);
+    border:2px outset #ECE9D8;
+    font-family:'Tahoma',sans-serif;
+    box-shadow:
+        1px 1px 0 #FFFFFF inset,
+        -1px -1px 0 #808080 inset,
+        0 6px 14px rgba(0,0,0,.25);
+    position:relative;overflow:hidden;
+    transition:all .35s cubic-bezier(.34,1.56,.64,1);
+}
+
+.back-btn::before{
+    content:'';position:absolute;
+    top:0;left:-120%;width:100%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);
+    transition:left .8s cubic-bezier(.4,0,.2,1);
+}
+
+.back-btn::after{
+    content:'';position:absolute;
+    inset:-4px;border-radius:10px;
+    background:radial-gradient(circle at 50% 50%,rgba(0,180,255,.7),transparent 70%);
+    opacity:0;z-index:-1;filter:blur(10px);
+    transition:opacity .4s ease;
+}
+
+.back-btn:hover::before{left:120%;}
+.back-btn:hover::after{opacity:1;}
+
+.back-btn:hover{
+    background:linear-gradient(180deg,#FFFFFF,#F4F0E2 45%,#E4E0D0);
+    transform:translateY(-4px) scale(1.05);
+    border-color:#0088FF;
+    box-shadow:
+        1px 1px 0 #FFFFFF inset,
+        -1px -1px 0 #808080 inset,
+        0 12px 28px rgba(0,140,255,.55),
+        0 0 50px rgba(0,180,255,.4);
+}
+
+.back-btn:active{
+    border:2px inset #ECE9D8;
+    transform:translateY(-1px) scale(.97);
+    box-shadow:
+        -1px -1px 0 #FFFFFF inset,
+        1px 1px 0 #808080 inset,
+        0 2px 6px rgba(0,0,0,.4);
+}
+
+.back-btn svg{
+    width:16px;height:16px;fill:#000;
+    transition:transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+
+.back-btn:hover svg{transform:translateX(-6px) scale(1.1);}
+
+.back-row{
+    display:flex;flex-direction:column;align-items:center;
+    gap:12px;margin-top:10px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 480px){
+    .flag{width:90px;top:12px;left:12px;}
+    .main-content{padding:30px 20px 30px;}
+    #typewriter{font-size:1.8rem;}
+    .btn-merch,.btn-discord{height:50px;font-size:.85rem;width:220px;}
+    .plans-title{font-size:2rem;}
+    .plan-box{padding:26px 20px 22px;}
+    .custom-cursor{display:none !important;}
+}
+
+@media (hover: none) and (pointer: coarse){
+    .custom-cursor{display:none !important;}
+    *{cursor:auto !important;}
+}
 </style>
 </head>
 <body>
 
-    <!-- ─── FLAG (TOP LEFT) ─── -->
-    <div class="flag"></div>
+<div class="flag"></div>
+<div class="custom-cursor" id="customCursor"></div>
 
-    <!-- ─── CUSTOM CURSOR ─── -->
-    <div class="custom-cursor" id="customCursor"></div>
+<div id="mainPage">
+    <div class="window-titlebar">
+        <div class="window-controls">
+            <button type="button" class="window-btn" data-action="minimize" aria-label="Minimize">_</button>
+            <button type="button" class="window-btn" data-action="maximize" aria-label="Maximize">□</button>
+            <button type="button" class="window-btn close" data-action="close" aria-label="Close">×</button>
+        </div>
+    </div>
 
-    <!-- ─── MAIN PAGE ─── -->
-    <div id="mainPage">
-
-        <!-- Typewriter Title -->
+    <div class="main-content">
         <div class="title-wrapper">
             <h1 id="typewriter">
                 <span id="typed-text"></span><span class="cursor"></span>
             </h1>
         </div>
 
-        <!-- Buttons Container -->
         <div class="buttons-container">
             <div class="btn-wrapper">
-                <button class="btn-merch magnetic-btn" onclick="showPlans()" id="viewPlansBtn">
-                    <span class="merch-icon"></span>
-                    Subscriptions
+                <button type="button" class="btn-merch" id="viewPlansBtn">
+                    <span class="btn-text">Subscriptions</span>
                 </button>
             </div>
 
             <div class="btn-wrapper">
-                <a href="https://discord.gg/8qCDcjFH7c" class="btn-discord magnetic-btn" target="_blank" id="discordBtn">
+                <a href="https://discord.gg/8qCDcjFH7c" class="btn-discord" target="_blank" rel="noopener" id="discordBtn">
                     <svg class="discord-icon" viewBox="0 0 127.14 96.36" xmlns="http://www.w3.org/2000/svg">
                         <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S53.9,46,53.9,53,48.77,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.21,60,73.21,53s5-12.74,11.44-12.74S96.12,46,96.12,53,91,65.69,84.69,65.69Z"/>
                     </svg>
-                    Discord
+                    <span class="btn-text">Discord</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="plansPage">
+    <div class="plans-container">
+        <div class="plans-title-wrapper">
+            <h1 class="plans-title">Subscriptions</h1>
+        </div>
+
+        <div class="plans-grid">
+            <div class="plan-box">
+                <h3>Cleetus Lifetime Subscription</h3>
+                <a href="https://t.me/thycleetus" target="_blank" rel="noopener" class="btn-lifetime">
+                    <span>Purchase</span>
+                    <svg class="arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+                    </svg>
                 </a>
             </div>
         </div>
 
-    </div>
-
-    <!-- ─── PLANS PAGE ─── -->
-    <div id="plansPage">
-        <div class="plans-container">
-
-            <!-- ─── TITLE AREA WITH GIFS BEHIND ─── -->
-            <div class="plans-title-wrapper">
-                <img src="sharks3.gif" class="shark-gif shark-gif-right" alt="Shark 3" />
-                <img src="sharks2.gif" class="shark-gif shark-gif-left" alt="Shark 2" />
-                <h1 class="plans-title">Subscriptions</h1>
-            </div>
-
-            <div class="plans-grid">
-                <!-- ─── COURT'S BASE MONTHLY SUBSCRIPTION ─── -->
-                <div class="plan-box">
-                    <h3><span class="plan-icon"></span> Court's Base Monthly Subscription</h3>
-                    <a href="https://t.me/thycourt" target="_blank" class="btn-github magnetic-btn">
-                        <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                        </svg>
-                        €0.60
-                    </a>
-                </div>
-
-                <!-- ─── COURT'S BASE CLIENT ─── -->
-                <div class="plan-box">
-                    <h3><span class="plan-icon"></span> Court's Base Client</h3>
-                    <a href="https://t.me/thycourt" target="_blank" class="btn-github magnetic-btn">
-                        <svg class="github-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/>
-                        </svg>
-                        Download
-                    </a>
-                </div>
-            </div>
-
-            <div class="back-row">
-                <button class="back-btn magnetic-btn" onclick="hidePlans()" id="backBtn">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                    </svg>
-                    Back to Home
-                </button>
-            </div>
+        <div class="back-row">
+            <button type="button" class="back-btn" id="backBtn">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+                <span>Back to Home</span>
+            </button>
         </div>
     </div>
-
-    <!-- ─── JAVASCRIPT ─── -->
-    <script>
-        // ──────────────────────────────────────────────
-        //  1. TELEGRAM MINI APP INIT
-        // ──────────────────────────────────────────────
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-
-        // ──────────────────────────────────────────────
-        //  2. TYPEWRITER EFFECT WITH EASTER EGGS
-        // ──────────────────────────────────────────────
-        const textElement = document.getElementById('typed-text');
-        const baseWord = 'Court\'s';
-        const easterEggs = [
-            { text: 'Gamble at @courtsbetbot', chance: 0.10 },
-            { text: 'The base servers are temporarily unavailable.', chance: 0.05 }
-        ];
-        let charIndex = 0;
-        let isDeleting = false;
-        let speed = 200;
-        let currentWord = baseWord;
-
-        function typeEffect() {
-            if (!isDeleting) {
-                textElement.textContent = currentWord.substring(0, charIndex + 1);
-                charIndex++;
-
-                if (charIndex === currentWord.length) {
-                    isDeleting = true;
-                    speed = 2000;
-                    setTimeout(() => { speed = 100; }, 2000);
-                }
-            } else {
-                textElement.textContent = currentWord.substring(0, charIndex - 1);
-                charIndex--;
-
-                if (charIndex === 0) {
-                    isDeleting = false;
-                    currentWord = rollEasterEgg();
-                    speed = 150;
-                }
-            }
-
-            setTimeout(typeEffect, speed);
-        }
-
-        function rollEasterEgg() {
-            const roll = Math.random();
-            let cumulative = 0;
-            for (const egg of easterEggs) {
-                cumulative += egg.chance;
-                if (roll < cumulative) return egg.text;
-            }
-            return baseWord;
-        }
-
-        setTimeout(typeEffect, 300);
-
-        // ──────────────────────────────────────────────
-        //  3. SHOW/HIDE PLANS PAGE
-        // ──────────────────────────────────────────────
-        function showPlans() {
-            const mainPage = document.getElementById('mainPage');
-            const plansPage = document.getElementById('plansPage');
-            
-            playClickSound();
-            
-            mainPage.classList.remove('slide-in');
-            mainPage.classList.add('slide-out');
-            
-            setTimeout(() => {
-                mainPage.classList.add('hidden');
-                mainPage.classList.remove('slide-out');
-                
-                plansPage.style.display = 'flex';
-                plansPage.classList.remove('exit');
-                plansPage.classList.add('active');
-                tg.expand();
-            }, 500);
-        }
-
-        function hidePlans() {
-            const mainPage = document.getElementById('mainPage');
-            const plansPage = document.getElementById('plansPage');
-            
-            playClickSound();
-            
-            plansPage.classList.remove('active');
-            plansPage.classList.add('exit');
-            
-            setTimeout(() => {
-                plansPage.classList.remove('exit');
-                plansPage.style.display = 'none';
-                
-                mainPage.classList.remove('hidden');
-                mainPage.classList.add('slide-in');
-                
-                setTimeout(() => {
-                    mainPage.classList.remove('slide-in');
-                }, 600);
-                
-                tg.expand();
-            }, 500);
-        }
-
-        // ──────────────────────────────────────────────
-        //  4. SOUND EFFECTS
-        // ──────────────────────────────────────────────
-        function playClickSound() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                
-                oscillator.frequency.value = 800;
-                oscillator.type = 'sine';
-                
-                gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-                
-                oscillator.start(audioCtx.currentTime);
-                oscillator.stop(audioCtx.currentTime + 0.1);
-            } catch (e) {}
-        }
-
-        // ──────────────────────────────────────────────
-        //  5. CUSTOM CURSOR
-        // ──────────────────────────────────────────────
-        const cursor = document.getElementById('customCursor');
-
-        document.addEventListener('mousemove', function(e) {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursor.classList.remove('hidden');
-        });
-
-        document.addEventListener('mouseleave', function() {
-            cursor.classList.add('hidden');
-        });
-
-        document.querySelectorAll('button, a, .magnetic-btn, .back-btn').forEach(el => {
-            if (!el) return;
-            el.addEventListener('mouseenter', function() {
-                cursor.classList.add('hover');
-            });
-            el.addEventListener('mouseleave', function() {
-                cursor.classList.remove('hover');
-            });
-            el.addEventListener('mousedown', function() {
-                cursor.classList.add('click');
-                setTimeout(() => {
-                    cursor.classList.remove('click');
-                }, 150);
-            });
-        });
-
-        // ──────────────────────────────────────────────
-        //  6. MAGNETIC BUTTON EFFECT
-        // ──────────────────────────────────────────────
-        document.querySelectorAll('.magnetic-btn').forEach(btn => {
-            btn.addEventListener('mousemove', function(e) {
-                const rect = this.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                
-                const intensity = 16;
-                const rotateX = -(y / rect.height) * intensity;
-                const rotateY = (x / rect.width) * intensity;
-                const scale = 1.04;
-                
-                this.style.transform = `
-                    perspective(600px) 
-                    rotateX(${rotateX}deg) 
-                    rotateY(${rotateY}deg) 
-                    scale(${scale})
-                    translateY(-4px)
-                `;
-                this.style.boxShadow = `
-                    0 20px 60px rgba(0,0,0,0.3),
-                    0 0 80px rgba(0,134,201,0.08)
-                `;
-                this.style.transition = 'transform 0.08s ease-out, box-shadow 0.3s ease';
-            });
-            
-            btn.addEventListener('mouseleave', function() {
-                this.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0px)';
-                this.style.boxShadow = '';
-                this.style.transition = 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease';
-            });
-        });
-
-        // ──────────────────────────────────────────────
-        //  7. INTERACTIVE GRADIENT BACKGROUND
-        // ──────────────────────────────────────────────
-        document.addEventListener('mousemove', function(e) {
-            const xPercent = (e.clientX / window.innerWidth) * 100;
-            const yPercent = (e.clientY / window.innerHeight) * 100;
-            document.documentElement.style.setProperty('--mouse-x', xPercent + '%');
-            document.documentElement.style.setProperty('--mouse-y', yPercent + '%');
-        });
-
-        // ──────────────────────────────────────────────
-        //  8. KEYBOARD SHORTCUTS
-        // ──────────────────────────────────────────────
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                if (document.getElementById('plansPage').classList.contains('active')) {
-                    hidePlans();
-                }
-            }
-        });
-
-        console.log('✨ Court\'s Website Loaded!');
-        console.log('🦈 Shark GIFs now playing behind the Subscriptions title');
-        console.log('🖱️ Custom cursor: courts.png');
-        console.log('🎲 Easter eggs active: 10% Gamble, 5% Servers unavailable');
-        console.log('⌨️ Press "ESC" to close Subscriptions');
-    </script>
-
+</div>
 
 <script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
+
+function el(id){ return document.getElementById(id); }
+
+function playClickSound(freq = 800){
+    try{
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.frequency.value = freq;
+        osc.type = 'sine';
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+        osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 0.12);
+    }catch(e){}
+}
+
+/* ─── WINDOW CONTROLS ─── */
+document.querySelectorAll('.window-btn').forEach(btn => {
+    btn.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        playClickSound(600);
+
+        const action = this.dataset.action;
+        const mainPage = el('mainPage');
+
+        if (action === 'minimize'){
+            mainPage.style.transition = 'all 0.4s cubic-bezier(.4,0,.2,1)';
+            mainPage.style.transform = 'scale(0.9) translateY(40px)';
+            mainPage.style.opacity = '0.35';
+            setTimeout(() => {
+                mainPage.style.transform = '';
+                mainPage.style.opacity = '';
+            }, 550);
+        }
+        if (action === 'maximize'){
+            mainPage.style.transition = 'all 0.4s cubic-bezier(.34,1.56,.64,1)';
+            mainPage.style.transform = 'scale(1.08)';
+            setTimeout(() => {
+                mainPage.style.transform = '';
+                mainPage.style.transition = 'all 0.6s cubic-bezier(.4,0,.2,1)';
+            }, 450);
+        }
+        if (action === 'close'){
+            mainPage.style.transition = 'all 0.45s cubic-bezier(.4,0,.2,1)';
+            mainPage.style.transform = 'scale(0.75) rotate(6deg)';
+            mainPage.style.opacity = '0';
+            setTimeout(() => {
+                mainPage.classList.add('hidden');
+                mainPage.style.transform = '';
+                mainPage.style.opacity = '';
+                setTimeout(() => {
+                    mainPage.classList.remove('hidden');
+                    mainPage.classList.add('slide-in');
+                    setTimeout(() => mainPage.classList.remove('slide-in'), 700);
+                }, 700);
+            }, 450);
+        }
     });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
+});
+
+/* ─── PAGE NAV ─── */
+function showPlans(){
+    playClickSound(800);
+    const main = el('mainPage');
+    const plans = el('plansPage');
+    main.classList.remove('slide-in');
+    main.classList.add('slide-out');
+    setTimeout(() => {
+        main.classList.add('hidden');
+        main.classList.remove('slide-out');
+        plans.style.display = 'flex';
+        plans.classList.remove('exit');
+        plans.classList.add('active');
+        tg.expand();
+    }, 500);
+}
+
+function hidePlans(){
+    playClickSound(600);
+    const main = el('mainPage');
+    const plans = el('plansPage');
+    plans.classList.remove('active');
+    plans.classList.add('exit');
+    setTimeout(() => {
+        plans.classList.remove('exit');
+        plans.style.display = 'none';
+        main.classList.remove('hidden');
+        main.classList.add('slide-in');
+        setTimeout(() => main.classList.remove('slide-in'), 700);
+        tg.expand();
+    }, 500);
+}
+
+el('viewPlansBtn').addEventListener('click', showPlans);
+el('backBtn').addEventListener('click', hidePlans);
+
+/* ─── TYPEWRITER ─── */
+(function(){
+    const target = el('typed-text');
+    const word = 'Cleetus';
+    let idx = 0, deleting = false, speed = 200;
+
+    function step(){
+        if (!deleting){
+            target.textContent = word.substring(0, idx + 1);
+            idx++;
+            if (idx === word.length){
+                deleting = true;
+                speed = 2200;
+                setTimeout(() => speed = 90, 2200);
+            }
+        } else {
+            target.textContent = word.substring(0, idx - 1);
+            idx--;
+            if (idx === 0){
+                deleting = false;
+                speed = 150;
+            }
+        }
+        setTimeout(step, speed);
+    }
+    setTimeout(step, 400);
 })();
+
+/* ─── CURSOR ─── */
+const cursor = el('customCursor');
+document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    cursor.classList.remove('hidden');
+});
+document.addEventListener('mouseleave', () => cursor.classList.add('hidden'));
+
+document.addEventListener('mouseover', e => {
+    if (e.target.closest('button, a, .btn-merch, .btn-discord, .back-btn, .window-btn, .btn-lifetime')){
+        cursor.classList.add('hover');
+    }
+});
+document.addEventListener('mouseout', e => {
+    if (e.target.closest('button, a, .btn-merch, .btn-discord, .back-btn, .window-btn, .btn-lifetime')){
+        cursor.classList.remove('hover');
+    }
+});
+document.addEventListener('mousedown', () => cursor.classList.add('click'));
+document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+
+/* ─── INTERACTIVE GRADIENT ─── */
+document.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth) * 100;
+    const y = (e.clientY / window.innerHeight) * 100;
+    document.documentElement.style.setProperty('--mouse-x', x + '%');
+    document.documentElement.style.setProperty('--mouse-y', y + '%');
+});
+
+/* ─── KEYBOARD ─── */
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && el('plansPage').classList.contains('active')){
+        hidePlans();
+    }
+});
+
+console.log('Cleetus loaded — cool theme active.');
 </script>
 
 </body>
