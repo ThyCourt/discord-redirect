@@ -31,7 +31,7 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-a, button, input, .case-image {
+a, button, input {
     cursor: none;
 }
 
@@ -303,224 +303,183 @@ body::after {
     filter: drop-shadow(0 0 8px rgba(88, 101, 242, 1));
 }
 
-/* ─── CASES PAGE ─── */
+/* ─── STEAM PAGE ─── */
 #casesPage {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 100;
-    overflow-y: auto;
-    padding: 40px 20px;
+    overflow: hidden;
+    padding: 0;
     justify-content: center;
-    align-items: flex-start;
+    align-items: stretch;
     background: #0a1220;
+    flex-direction: column;
 }
 
 #casesPage.active {
     display: flex;
-    animation: pageSlideIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation: pageSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 @keyframes pageSlideIn {
-    0%   { opacity: 0; transform: scale(0.88) translateY(50px); }
+    0%   { opacity: 0; transform: scale(0.94) translateY(30px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-.cases-container {
-    position: relative;
-    z-index: 2;
-    max-width: 500px;
-    width: 100%;
-    padding: 40px 30px;
-    margin: 0 auto;
-}
-
-.cases-title {
-    font-size: 2.8rem;
-    font-weight: 700;
-    text-align: center;
-    letter-spacing: -0.6px;
-    background: linear-gradient(180deg, #00B4FF, #0088FF, #0A246A, #0088FF, #00B4FF);
-    background-size: 100% 300%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    font-family: 'Tahoma', sans-serif;
-    animation: titleGradientShift 5s ease-in-out infinite;
-    filter: drop-shadow(0 0 20px rgba(0, 140, 255, 0.8));
-    margin-bottom: 40px;
-}
-
-/* ─── STEAM SIGN-UP WINDOW ─── */
-.steam-window {
-    background: #ECE9D8;
-    border: 3px solid #0054E3;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.6),
-        0 0 80px rgba(0, 140, 255, 0.5);
-    animation: windowGlow 5s ease-in-out infinite alternate;
-}
-
-.steam-titlebar {
-    height: 34px;
+/* Steam top bar */
+.steam-bar {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
-    padding: 0 12px;
+    justify-content: space-between;
+    height: 44px;
+    padding: 0 16px;
     background: linear-gradient(180deg, #1B2838 0%, #2A475E 50%, #1B2838 100%);
     border-bottom: 2px solid #0F1B26;
-    font-size: 0.85rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.steam-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #C7D5E0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-family: 'Tahoma', sans-serif;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.steam-bar-left svg {
+    width: 24px;
+    height: 24px;
+    fill: #C7D5E0;
+    filter: drop-shadow(0 0 6px rgba(102, 192, 244, 0.5));
+}
+
+.steam-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.steam-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    font-size: 0.8rem;
     font-weight: 700;
     color: #C7D5E0;
-    letter-spacing: 0.5px;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
-}
-
-.steam-logo {
-    width: 22px;
-    height: 22px;
-    margin-right: 10px;
-    fill: #C7D5E0;
-}
-
-.steam-body {
-    padding: 34px 34px 30px;
-    text-align: center;
-}
-
-.steam-heading {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #0A246A;
-    margin-bottom: 8px;
-    font-family: 'Tahoma', sans-serif;
-}
-
-.steam-sub {
-    font-size: 0.82rem;
-    color: #666;
-    margin-bottom: 26px;
-    font-family: 'Tahoma', sans-serif;
-    line-height: 1.4;
-}
-
-.steam-field {
-    text-align: left;
-    margin-bottom: 16px;
-}
-
-.steam-label {
-    display: block;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #000;
-    margin-bottom: 6px;
-    font-family: 'Tahoma', sans-serif;
-}
-
-.steam-input {
-    width: 100%;
-    padding: 11px 13px;
-    font-size: 0.9rem;
-    font-family: 'Tahoma', sans-serif;
-    color: #000;
-    background: #FFFFFF;
-    border: 2px inset #ECE9D8;
-    border-radius: 3px;
-    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.15);
-    outline: none;
-    transition: all 0.15s ease;
-    cursor: text;
-}
-
-.steam-input:focus {
-    border-color: #0088FF;
-    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.15), 0 0 8px rgba(0, 140, 255, 0.5);
-}
-
-.steam-submit {
-    width: 100%;
-    margin-top: 10px;
-    padding: 14px 20px;
-    font-size: 1rem;
-    font-weight: 700;
-    color: #FFF;
     background: linear-gradient(180deg, #66C0F4 0%, #1B6D9F 45%, #0F4A6E 100%);
-    border: 2px outset #ECE9D8;
-    border-radius: 6px;
+    border: 2px outset #2A475E;
+    border-radius: 4px;
     font-family: 'Tahoma', sans-serif;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 6px 18px rgba(0, 84, 227, 0.5);
-    letter-spacing: 0.7px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.5px;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
     cursor: none;
     -webkit-tap-highlight-color: transparent;
 }
 
-.steam-submit:hover {
+.steam-back-btn:hover {
     background: linear-gradient(180deg, #8FD4FF 0%, #2A89C7 45%, #156286 100%);
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 12px 28px rgba(0, 140, 255, 0.7), 0 0 60px rgba(100, 200, 255, 0.5);
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(102, 192, 244, 0.6);
 }
 
-.steam-submit:active {
-    border: 2px inset #ECE9D8;
-    transform: translateY(-1px) scale(0.97);
+.steam-back-btn:active {
+    border: 2px inset #2A475E;
+    transform: translateY(0) scale(0.97);
 }
 
-.steam-footnote {
-    margin-top: 18px;
-    font-size: 0.7rem;
-    color: #888;
-    font-family: 'Tahoma', sans-serif;
-    line-height: 1.4;
+.steam-back-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: #C7D5E0;
 }
 
-/* ─── BACK BUTTON ─── */
-.back-btn {
-    display: inline-flex;
+/* Steam iframe area */
+.steam-frame-wrapper {
+    flex: 1;
+    position: relative;
+    background: #1B2838;
+    overflow: hidden;
+}
+
+.steam-frame-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    background: #1B2838;
+}
+
+/* Fallback overlay if iframe is blocked */
+.steam-fallback {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 30px;
+    text-align: center;
+    background: linear-gradient(160deg, #1B2838, #0F1B26);
+    z-index: 5;
+}
+
+.steam-fallback.show { display: flex; }
+
+.steam-fallback h2 {
+    color: #C7D5E0;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.steam-fallback p {
+    color: #8F98A0;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    line-height: 1.5;
+    max-width: 400px;
+}
+
+.steam-open-btn {
+    display: inline-flex;
+    align-items: center;
     gap: 10px;
     padding: 14px 32px;
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     font-weight: 700;
+    color: #FFF;
+    background: linear-gradient(180deg, #66C0F4 0%, #1B6D9F 45%, #0F4A6E 100%);
+    border: 2px outset #2A475E;
     border-radius: 6px;
-    margin: 30px auto 0;
-    width: 100%;
-    max-width: 330px;
-    color: #000;
-    background: linear-gradient(180deg, #FFFFFF, #E8E4D8 45%, #D4D0C8);
-    border: 2px outset #ECE9D8;
+    text-decoration: none;
     font-family: 'Tahoma', sans-serif;
-    box-shadow:
-        1px 1px 0 #FFFFFF inset,
-        -1px -1px 0 #808080 inset,
-        0 6px 14px rgba(0, 0, 0, 0.25);
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.6px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 8px 22px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: none;
 }
 
-.back-btn:hover {
-    background: linear-gradient(180deg, #FFFFFF, #F4F0E2 45%, #E4E0D0);
-    transform: translateY(-4px) scale(1.05);
-    border-color: #0088FF;
-    box-shadow:
-        1px 1px 0 #FFFFFF inset,
-        -1px -1px 0 #808080 inset,
-        0 12px 28px rgba(0, 140, 255, 0.55),
-        0 0 50px rgba(0, 180, 255, 0.4);
+.steam-open-btn:hover {
+    background: linear-gradient(180deg, #8FD4FF 0%, #2A89C7 45%, #156286 100%);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 14px 32px rgba(102, 192, 244, 0.5);
 }
 
-.back-btn svg { width: 16px; height: 16px; fill: #000; }
-
-.back-row {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+.steam-open-btn:active {
+    border: 2px inset #2A475E;
+    transform: translateY(-1px) scale(0.97);
 }
 
 /* ─── MOBILE ─── */
@@ -529,29 +488,11 @@ body::after {
     .main-content { padding: 35px 18px; }
     #typewriter { font-size: 1.8rem; }
     .btn-merch, .btn-discord { height: 50px; font-size: 0.85rem; width: 220px; }
-    .cases-title { font-size: 2rem; }
-    .steam-body { padding: 26px 20px 24px; }
-    .steam-heading { font-size: 1.2rem; }
+    .steam-bar { height: 40px; padding: 0 10px; }
+    .steam-bar-left { font-size: 0.8rem; gap: 8px; }
+    .steam-bar-left svg { width: 20px; height: 20px; }
+    .steam-back-btn { padding: 6px 12px; font-size: 0.72rem; }
 }
-
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
-}
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
 </style>
 </head>
 <body>
@@ -586,55 +527,48 @@ body::after {
     </div>
 </div>
 
-<!-- CASES / STEAM SIGNUP PAGE -->
+<!-- STEAM PAGE -->
 <div id="casesPage">
-    <div class="cases-container">
-        <h1 class="cases-title">Steam</h1>
-
-        <div class="steam-window">
-            <div class="steam-titlebar">
-                <svg class="steam-logo" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/>
-                </svg>
-                Steam Sign Up
-            </div>
-
-            <div class="steam-body">
-                <div class="steam-heading">Create Your Account</div>
-                <div class="steam-sub">Join Steam to start trading, buying, and unboxing CS2 cases.</div>
-
-                <div class="steam-field">
-                    <label class="steam-label" for="steamEmail">Email Address</label>
-                    <input type="email" id="steamEmail" class="steam-input" placeholder="you@example.com" />
-                </div>
-
-                <div class="steam-field">
-                    <label class="steam-label" for="steamUser">Account Name</label>
-                    <input type="text" id="steamUser" class="steam-input" placeholder="Choose a username" />
-                </div>
-
-                <div class="steam-field">
-                    <label class="steam-label" for="steamPass">Password</label>
-                    <input type="password" id="steamPass" class="steam-input" placeholder="Enter a strong password" />
-                </div>
-
-                <button type="button" class="steam-submit" id="steamSubmit">
-                    Create Account
-                </button>
-
-                <div class="steam-footnote">
-                    This is a demo page and does not submit any data.
-                </div>
-            </div>
+    <div class="steam-bar">
+        <div class="steam-bar-left">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.524 2.031 4.524 4.527s-2.03 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/>
+            </svg>
+            Steam Sign Up
         </div>
-
-        <div class="back-row">
-            <button type="button" class="back-btn" id="backBtn">
+        <div class="steam-bar-right">
+            <button type="button" class="steam-back-btn" id="backBtn">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
                 </svg>
-                <span>Back to Home</span>
+                Back
             </button>
+        </div>
+    </div>
+
+    <div class="steam-frame-wrapper">
+        <iframe
+            id="steamFrame"
+            src="https://store.steampowered.com/join/"
+            title="Steam Sign Up"
+            referrerpolicy="no-referrer-when-downgrade"
+            sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+        ></iframe>
+
+        <!-- Fallback shown if the iframe can't load (Steam blocks framing) -->
+        <div class="steam-fallback" id="steamFallback">
+            <h2>Steam Sign Up</h2>
+            <p>
+                Steam blocks being displayed inside other apps for security reasons.
+                Tap below to open the real Steam sign-up page.
+            </p>
+            <a href="https://store.steampowered.com/join/" target="_blank" rel="noopener" class="steam-open-btn">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="#FFF" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+                    <path d="M19 19H5V5h7V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z"/>
+                </svg>
+                Open Steam Sign Up
+            </a>
         </div>
     </div>
 </div>
@@ -666,7 +600,7 @@ function playClickSound(freq) {
     } catch (e) {}
 }
 
-/* ─── TYPEWRITER — now says "Cleetus Drop" ─── */
+/* ─── TYPEWRITER ─── */
 (function typewriter() {
     var target = $('typed-text');
     if (!target) return;
@@ -706,6 +640,25 @@ function showCases() {
     main.style.display = 'none';
     cases.style.display = 'flex';
     cases.classList.add('active');
+
+    // Try to detect if the iframe failed to load (Steam blocks framing)
+    var frame = $('steamFrame');
+    var fallback = $('steamFallback');
+    if (fallback) fallback.classList.remove('show');
+
+    // Steam blocks iframes via X-Frame-Options. Most browsers will silently
+    // show a blank frame. We can't reliably detect a cross-origin block,
+    // but if the user is in Telegram, we can proactively offer the fallback
+    // via Telegram's openLink after a short delay.
+    try {
+        if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
+            // inside Telegram Mini App — iframe will definitely be blocked
+            setTimeout(function () {
+                if (fallback) fallback.classList.add('show');
+            }, 1200);
+        }
+    } catch (e) {}
+
     try { window.Telegram.WebApp.expand(); } catch (e) {}
 }
 
@@ -721,13 +674,9 @@ function hideCases() {
 }
 
 /* ─── EVENT BINDINGS ─── */
-document.addEventListener('DOMContentLoaded', bindAll);
-(function () { setTimeout(bindAll, 0); })();
-
 function bindAll() {
     var casesBtn = $('casesBtn');
     var backBtn = $('backBtn');
-    var steamSubmit = $('steamSubmit');
 
     if (casesBtn && !casesBtn.dataset.bound) {
         casesBtn.addEventListener('click', showCases);
@@ -737,13 +686,9 @@ function bindAll() {
         backBtn.addEventListener('click', hideCases);
         backBtn.dataset.bound = '1';
     }
-    if (steamSubmit && !steamSubmit.dataset.bound) {
-        steamSubmit.addEventListener('click', function () {
-            playClickSound(900);
-        });
-        steamSubmit.dataset.bound = '1';
-    }
 }
+document.addEventListener('DOMContentLoaded', bindAll);
+setTimeout(bindAll, 0);
 
 /* ─── CURSOR ─── */
 (function () {
@@ -766,7 +711,7 @@ function bindAll() {
         cursor.style.opacity = '0';
     });
 
-    var sel = 'button, a, .case-image, .back-btn, .steam-submit, .btn-merch, .btn-discord, .steam-input';
+    var sel = 'button, a, .back-btn, .btn-merch, .btn-discord, .steam-back-btn, .steam-open-btn';
     document.addEventListener('mouseover', function (e) {
         if (e.target.closest(sel)) cursor.classList.add('hover');
     });
@@ -792,32 +737,6 @@ document.addEventListener('keydown', function (e) {
         hideCases();
     }
 });
-</script>
-
-
-<script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
-    });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
-})();
 </script>
 
 </body>
