@@ -345,6 +345,57 @@ a, button, input {
     font-style: italic;
 }
 
+/* ─── PRODUCTS PAGE ─── */
+.products-title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #C8C8C0;
+}
+
+.category-title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #000000;
+    margin: 18px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px dotted #C8C8C0;
+}
+
+.category-title:first-of-type {
+    margin-top: 0;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background: #FFFFFF;
+    border: 1px solid #B0B0A8;
+    margin-bottom: 8px;
+    gap: 12px;
+}
+
+.product-name {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: #000000;
+}
+
+.product-price {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: #008000;
+    white-space: nowrap;
+}
+
 /* ─── FOOTER ─── */
 .footer {
     margin-top: 24px;
@@ -367,6 +418,7 @@ a, button, input {
     .page-wrap { padding: 12px 8px 30px; }
     #typewriter { font-size: 1.6rem; }
     .link-grid { grid-template-columns: 1fr; }
+    .product-item { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 </style>
 </head>
@@ -421,7 +473,7 @@ a, button, input {
                     <a href="#" id="downloadLink">Download Page</a>
                     <a href="#">Members Arena</a>
                     <a href="#" id="playlistLink">Playlist</a>
-                    <a href="#">Products</a>
+                    <a href="#" id="productsLink">Products</a>
                 </div>
 
                 <!-- Buttons row -->
@@ -505,6 +557,47 @@ a, button, input {
     </div>
 </div>
 
+<!-- PRODUCTS PAGE -->
+<div id="productsPage" style="display:none;">
+    <div class="page-wrap">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1 class="products-title">Products</h1>
+            <div class="header-right">
+                <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
+            </div>
+        </div>
+
+        <!-- SUBSCRIPTIONS CATEGORY -->
+        <div class="category-title">Subscriptions</div>
+
+        <div class="product-item">
+            <div class="product-name">Cleetus Subscription</div>
+            <div class="product-price">0.99 €</div>
+        </div>
+
+        <div class="product-item">
+            <div class="product-name">Cleetus Ai Agents</div>
+            <div class="product-price">1 €</div>
+        </div>
+
+        <!-- EXPLOITS CATEGORY -->
+        <div class="category-title">Exploits</div>
+
+        <div class="product-item">
+            <div class="product-name">Cs2 ESP11 Monthly Subscription</div>
+            <div class="product-price">4 €</div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <a href="#">Terms of Service</a>
+        </div>
+
+    </div>
+</div>
+
 <script>
 try {
     if (window.Telegram && window.Telegram.WebApp) {
@@ -515,11 +608,9 @@ try {
 
 function $(id) { return document.getElementById(id); }
 
-/* ─── PLAYLIST SONGS ───
-   These are in the SAME folder as index.html.
-   The %20 is the URL-encoded space character. */
+/* ─── PLAYLIST SONGS ─── */
 var SONGS = [
-    { title: '03 What Went Wrong',       file: '03%20What%20Went%20Wrong.mp3' },
+    { title: '03 What Went Wrong',        file: '03%20What%20Went%20Wrong.mp3' },
     { title: '06 When You Fucked Grandpa', file: '06%20When%20You%20Fucked%20Grandpa.mp3' }
 ];
 
@@ -578,7 +669,7 @@ function renderPlaylist() {
 
 /* ─── PAGE NAVIGATION ─── */
 function showPage(targetId) {
-    var pages = ['mainPage', 'downloadPage', 'playlistPage'];
+    var pages = ['mainPage', 'downloadPage', 'playlistPage', 'productsPage'];
     for (var i = 0; i < pages.length; i++) {
         var el = $(pages[i]);
         if (el) el.style.display = (pages[i] === targetId) ? 'block' : 'none';
@@ -589,6 +680,7 @@ function showPage(targetId) {
 function bindAll() {
     var dl = $('downloadLink');
     var pl = $('playlistLink');
+    var pr = $('productsLink');
     var backs = document.querySelectorAll('.back-link');
 
     if (dl && !dl.dataset.bound) {
@@ -598,6 +690,10 @@ function bindAll() {
     if (pl && !pl.dataset.bound) {
         pl.addEventListener('click', function (e) { e.preventDefault(); renderPlaylist(); showPage('playlistPage'); });
         pl.dataset.bound = '1';
+    }
+    if (pr && !pr.dataset.bound) {
+        pr.addEventListener('click', function (e) { e.preventDefault(); showPage('productsPage'); });
+        pr.dataset.bound = '1';
     }
     for (var i = 0; i < backs.length; i++) {
         var b = backs[i];
