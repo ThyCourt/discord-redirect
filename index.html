@@ -165,7 +165,7 @@ a, button, input {
     }
 }
 
-/* ─── SIDEBAR BOXES ─── */
+/* ─── BOXES ─── */
 .box {
     background: #FFFFFF;
     border: 1px solid #B0B0A8;
@@ -227,33 +227,6 @@ a, button, input {
 
 .link-grid a:hover { color: #CC0000; }
 
-/* ─── ESP11 BOX ─── */
-.esp-main {
-    background: #FFFFFF;
-    border: 1px solid #B0B0A8;
-    padding: 10px 14px;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.esp-main .name {
-    font-family: Verdana, Tahoma, Arial, sans-serif;
-    font-size: 12px;
-    font-weight: bold;
-    color: #000000;
-    letter-spacing: 0.5px;
-}
-
-.esp-main .status {
-    font-family: Verdana, Tahoma, Arial, sans-serif;
-    font-size: 12px;
-    font-weight: bold;
-    color: #008000;
-    letter-spacing: 0.5px;
-}
-
 /* ─── BUTTONS ROW ─── */
 .btn-row {
     display: flex;
@@ -264,7 +237,8 @@ a, button, input {
     border-top: 1px dotted #C8C8C0;
 }
 
-.btn-discord {
+.btn-discord,
+.btn-telegram {
     display: inline-flex;
     align-items: center;
     gap: 5px;
@@ -282,9 +256,11 @@ a, button, input {
     letter-spacing: 0.3px;
 }
 
-.btn-discord:hover { background: #E0DCD0; color: #0000CC; }
+.btn-discord:hover,
+.btn-telegram:hover { background: #E0DCD0; color: #0000CC; }
 
-.btn-discord:active {
+.btn-discord:active,
+.btn-telegram:active {
     border-top: 1px solid #808080;
     border-left: 1px solid #808080;
     border-right: 1px solid #FFFFFF;
@@ -295,6 +271,13 @@ a, button, input {
     width: 12px;
     height: 12px;
     fill: #5865F2;
+    flex-shrink: 0;
+}
+
+.telegram-icon {
+    width: 12px;
+    height: 12px;
+    fill: #0088CC;
     flex-shrink: 0;
 }
 
@@ -317,6 +300,50 @@ a, button, input {
 }
 
 .download-item a:hover { color: #CC0000; }
+
+/* ─── PLAYLIST PAGE ─── */
+.playlist-title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #C8C8C0;
+}
+
+.song-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 14px;
+    background: #FFFFFF;
+    border: 1px solid #B0B0A8;
+    margin-bottom: 8px;
+}
+
+.song-title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: #000000;
+}
+
+.song-item audio {
+    width: 100%;
+    height: 30px;
+    outline: none;
+}
+
+.playlist-empty {
+    padding: 20px 14px;
+    background: #FFFFFF;
+    border: 1px solid #B0B0A8;
+    color: #888888;
+    font-size: 11px;
+    text-align: center;
+    font-style: italic;
+}
 
 /* ─── FOOTER ─── */
 .footer {
@@ -341,25 +368,6 @@ a, button, input {
     #typewriter { font-size: 1.6rem; }
     .link-grid { grid-template-columns: 1fr; }
 }
-
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
-}
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
 </style>
 </head>
 <body>
@@ -401,9 +409,7 @@ a, button, input {
             <div class="left-col">
                 <div class="box">
                     <div class="box-title">Featured Content</div>
-                    <div class="box-body">
-                        <a href="#">ESP11 Patched</a>
-                    </div>
+                    <div class="box-body"></div>
                 </div>
             </div>
 
@@ -414,9 +420,11 @@ a, button, input {
                 <div class="link-grid">
                     <a href="#" id="downloadLink">Download Page</a>
                     <a href="#">Members Arena</a>
+                    <a href="#" id="playlistLink">Playlist</a>
+                    <a href="#">Products</a>
                 </div>
 
-                <!-- Discord button -->
+                <!-- Buttons row -->
                 <div class="btn-row">
                     <a href="https://discord.gg/8qCDcjFH7c" class="btn-discord" target="_blank" rel="noopener">
                         <svg class="discord-icon" viewBox="0 0 127.14 96.36" xmlns="http://www.w3.org/2000/svg">
@@ -424,20 +432,18 @@ a, button, input {
                         </svg>
                         <span>Discord</span>
                     </a>
+
+                    <a href="https://t.me/thycleetus" class="btn-telegram" target="_blank" rel="noopener">
+                        <svg class="telegram-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                        <span>Telegram</span>
+                    </a>
                 </div>
             </div>
 
-            <!-- RIGHT SIDEBAR -->
-            <div class="right-col">
-                <div class="box">
-                    <div class="box-title">Get Started With A Subscription</div>
-                    <div class="box-body" style="text-align:center;">
-                        <div style="background:#EFEFEA;padding:8px;border:1px solid #C8C8C0;">
-                            <span style="font-size:11px;font-weight:bold;">1.99 euro / month</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- RIGHT SIDEBAR (empty) -->
+            <div class="right-col"></div>
 
         </div>
 
@@ -459,7 +465,7 @@ a, button, input {
                 Download Page
             </h1>
             <div class="header-right">
-                <a href="#" id="backLink">&laquo; Back to Home</a>
+                <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
             </div>
         </div>
 
@@ -467,6 +473,29 @@ a, button, input {
         <div class="download-item">
             <a href="https://github.com/JKAnderson/DSR-Gadget" target="_blank" rel="noopener">DSR-Gadget</a>
         </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <a href="#">Terms of Service</a>
+        </div>
+
+    </div>
+</div>
+
+<!-- PLAYLIST PAGE -->
+<div id="playlistPage" style="display:none;">
+    <div class="page-wrap">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1 class="playlist-title">Playlist of the Week</h1>
+            <div class="header-right">
+                <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
+            </div>
+        </div>
+
+        <!-- SONG LIST -->
+        <div id="songList"></div>
 
         <!-- FOOTER -->
         <div class="footer">
@@ -486,7 +515,37 @@ try {
 
 function $(id) { return document.getElementById(id); }
 
-/* ─── TYPEWRITER (just "Cleetus") ─── */
+/* ─── PLAYLIST SONGS ───
+   These are in the SAME folder as index.html.
+   The %20 is the URL-encoded space character. */
+var SONGS = [
+    { title: '03 What Went Wrong',       file: '03%20What%20Went%20Wrong.mp3' },
+    { title: '06 When You Fucked Grandpa', file: '06%20When%20You%20Fucked%20Grandpa.mp3' }
+];
+
+function renderPlaylist() {
+    var list = $('songList');
+    if (!list) return;
+
+    if (!SONGS.length) {
+        list.innerHTML = '<div class="playlist-empty">No songs in the playlist.</div>';
+        return;
+    }
+
+    var html = '';
+    for (var i = 0; i < SONGS.length; i++) {
+        var s = SONGS[i];
+        html += '<div class="song-item">' +
+                    '<div class="song-title">' + s.title + '</div>' +
+                    '<audio controls preload="none">' +
+                        '<source src="' + s.file + '" type="audio/mpeg" />' +
+                    '</audio>' +
+                '</div>';
+    }
+    list.innerHTML = html;
+}
+
+/* ─── TYPEWRITER ─── */
 (function typewriter() {
     var target = $('typed-text');
     if (!target) return;
@@ -518,23 +577,37 @@ function $(id) { return document.getElementById(id); }
 })();
 
 /* ─── PAGE NAVIGATION ─── */
-function showDownload() {
-    $('mainPage').style.display = 'none';
-    $('downloadPage').style.display = 'block';
-    try { window.Telegram.WebApp.expand(); } catch (e) {}
-}
-
-function hideDownload() {
-    $('downloadPage').style.display = 'none';
-    $('mainPage').style.display = 'block';
+function showPage(targetId) {
+    var pages = ['mainPage', 'downloadPage', 'playlistPage'];
+    for (var i = 0; i < pages.length; i++) {
+        var el = $(pages[i]);
+        if (el) el.style.display = (pages[i] === targetId) ? 'block' : 'none';
+    }
     try { window.Telegram.WebApp.expand(); } catch (e) {}
 }
 
 function bindAll() {
     var dl = $('downloadLink');
-    var bk = $('backLink');
-    if (dl && !dl.dataset.bound) { dl.addEventListener('click', function (e) { e.preventDefault(); showDownload(); }); dl.dataset.bound = '1'; }
-    if (bk && !bk.dataset.bound) { bk.addEventListener('click', function (e) { e.preventDefault(); hideDownload(); }); bk.dataset.bound = '1'; }
+    var pl = $('playlistLink');
+    var backs = document.querySelectorAll('.back-link');
+
+    if (dl && !dl.dataset.bound) {
+        dl.addEventListener('click', function (e) { e.preventDefault(); showPage('downloadPage'); });
+        dl.dataset.bound = '1';
+    }
+    if (pl && !pl.dataset.bound) {
+        pl.addEventListener('click', function (e) { e.preventDefault(); renderPlaylist(); showPage('playlistPage'); });
+        pl.dataset.bound = '1';
+    }
+    for (var i = 0; i < backs.length; i++) {
+        var b = backs[i];
+        if (b.dataset.bound) continue;
+        b.addEventListener('click', function (e) {
+            e.preventDefault();
+            showPage(this.dataset.target || 'mainPage');
+        });
+        b.dataset.bound = '1';
+    }
 }
 document.addEventListener('DOMContentLoaded', bindAll);
 setTimeout(bindAll, 0);
@@ -554,39 +627,13 @@ setTimeout(bindAll, 0);
     document.addEventListener('mouseleave', function () { cursor.style.opacity = '0'; });
 
     document.addEventListener('mouseover', function (e) {
-        if (e.target.closest('button, a, input')) cursor.classList.add('hover');
+        if (e.target.closest('button, a, input, audio')) cursor.classList.add('hover');
     });
     document.addEventListener('mouseout', function (e) {
-        if (e.target.closest('button, a, input')) cursor.classList.remove('hover');
+        if (e.target.closest('button, a, input, audio')) cursor.classList.remove('hover');
     });
     document.addEventListener('mousedown', function () { cursor.classList.add('click'); });
     document.addEventListener('mouseup', function () { cursor.classList.remove('click'); });
-})();
-</script>
-
-
-<script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
-    });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
 })();
 </script>
 
