@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Cleetus Drop</title>
+<title>Cleetus</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -16,23 +16,22 @@
 
 html, body {
     min-height: 100vh;
-    font-family: 'Tahoma', 'Segoe UI', sans-serif;
-    background: #0a1220;
-    overflow: hidden;
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 11px;
+    background: #F5F5F0;
+    overflow-x: hidden;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-    position: relative;
+    padding: 0;
     cursor: none;
     -webkit-tap-highlight-color: transparent;
+    color: #000000;
 }
 
 a, button, input {
     cursor: none;
+    font-family: Verdana, Tahoma, Arial, sans-serif;
 }
 
 @media (hover: none), (pointer: coarse) {
@@ -40,161 +39,62 @@ a, button, input {
     .custom-cursor { display: none !important; }
 }
 
-/* ─── BACKGROUND ─── */
-body::before {
-    content: '';
-    position: fixed;
-    inset: -20%;
-    z-index: 0;
-    background:
-        radial-gradient(circle at var(--mx, 30%) var(--my, 50%), rgba(0, 140, 255, 0.35) 0%, transparent 40%),
-        radial-gradient(circle at calc(100% - var(--mx, 30%)) calc(100% - var(--my, 50%)), rgba(80, 200, 255, 0.25) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(10, 30, 80, 0.9) 0%, #050812 80%);
-    animation: bgBreath 10s ease-in-out infinite alternate;
-    pointer-events: none;
-}
-
-@keyframes bgBreath {
-    0%   { transform: scale(1); }
-    100% { transform: scale(1.06); }
-}
-
-body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    background: linear-gradient(115deg,
-        transparent 20%,
-        rgba(0, 140, 255, 0.06) 35%,
-        rgba(120, 220, 255, 0.12) 45%,
-        rgba(0, 140, 255, 0.06) 55%,
-        transparent 70%);
-    background-size: 300% 300%;
-    animation: auroraSweep 12s linear infinite;
-    pointer-events: none;
-    mix-blend-mode: screen;
-}
-
-@keyframes auroraSweep {
-    0%   { background-position: 0% 0%; }
-    100% { background-position: 200% 100%; }
-}
-
 /* ─── CURSOR ─── */
 .custom-cursor {
     position: fixed;
     top: 0;
     left: 0;
-    width: 32px;
-    height: 32px;
-    margin-left: -16px;
-    margin-top: -16px;
+    width: 24px;
+    height: 24px;
+    margin-left: -12px;
+    margin-top: -12px;
     pointer-events: none;
     z-index: 999999;
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='b' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%23FFFFFF'/><stop offset='100%' stop-color='%23E0E0E0'/></linearGradient></defs><path d='M4 2 L4 24 L10 18 L14 28 L18 26 L14 16 L22 16 Z' fill='url(%23b)' stroke='%23000' stroke-width='1.2' stroke-linejoin='round'/></svg>") no-repeat center;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M4 2 L4 24 L10 18 L14 28 L18 26 L14 16 L22 16 Z' fill='%23FFFFFF' stroke='%23000' stroke-width='1.4' stroke-linejoin='round'/></svg>") no-repeat center;
     background-size: contain;
-    transition: width 0.15s ease, height 0.15s ease, margin 0.15s ease, filter 0.3s ease;
 }
 
-.custom-cursor.hover {
-    width: 42px;
-    height: 42px;
-    margin-left: -21px;
-    margin-top: -21px;
-    filter: drop-shadow(0 0 14px rgba(120, 200, 255, 1));
+.custom-cursor.hover { filter: drop-shadow(0 0 3px #0000CC); }
+.custom-cursor.click { width: 18px; height: 18px; margin-left: -9px; margin-top: -9px; }
+
+/* ─── LAYOUT ─── */
+.page-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px 14px 40px;
+    background: #F5F5F0;
+    min-height: 100vh;
 }
 
-.custom-cursor.click {
-    width: 22px;
-    height: 22px;
-    margin-left: -11px;
-    margin-top: -11px;
-}
-
-/* ─── MAIN WINDOW ─── */
-#mainPage {
-    position: relative;
-    z-index: 2;
-    border-radius: 10px;
-    max-width: 480px;
-    width: 100%;
-    text-align: center;
-    background: #ECE9D8;
-    border: 3px solid #0054E3;
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.6),
-        0 0 80px rgba(0, 140, 255, 0.5),
-        0 0 140px rgba(0, 140, 255, 0.25),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-    overflow: hidden;
-    animation: windowGlow 5s ease-in-out infinite alternate;
-}
-
-@keyframes windowGlow {
-    0% {
-        box-shadow:
-            0 20px 60px rgba(0, 0, 0, 0.6),
-            0 0 60px rgba(0, 140, 255, 0.4),
-            0 0 100px rgba(0, 140, 255, 0.2),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-    }
-    100% {
-        box-shadow:
-            0 25px 70px rgba(0, 0, 0, 0.7),
-            0 0 120px rgba(0, 140, 255, 0.7),
-            0 0 200px rgba(0, 140, 255, 0.4),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.5);
-    }
-}
-
-.main-content {
-    padding: 50px 40px 45px;
-}
-
-/* ─── TYPEWRITER ─── */
-.title-wrapper {
-    min-height: 80px;
+/* ─── HEADER ─── */
+.header {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 10px 4px 12px;
+    border-bottom: 1px solid #C8C8C0;
+    margin-bottom: 12px;
 }
 
 #typewriter {
-    font-size: 2.5rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    line-height: 1.1;
-    font-family: 'Tahoma', sans-serif;
-    color: #0A246A;
-    min-height: 1.1em;
-    min-width: 1ch;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #000000;
+    letter-spacing: 0.5px;
+    min-height: 1.2em;
+    line-height: 1.2;
 }
 
-#typed-text {
-    background: linear-gradient(180deg, #0A246A, #0088FF, #0A246A);
-    background-size: 100% 200%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    animation: titleGradientShift 4s ease-in-out infinite;
-}
-
-@keyframes titleGradientShift {
-    0%, 100% { background-position: 0% 0%; }
-    50%      { background-position: 0% 100%; }
-}
+#typed-text { color: #000000; }
 
 #typewriter .cursor {
     display: inline-block;
     width: 3px;
-    height: 0.8em;
-    margin-left: 4px;
-    background: #0088FF;
-    box-shadow: 0 0 14px rgba(0, 140, 255, 1);
-    animation: blink 0.8s step-end infinite;
+    height: 0.85em;
+    margin-left: 2px;
+    background: #000000;
+    animation: blink 0.9s step-end infinite;
     vertical-align: middle;
 }
 
@@ -203,252 +103,241 @@ body::after {
     50%      { opacity: 0; }
 }
 
-/* ─── BUTTONS ─── */
-.buttons-container {
+.header-right {
+    font-size: 10px;
+    color: #666666;
+    text-align: right;
+}
+
+.header-right a {
+    color: #0000CC;
+    text-decoration: underline;
+}
+
+/* ─── LINK BAR ─── */
+.link-bar {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-}
-
-.btn-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.btn-merch,
-.btn-discord {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    height: 54px;
-    padding: 0 26px;
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: #000;
-    border: 2px outset #ECE9D8;
-    border-radius: 6px;
-    text-decoration: none;
-    letter-spacing: 0.6px;
-    overflow: hidden;
-    width: 260px;
-    max-width: 100%;
-    font-family: 'Tahoma', sans-serif;
-    background: linear-gradient(180deg, #FFFFFF, #E8E4D8 45%, #D4D0C8);
-    box-shadow:
-        1px 1px 0 #FFFFFF inset,
-        -1px -1px 0 #808080 inset,
-        0 4px 12px rgba(0, 0, 0, 0.25);
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-}
-
-.btn-merch::before,
-.btn-discord::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -120%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
-    transition: left 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1;
-}
-
-.btn-merch:hover::before,
-.btn-discord:hover::before { left: 120%; }
-
-.btn-merch:hover,
-.btn-discord:hover {
-    background: linear-gradient(180deg, #FFFFFF, #F4F0E2 45%, #E4E0D0);
-    transform: translateY(-5px) scale(1.06);
-    border-color: #00A8FF;
-    box-shadow:
-        1px 1px 0 #FFFFFF inset,
-        -1px -1px 0 #808080 inset,
-        0 14px 32px rgba(0, 140, 255, 0.55),
-        0 0 60px rgba(0, 180, 255, 0.5);
-}
-
-.btn-merch:active,
-.btn-discord:active {
-    border: 2px inset #ECE9D8;
-    transform: translateY(-1px) scale(0.96);
-    box-shadow:
-        -1px -1px 0 #FFFFFF inset,
-        1px 1px 0 #808080 inset,
-        0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.btn-text { position: relative; z-index: 2; }
-
-.discord-icon {
-    width: 22px;
-    height: 22px;
-    fill: #5865F2;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    flex-shrink: 0;
-    position: relative;
-    z-index: 2;
-}
-
-.btn-discord:hover .discord-icon {
-    transform: scale(1.3) rotate(-12deg);
-    filter: drop-shadow(0 0 8px rgba(88, 101, 242, 1));
-}
-
-/* ─── DROPS PAGE (unavailable) ─── */
-#dropsPage {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 100;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 30px 24px;
-    background: #0a1220;
-    text-align: center;
-}
-
-#dropsPage.active {
-    display: flex;
-    animation: pageSlideIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-@keyframes pageSlideIn {
-    0%   { opacity: 0; transform: scale(0.94); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-.unavailable-box {
-    background: #ECE9D8;
-    border: 3px solid #0054E3;
-    border-radius: 12px;
-    padding: 44px 36px;
-    max-width: 480px;
-    width: 100%;
-    box-shadow:
-        0 20px 60px rgba(0, 0, 0, 0.6),
-        0 0 80px rgba(0, 140, 255, 0.5),
-        0 0 140px rgba(0, 140, 255, 0.25);
-    animation: windowGlow 5s ease-in-out infinite alternate;
-}
-
-.unavailable-icon {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 22px;
-    border-radius: 50%;
-    background: linear-gradient(180deg, #FF6B5A, #C72C17);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #FFF;
-    box-shadow: 0 6px 18px rgba(199, 44, 23, 0.6);
-    animation: iconPulse 2s ease-in-out infinite;
-}
-
-@keyframes iconPulse {
-    0%, 100% { transform: scale(1); box-shadow: 0 6px 18px rgba(199, 44, 23, 0.6); }
-    50%      { transform: scale(1.06); box-shadow: 0 10px 28px rgba(199, 44, 23, 0.9); }
-}
-
-.unavailable-icon svg {
-    width: 40px;
-    height: 40px;
-    fill: #FFF;
-}
-
-.unavailable-title {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #0A246A;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+    padding: 8px 0 10px;
+    border-bottom: 1px solid #C8C8C0;
     margin-bottom: 12px;
-    font-family: 'Tahoma', sans-serif;
-    line-height: 1.25;
 }
 
-.unavailable-text {
-    font-size: 0.92rem;
-    color: #555;
-    margin-bottom: 30px;
-    font-family: 'Tahoma', sans-serif;
-    line-height: 1.5;
+.link-bar a {
+    color: #0000CC;
+    text-decoration: underline;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
-.back-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 14px 32px;
-    font-size: 0.92rem;
-    font-weight: 700;
-    border-radius: 6px;
-    width: 100%;
-    max-width: 300px;
-    color: #000;
-    background: linear-gradient(180deg, #FFFFFF, #E8E4D8 45%, #D4D0C8);
-    border: 2px outset #ECE9D8;
-    font-family: 'Tahoma', sans-serif;
-    box-shadow:
-        1px 1px 0 #FFFFFF inset,
-        -1px -1px 0 #808080 inset,
-        0 6px 14px rgba(0, 0, 0, 0.25);
-    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+.link-bar a:hover { color: #CC0000; }
+
+/* ─── MAIN LAYOUT ─── */
+.main-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    gap: 12px;
 }
 
-.back-btn:hover {
-    background: linear-gradient(180deg, #FFFFFF, #F4F0E2 45%, #E4E0D0);
-    transform: translateY(-4px) scale(1.05);
-    border-color: #0088FF;
-    box-shadow:
-        1px 1px 0 #FFFFFF inset,
-        -1px -1px 0 #808080 inset,
-        0 12px 28px rgba(0, 140, 255, 0.55),
-        0 0 50px rgba(0, 180, 255, 0.4);
-}
-
-.back-btn svg { width: 16px; height: 16px; fill: #000; }
-
-/* ─── MOBILE ─── */
-@media (max-width: 480px) {
-    body { padding: 10px; }
-    .main-content { padding: 35px 18px; }
-    #typewriter { font-size: 1.8rem; }
-    .btn-merch, .btn-discord { height: 50px; font-size: 0.85rem; width: 220px; }
-    .unavailable-box { padding: 34px 24px; }
-    .unavailable-title { font-size: 1.35rem; }
-    .unavailable-text { font-size: 0.85rem; }
-}
-
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
-}
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
+@media (max-width: 800px) {
+    .main-grid {
+        grid-template-columns: 1fr;
     }
 }
 
+/* ─── SIDEBAR BOXES ─── */
+.box {
+    background: #FFFFFF;
+    border: 1px solid #B0B0A8;
+    margin-bottom: 10px;
+}
+
+.box-title {
+    background: #E8E4D8;
+    border-bottom: 1px solid #B0B0A8;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.box-body {
+    padding: 8px 10px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #333333;
+}
+
+.box-body a {
+    color: #0000CC;
+    text-decoration: underline;
+}
+
+.box-body a:hover { color: #CC0000; }
+
+/* ─── CENTER COLUMN ─── */
+.center-col {
+    background: #FFFFFF;
+    border: 1px solid #B0B0A8;
+    padding: 12px 14px;
+}
+
+.center-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #000000;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #E0E0D8;
+    margin-bottom: 10px;
+}
+
+.link-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 20px;
+    margin-bottom: 14px;
+}
+
+.link-grid a {
+    color: #0000CC;
+    text-decoration: underline;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.link-grid a:hover { color: #CC0000; }
+
+/* ─── ESP11 BOX ─── */
+.esp-main {
+    background: #FFFFFF;
+    border: 1px solid #B0B0A8;
+    padding: 10px 14px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.esp-main .name {
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000000;
+    letter-spacing: 0.5px;
+}
+
+.esp-main .status {
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #008000;
+    letter-spacing: 0.5px;
+}
+
+/* ─── BUTTONS ROW ─── */
+.btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dotted #C8C8C0;
+}
+
+.btn-discord {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 14px;
+    background: #D4D0C8;
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000000;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+}
+
+.btn-discord:hover { background: #E0DCD0; color: #0000CC; }
+
+.btn-discord:active {
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.discord-icon {
+    width: 12px;
+    height: 12px;
+    fill: #5865F2;
+    flex-shrink: 0;
+}
+
+/* ─── PAGE TRANSITIONS ─── */
+.page-content {
+    display: none;
+}
+
+.page-content.active {
+    display: block;
+}
+
+/* ─── DOWNLOAD PAGE ─── */
+.download-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background: #FFFFFF;
+    border: 1px solid #B0B0A8;
+    margin-bottom: 8px;
+}
+
+.download-item a {
+    color: #0000CC;
+    text-decoration: underline;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.download-item a:hover { color: #CC0000; }
+
+.download-size {
+    font-size: 10px;
+    color: #888888;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+    margin-top: 24px;
+    padding: 12px 4px;
+    border-top: 1px solid #C8C8C0;
+    font-size: 10px;
+    color: #888888;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.footer a {
+    color: #0000CC;
+    text-decoration: underline;
+}
+
+/* ─── MOBILE ─── */
+@media (max-width: 480px) {
+    html, body { font-size: 10px; }
+    .page-wrap { padding: 12px 8px 30px; }
+    #typewriter { font-size: 1.6rem; }
+    .link-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -457,48 +346,106 @@ body::after {
 
 <!-- MAIN PAGE -->
 <div id="mainPage">
-    <div class="main-content">
-        <div class="title-wrapper">
+    <div class="page-wrap">
+
+        <!-- HEADER -->
+        <div class="header">
             <h1 id="typewriter">
                 <span id="typed-text"></span><span class="cursor"></span>
             </h1>
-        </div>
-
-        <div class="buttons-container">
-            <div class="btn-wrapper">
-                <button type="button" class="btn-merch" id="dropsBtn">
-                    <span class="btn-text">Drops</span>
-                </button>
-            </div>
-
-            <div class="btn-wrapper">
-                <a href="https://discord.gg/8qCDcjFH7c" class="btn-discord" target="_blank" rel="noopener">
-                    <svg class="discord-icon" viewBox="0 0 127.14 96.36" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S53.9,46,53.9,53,48.77,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.21,60,73.21,53s5-12.74,11.44-12.74S96.12,46,96.12,53,91,65.69,84.69,65.69Z"/>
-                    </svg>
-                    <span class="btn-text">Discord</span>
-                </a>
+            <div class="header-right">
+                <a href="#">Advanced Search</a> &middot;
+                <a href="#">Site Map</a>
             </div>
         </div>
+
+        <!-- LINK BAR -->
+        <div class="link-bar">
+            <a href="#">Home</a>
+            <a href="#">Tools</a>
+            <a href="#">Forums</a>
+            <a href="#">Subscription</a>
+        </div>
+
+        <!-- MAIN GRID -->
+        <div class="main-grid">
+
+            <!-- LEFT SIDEBAR -->
+            <div class="left-col">
+                <div class="box">
+                    <div class="box-title">Featured Content</div>
+                    <div class="box-body">
+                        <a href="#">ESP11 Patched</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER COLUMN -->
+            <div class="center-col">
+                <div class="center-title">Quick Links</div>
+
+                <div class="link-grid">
+                    <a href="#" id="downloadLink">Download Page</a>
+                    <a href="#">Members Arena</a>
+                </div>
+
+                <!-- Discord button -->
+                <div class="btn-row">
+                    <a href="https://discord.gg/8qCDcjFH7c" class="btn-discord" target="_blank" rel="noopener">
+                        <svg class="discord-icon" viewBox="0 0 127.14 96.36" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S53.9,46,53.9,53,48.77,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.21,60,73.21,53s5-12.74,11.44-12.74S96.12,46,96.12,53,91,65.69,84.69,65.69Z"/>
+                        </svg>
+                        <span>Discord</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDEBAR -->
+            <div class="right-col">
+                <div class="box">
+                    <div class="box-title">Get Started With A Subscription</div>
+                    <div class="box-body" style="text-align:center;">
+                        <div style="background:#EFEFEA;padding:8px;border:1px solid #C8C8C0;">
+                            <span style="font-size:11px;font-weight:bold;">1.99 euro / month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <a href="#">Terms of Service</a>
+        </div>
+
     </div>
 </div>
 
-<!-- DROPS UNAVAILABLE PAGE -->
-<div id="dropsPage">
-    <div class="unavailable-box">
-        <div class="unavailable-icon">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-            </svg>
+<!-- DOWNLOAD PAGE -->
+<div id="downloadPage">
+    <div class="page-wrap">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1 style="font-family:'Times New Roman',Times,serif;font-size:2.2rem;font-weight:bold;color:#000;min-height:1.2em;line-height:1.2;">
+                Download Page
+            </h1>
+            <div class="header-right">
+                <a href="#" id="backLink">&laquo; Back to Home</a>
+            </div>
         </div>
-        <div class="unavailable-title">Cleetus Drop is temporarily unavailable</div>
-        <div class="unavailable-text">Please check back later. We are currently working on something big.</div>
-        <button type="button" class="back-btn" id="backBtn">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-            </svg>
-            <span>Back to Home</span>
-        </button>
+
+        <!-- DOWNLOAD ITEM -->
+        <div class="download-item">
+            <a href="https://github.com/JKAnderson/DSR-Gadget" target="_blank" rel="noopener">DSR-Gadget</a>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <a href="#">Terms of Service</a>
+        </div>
+
     </div>
 </div>
 
@@ -512,31 +459,14 @@ try {
 
 function $(id) { return document.getElementById(id); }
 
-function playSound(freq) {
-    freq = freq || 800;
-    try {
-        var ctx = new (window.AudioContext || window.webkitAudioContext)();
-        var osc = ctx.createOscillator();
-        var gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.frequency.value = freq;
-        osc.type = 'sine';
-        gain.gain.setValueAtTime(0.1, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.12);
-    } catch (e) {}
-}
-
-/* ─── TYPEWRITER ─── */
+/* ─── TYPEWRITER (just "Cleetus") ─── */
 (function typewriter() {
     var target = $('typed-text');
     if (!target) return;
-    var word = 'Cleetus Drop';
+    var word = 'Cleetus';
     var idx = 0;
     var deleting = false;
-    var speed = 150;
+    var speed = 160;
 
     function step() {
         if (!deleting) {
@@ -544,15 +474,15 @@ function playSound(freq) {
             idx++;
             if (idx === word.length) {
                 deleting = true;
-                speed = 2200;
-                setTimeout(function () { speed = 70; }, 2200);
+                speed = 2400;
+                setTimeout(function () { speed = 90; }, 2400);
             }
         } else {
             target.textContent = word.substring(0, idx - 1);
             idx--;
             if (idx === 0) {
                 deleting = false;
-                speed = 130;
+                speed = 140;
             }
         }
         setTimeout(step, speed);
@@ -560,40 +490,24 @@ function playSound(freq) {
     step();
 })();
 
-/* ─── PAGE NAV ─── */
-function showDrops() {
-    playSound(500);
-    var main = $('mainPage');
-    var drops = $('dropsPage');
-    main.style.display = 'none';
-    drops.style.display = 'flex';
-    drops.classList.add('active');
+/* ─── PAGE NAVIGATION ─── */
+function showDownload() {
+    $('mainPage').style.display = 'none';
+    $('downloadPage').style.display = 'block';
     try { window.Telegram.WebApp.expand(); } catch (e) {}
 }
 
-function hideDrops() {
-    playSound(800);
-    var main = $('mainPage');
-    var drops = $('dropsPage');
-    drops.style.display = 'none';
-    drops.classList.remove('active');
-    main.style.display = 'block';
+function hideDownload() {
+    $('downloadPage').style.display = 'none';
+    $('mainPage').style.display = 'block';
     try { window.Telegram.WebApp.expand(); } catch (e) {}
 }
 
-/* ─── EVENT BINDINGS ─── */
 function bindAll() {
-    var dropsBtn = $('dropsBtn');
-    var backBtn = $('backBtn');
-
-    if (dropsBtn && !dropsBtn.dataset.bound) {
-        dropsBtn.addEventListener('click', showDrops);
-        dropsBtn.dataset.bound = '1';
-    }
-    if (backBtn && !backBtn.dataset.bound) {
-        backBtn.addEventListener('click', hideDrops);
-        backBtn.dataset.bound = '1';
-    }
+    var dl = $('downloadLink');
+    var bk = $('backLink');
+    if (dl && !dl.dataset.bound) { dl.addEventListener('click', function (e) { e.preventDefault(); showDownload(); }); dl.dataset.bound = '1'; }
+    if (bk && !bk.dataset.bound) { bk.addEventListener('click', function (e) { e.preventDefault(); hideDownload(); }); bk.dataset.bound = '1'; }
 }
 document.addEventListener('DOMContentLoaded', bindAll);
 setTimeout(bindAll, 0);
@@ -602,74 +516,24 @@ setTimeout(bindAll, 0);
 (function () {
     var cursor = $('customCursor');
     if (!cursor) return;
-
     var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-    if (isTouch) {
-        cursor.style.display = 'none';
-        return;
-    }
+    if (isTouch) { cursor.style.display = 'none'; return; }
 
     document.addEventListener('mousemove', function (e) {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
         cursor.style.opacity = '1';
     });
+    document.addEventListener('mouseleave', function () { cursor.style.opacity = '0'; });
 
-    document.addEventListener('mouseleave', function () {
-        cursor.style.opacity = '0';
-    });
-
-    var sel = 'button, a, .back-btn, .btn-merch, .btn-discord';
     document.addEventListener('mouseover', function (e) {
-        if (e.target.closest(sel)) cursor.classList.add('hover');
+        if (e.target.closest('button, a, input')) cursor.classList.add('hover');
     });
     document.addEventListener('mouseout', function (e) {
-        if (e.target.closest(sel)) cursor.classList.remove('hover');
+        if (e.target.closest('button, a, input')) cursor.classList.remove('hover');
     });
-
     document.addEventListener('mousedown', function () { cursor.classList.add('click'); });
     document.addEventListener('mouseup', function () { cursor.classList.remove('click'); });
-})();
-
-/* ─── INTERACTIVE BACKGROUND ─── */
-document.addEventListener('mousemove', function (e) {
-    var x = (e.clientX / window.innerWidth) * 100;
-    var y = (e.clientY / window.innerHeight) * 100;
-    document.documentElement.style.setProperty('--mx', x + '%');
-    document.documentElement.style.setProperty('--my', y + '%');
-});
-
-/* ─── KEYBOARD ─── */
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && $('dropsPage').classList.contains('active')) {
-        hideDrops();
-    }
-});
-</script>
-
-
-<script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
-    });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
 })();
 </script>
 
