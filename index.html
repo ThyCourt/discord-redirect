@@ -57,6 +57,23 @@ a, button, input {
 .custom-cursor.hover { filter: drop-shadow(0 0 3px #0000CC); }
 .custom-cursor.click { width: 18px; height: 18px; margin-left: -9px; margin-top: -9px; }
 
+/* ─── BANNER ─── */
+.banner-wrap {
+    width: 100%;
+    background: #F5F5F0;
+    text-align: center;
+    padding: 0;
+    border-bottom: 1px solid #C8C8C0;
+}
+
+.banner-wrap img {
+    display: block;
+    width: 100%;
+    max-width: 2172px;
+    height: auto;
+    margin: 0 auto;
+}
+
 /* ─── LAYOUT ─── */
 .page-wrap {
     max-width: 1000px;
@@ -281,15 +298,6 @@ a, button, input {
     flex-shrink: 0;
 }
 
-/* ─── PAGE TRANSITIONS ─── */
-.page-content {
-    display: none;
-}
-
-.page-content.active {
-    display: block;
-}
-
 /* ─── DOWNLOAD PAGE ─── */
 .download-item {
     display: flex;
@@ -309,11 +317,6 @@ a, button, input {
 }
 
 .download-item a:hover { color: #CC0000; }
-
-.download-size {
-    font-size: 10px;
-    color: #888888;
-}
 
 /* ─── FOOTER ─── */
 .footer {
@@ -338,30 +341,16 @@ a, button, input {
     #typewriter { font-size: 1.6rem; }
     .link-grid { grid-template-columns: 1fr; }
 }
-
-
-/* UI grid repair */
-.button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 14px !important;
-    width: 100%;
-}
-.button-grid > *, .buttons-grid > *, .button-container > *, .buttons > *, .links > *, .link-grid > * {
-    width: 100% !important;
-    min-width: 0;
-}
-@media (max-width: 520px) {
-    .button-grid, .buttons-grid, .button-container, .buttons, .links, .link-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-
 </style>
 </head>
 <body>
 
 <div class="custom-cursor" id="customCursor"></div>
+
+<!-- BANNER -->
+<div class="banner-wrap">
+    <img src="banner.png" alt="Cleetus Banner" />
+</div>
 
 <!-- MAIN PAGE -->
 <div id="mainPage">
@@ -442,7 +431,7 @@ a, button, input {
 </div>
 
 <!-- DOWNLOAD PAGE -->
-<div id="downloadPage">
+<div id="downloadPage" style="display:none;">
     <div class="page-wrap">
 
         <!-- HEADER -->
@@ -553,32 +542,6 @@ setTimeout(bindAll, 0);
     });
     document.addEventListener('mousedown', function () { cursor.classList.add('click'); });
     document.addEventListener('mouseup', function () { cursor.classList.remove('click'); });
-})();
-</script>
-
-
-<script>
-(() => {
-  const repairButtonGrids = () => {
-    document.querySelectorAll('button, a').forEach((el) => {
-      const parent = el.parentElement;
-      if (!parent) return;
-      const actions = [...parent.children].filter((child) =>
-        child.matches('button, a') && child.offsetParent !== null
-      );
-      if (actions.length >= 2) {
-        parent.style.display = 'grid';
-        parent.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
-        parent.style.gap = '14px';
-        actions.forEach((child) => child.style.width = '100%');
-      }
-    });
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', repairButtonGrids);
-  } else {
-    repairButtonGrids();
-  }
 })();
 </script>
 
