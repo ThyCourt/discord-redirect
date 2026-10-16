@@ -25,10 +25,10 @@ body {
     color: #000000;
 }
 
-a, button, input { cursor: none; font-family: Verdana, Tahoma, Arial, sans-serif; }
+a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma, Arial, sans-serif; }
 
 @media (hover: none), (pointer: coarse) {
-    body, a, button, input { cursor: auto; }
+    body, a, button, input, textarea, select { cursor: auto; }
     .custom-cursor { display: none !important; }
 }
 
@@ -124,21 +124,14 @@ a, button, input { cursor: none; font-family: Verdana, Tahoma, Arial, sans-serif
 .box-body a:hover { color: #CC0000; }
 
 /* ─── LIVE CHAT ─── */
-.chat-box-body {
-    padding: 4px;
-    line-height: 0;
-    position: relative;
-}
+.chat-box-body { padding: 4px; line-height: 0; position: relative; }
 .chat-frame {
     position: relative;
-    width: 100%;
-    height: 450px;
+    width: 100%; height: 450px;
     overflow: hidden;
 }
 .chat-frame iframe {
-    display: block;
-    width: 100%;
-    height: 100%;
+    display: block; width: 100%; height: 100%;
     border: 0;
     transition: filter 0.25s ease;
 }
@@ -149,20 +142,15 @@ a, button, input { cursor: none; font-family: Verdana, Tahoma, Arial, sans-serif
 .chat-overlay {
     position: absolute; inset: 0;
     display: none;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 14px;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 14px;
     background: rgba(245,245,240,0.35);
     z-index: 5;
 }
 .chat-frame.locked .chat-overlay { display: flex; }
-
 .chat-overlay .panel {
-    background: #FFFFFF;
-    border: 1px solid #B0B0A8;
-    padding: 12px 14px;
-    max-width: 170px;
+    background: #FFFFFF; border: 1px solid #B0B0A8;
+    padding: 12px 14px; max-width: 170px;
     box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
 }
 .chat-overlay .title {
@@ -170,23 +158,16 @@ a, button, input { cursor: none; font-family: Verdana, Tahoma, Arial, sans-serif
     font-size: 1rem; font-weight: bold;
     margin-bottom: 6px; color: #000000;
 }
-.chat-overlay p {
-    font-size: 10px; line-height: 1.5;
-    color: #333333; margin-bottom: 8px;
-}
+.chat-overlay p { font-size: 10px; line-height: 1.5; color: #333333; margin-bottom: 8px; }
 .chat-overlay .signin-btn {
-    display: inline-block;
-    padding: 4px 12px;
+    display: inline-block; padding: 4px 12px;
     background: #D4D0C8;
     border-top: 1px solid #FFFFFF;
     border-left: 1px solid #FFFFFF;
     border-right: 1px solid #808080;
     border-bottom: 1px solid #808080;
-    color: #000000;
-    font-weight: bold;
-    font-size: 11px;
-    text-decoration: none;
-    letter-spacing: 0.3px;
+    color: #000000; font-weight: bold; font-size: 11px;
+    text-decoration: none; letter-spacing: 0.3px;
 }
 .chat-overlay .signin-btn:hover { background: #E0DCD0; color: #0000CC; }
 .chat-overlay .signin-btn:active {
@@ -277,13 +258,15 @@ a, button, input { cursor: none; font-family: Verdana, Tahoma, Arial, sans-serif
 }
 .download-item a:hover { color: #CC0000; }
 
-/* ─── PLAYLIST PAGE ─── */
-.playlist-title, .products-title, .templates-title {
+/* ─── SHARED PAGE TITLES ─── */
+.playlist-title, .products-title, .templates-title, .tools-title {
     font-family: 'Times New Roman', Times, serif;
     font-size: 2rem; font-weight: bold; color: #000000;
     margin-bottom: 16px; padding-bottom: 8px;
     border-bottom: 1px solid #C8C8C0;
 }
+
+/* ─── PLAYLIST PAGE ─── */
 .song-item {
     display: flex; flex-direction: column; gap: 8px;
     padding: 12px 14px; background: #FFFFFF;
@@ -344,6 +327,185 @@ a.product-item:hover { background: #EEEEEE; }
     border: 1px solid #C8C8C0;
 }
 
+/* ─── TOOLS PAGE ─── */
+.tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+@media (max-width: 700px) { .tools-grid { grid-template-columns: 1fr; } }
+
+.tool-box {
+    background: #FFFFFF;
+    border: 1px solid #B0B0A8;
+    display: flex;
+    flex-direction: column;
+}
+.tool-box-title {
+    background: #E8E4D8;
+    border-bottom: 1px solid #B0B0A8;
+    padding: 4px 8px;
+    font-size: 11px; font-weight: bold;
+}
+.tool-box-body {
+    padding: 12px;
+    font-size: 11px; line-height: 1.5;
+    color: #333333;
+    flex: 1;
+}
+
+.tool-input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #B0B0A8;
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 11px;
+    background: #FFFFFF; color: #000000;
+    outline: none;
+}
+.tool-input:focus { border-color: #0000CC; }
+
+.tool-btn {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 14px;
+    background: #D4D0C8;
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 11px; font-weight: bold;
+    color: #000000;
+    cursor: pointer;
+}
+.tool-btn:hover { background: #E0DCD0; color: #0000CC; }
+.tool-btn:active {
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+
+.tool-output {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px dashed #B0B0A8;
+    background: #F9F9F5;
+    font-size: 11px;
+    line-height: 1.5;
+    min-height: 40px;
+    color: #000000;
+    word-wrap: break-word;
+}
+.tool-output strong { color: #0000CC; }
+
+.cool-score {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 6px 0;
+    color: #CC0000;
+}
+.cool-verdict {
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+.cool-label {
+    text-align: center;
+    font-size: 10px;
+    color: #666666;
+}
+
+/* ─── TERMS MODAL ─── */
+.tos-overlay {
+    position: fixed; inset: 0;
+    display: none;
+    align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.4);
+    z-index: 900000;
+    padding: 20px;
+}
+.tos-overlay.show { display: flex; }
+.tos-dialog {
+    background: #F5F5F0;
+    border: 1px solid #000000;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+    max-width: 340px;
+    width: 100%;
+}
+.tos-titlebar {
+    background: #000080;
+    color: #FFFFFF;
+    padding: 3px 6px;
+    font-size: 11px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.tos-close {
+    background: #D4D0C8;
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    width: 16px;
+    height: 16px;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    color: #000000;
+}
+.tos-close:active {
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+.tos-body {
+    padding: 16px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.tos-body .big {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 10px;
+}
+.tos-body .msg {
+    font-weight: bold;
+    color: #CC0000;
+    margin-bottom: 14px;
+}
+.tos-ok {
+    padding: 4px 20px;
+    background: #D4D0C8;
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.tos-ok:hover { background: #E0DCD0; color: #0000CC; }
+.tos-ok:active {
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+
 /* ─── FOOTER ─── */
 .footer {
     margin-top: 24px; padding: 12px 4px;
@@ -352,6 +514,7 @@ a.product-item:hover { background: #EEEEEE; }
     text-align: center; line-height: 1.6;
 }
 .footer a { color: #0000CC; text-decoration: underline; }
+.footer a:hover { color: #CC0000; }
 
 /* ─── MOBILE ─── */
 @media (max-width: 480px) {
@@ -377,7 +540,6 @@ a.product-item:hover { background: #EEEEEE; }
 <div id="mainPage">
     <div class="page-wrap">
 
-        <!-- HEADER -->
         <div class="header">
             <h1 id="typewriter">
                 <span id="typed-text"></span><span class="cursor"></span>
@@ -389,15 +551,13 @@ a.product-item:hover { background: #EEEEEE; }
             </div>
         </div>
 
-        <!-- LINK BAR -->
+        <!-- LINK BAR (Forums removed) -->
         <div class="link-bar">
             <a href="#">Home</a>
-            <a href="#">Tools</a>
-            <a href="#">Forums</a>
+            <a href="#" id="toolsLinkBar">Tools</a>
             <a href="#">Subscription</a>
         </div>
 
-        <!-- MAIN GRID -->
         <div class="main-grid">
 
             <!-- LEFT SIDEBAR -->
@@ -413,14 +573,14 @@ a.product-item:hover { background: #EEEEEE; }
                 </div>
             </div>
 
-            <!-- CENTER COLUMN -->
+            <!-- CENTER COLUMN (Members Arena removed) -->
             <div class="center-col">
                 <div class="center-title">Quick Links</div>
 
                 <div class="link-grid">
                     <a href="#" id="downloadLink">Download Page</a>
-                    <a href="#">Members Arena</a>
                     <a href="#" id="productsLink">Products</a>
+                    <a href="#" id="toolsLink">Tools</a>
                 </div>
 
                 <div class="btn-row">
@@ -462,7 +622,7 @@ a.product-item:hover { background: #EEEEEE; }
         </div>
 
         <div class="footer">
-            <a href="#">Terms of Service</a>
+            <a href="#" class="tos-link">Terms of Service</a>
         </div>
 
     </div>
@@ -484,7 +644,7 @@ a.product-item:hover { background: #EEEEEE; }
             <a href="https://github.com/JKAnderson/DSR-Gadget" target="_blank" rel="noopener">DSR-Gadget</a>
         </div>
 
-        <div class="footer"><a href="#">Terms of Service</a></div>
+        <div class="footer"><a href="#" class="tos-link">Terms of Service</a></div>
     </div>
 </div>
 
@@ -498,7 +658,7 @@ a.product-item:hover { background: #EEEEEE; }
             </div>
         </div>
         <div id="songList"></div>
-        <div class="footer"><a href="#">Terms of Service</a></div>
+        <div class="footer"><a href="#" class="tos-link">Terms of Service</a></div>
     </div>
 </div>
 
@@ -524,7 +684,7 @@ a.product-item:hover { background: #EEEEEE; }
             <div class="product-price">2.00 €</div>
         </a>
 
-        <div class="footer"><a href="#">Terms of Service</a></div>
+        <div class="footer"><a href="#" class="tos-link">Terms of Service</a></div>
     </div>
 </div>
 
@@ -547,7 +707,64 @@ a.product-item:hover { background: #EEEEEE; }
             </a>
         </div>
 
-        <div class="footer"><a href="#">Terms of Service</a></div>
+        <div class="footer"><a href="#" class="tos-link">Terms of Service</a></div>
+    </div>
+</div>
+
+<!-- TOOLS PAGE -->
+<div id="toolsPage" style="display:none;">
+    <div class="page-wrap">
+        <div class="header">
+            <h1 class="tools-title">Tools</h1>
+            <div class="header-right">
+                <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
+            </div>
+        </div>
+
+        <div class="tools-grid">
+
+            <!-- COOL TEST -->
+            <div class="tool-box">
+                <div class="tool-box-title">Am I Cool? Test</div>
+                <div class="tool-box-body">
+                    <p>Answer one simple question and we'll tell you the truth about your coolness.</p>
+                    <label style="display:block;margin-top:8px;margin-bottom:3px;font-weight:bold;">What's your name?</label>
+                    <input type="text" class="tool-input" id="coolName" placeholder="Enter your name" maxlength="30" />
+                    <button class="tool-btn" id="coolBtn">Test my coolness</button>
+                    <div class="tool-output" id="coolOutput" style="display:none;"></div>
+                </div>
+            </div>
+
+            <!-- EXCUSE GENERATOR -->
+            <div class="tool-box">
+                <div class="tool-box-title">Excuse Generator</div>
+                <div class="tool-box-body">
+                    <p>Need a reason to bail? We've got you covered.</p>
+                    <label style="display:block;margin-top:8px;margin-bottom:3px;font-weight:bold;">What are you skipping?</label>
+                    <input type="text" class="tool-input" id="excuseEvent" placeholder="e.g. work, the party, dinner" maxlength="40" />
+                    <button class="tool-btn" id="excuseBtn">Generate excuse</button>
+                    <div class="tool-output" id="excuseOutput" style="display:none;"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer"><a href="#" class="tos-link">Terms of Service</a></div>
+    </div>
+</div>
+
+<!-- TERMS OF SERVICE MODAL -->
+<div class="tos-overlay" id="tosOverlay">
+    <div class="tos-dialog">
+        <div class="tos-titlebar">
+            <span>Terms of Service</span>
+            <button class="tos-close" id="tosClose">×</button>
+        </div>
+        <div class="tos-body">
+            <div class="big">The Rules</div>
+            <div class="msg">Don't be a dick in the chat.</div>
+            <button class="tos-ok" id="tosOk">OK</button>
+        </div>
     </div>
 </div>
 
@@ -620,11 +837,12 @@ function renderPlaylist() {
 
 /* ─── PAGE NAVIGATION ─── */
 function showPage(targetId) {
-    var pages = ['mainPage', 'downloadPage', 'playlistPage', 'productsPage', 'templatesPage'];
+    var pages = ['mainPage', 'downloadPage', 'playlistPage', 'productsPage', 'templatesPage', 'toolsPage'];
     for (var i = 0; i < pages.length; i++) {
         var el = $(pages[i]);
         if (el) el.style.display = (pages[i] === targetId) ? 'block' : 'none';
     }
+    window.scrollTo(0, 0);
     try { window.Telegram.WebApp.expand(); } catch (e) {}
 }
 
@@ -633,7 +851,10 @@ function bindAll() {
     var pl = $('playlistLink');
     var pr = $('productsLink');
     var tp = $('templatesLink');
+    var tl = $('toolsLink');
+    var tlb = $('toolsLinkBar');
     var backs = document.querySelectorAll('.back-link');
+    var tosLinks = document.querySelectorAll('.tos-link');
 
     if (dl && !dl.dataset.bound) {
         dl.addEventListener('click', function (e) { e.preventDefault(); showPage('downloadPage'); });
@@ -651,6 +872,14 @@ function bindAll() {
         tp.addEventListener('click', function (e) { e.preventDefault(); showPage('templatesPage'); });
         tp.dataset.bound = '1';
     }
+    if (tl && !tl.dataset.bound) {
+        tl.addEventListener('click', function (e) { e.preventDefault(); showPage('toolsPage'); });
+        tl.dataset.bound = '1';
+    }
+    if (tlb && !tlb.dataset.bound) {
+        tlb.addEventListener('click', function (e) { e.preventDefault(); showPage('toolsPage'); });
+        tlb.dataset.bound = '1';
+    }
     for (var i = 0; i < backs.length; i++) {
         var b = backs[i];
         if (b.dataset.bound) continue;
@@ -660,9 +889,105 @@ function bindAll() {
         });
         b.dataset.bound = '1';
     }
+    for (var j = 0; j < tosLinks.length; j++) {
+        var t = tosLinks[j];
+        if (t.dataset.bound) continue;
+        t.addEventListener('click', function (e) {
+            e.preventDefault();
+            $('tosOverlay').classList.add('show');
+        });
+        t.dataset.bound = '1';
+    }
 }
 document.addEventListener('DOMContentLoaded', bindAll);
 setTimeout(bindAll, 0);
+
+/* ─── TERMS OF SERVICE MODAL ─── */
+(function () {
+    var overlay = $('tosOverlay');
+    var closeBtn = $('tosClose');
+    var okBtn = $('tosOk');
+    if (!overlay) return;
+
+    function close() { overlay.classList.remove('show'); }
+    closeBtn.addEventListener('click', close);
+    okBtn.addEventListener('click', close);
+    overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) close();
+    });
+})();
+
+/* ─── COOL TEST ─── */
+(function () {
+    var btn = $('coolBtn');
+    var out = $('coolOutput');
+    var nameInput = $('coolName');
+    if (!btn) return;
+
+    var verdicts = [
+        { min: 90, text: 'Certified Legend',        sub: 'You walk into a room and the room gets cooler.' },
+        { min: 75, text: 'Pretty Damn Cool',        sub: 'People copy your vibe. You know it.' },
+        { min: 55, text: 'Solidly Cool',            sub: 'Not trying too hard. Respect.' },
+        { min: 35, text: 'Somewhat Cool',           sub: 'You have your moments. Cherish them.' },
+        { min: 15, text: 'Barely Cool',             sub: 'Almost cool. Almost.' },
+        { min: 0,  text: 'Not Cool At All',         sub: 'Hey, at least you took the test.' }
+    ];
+
+    btn.addEventListener('click', function () {
+        var name = (nameInput.value || '').trim() || 'Mystery Person';
+        var score = Math.floor(Math.random() * 101);
+        var v = verdicts.find(function (x) { return score >= x.min; });
+
+        out.style.display = 'block';
+        out.innerHTML =
+            '<div class="cool-label">' + escapeHtml(name) + "'s Coolness Score" + '</div>' +
+            '<div class="cool-score">' + score + ' / 100</div>' +
+            '<div class="cool-verdict">' + v.text + '</div>' +
+            '<div class="cool-label">' + v.sub + '</div>';
+    });
+})();
+
+/* ─── EXCUSE GENERATOR ─── */
+(function () {
+    var btn = $('excuseBtn');
+    var out = $('excuseOutput');
+    var eventInput = $('excuseEvent');
+    if (!btn) return;
+
+    var pets = ['my dog', 'my cat', 'my goldfish', 'my neighbor\'s parrot', 'a raccoon', 'my hamster'];
+    var verbs = ['ate', 'destroyed', 'hacked into', 'sat on', 'set fire to', 'peed on'];
+    var objects = ['my homework', 'my phone', 'my car keys', 'the router', 'my shoes', 'the front door'];
+    var tails = [
+        'and I have to deal with it right now.',
+        'so I can\'t leave the house.',
+        'and the police are asking questions.',
+        'and I\'m still emotionally recovering.',
+        'and the insurance company needs a statement.',
+        'and it\'s somehow my fault.'
+    ];
+
+    btn.addEventListener('click', function () {
+        var event = (eventInput.value || '').trim() || 'that';
+        var p = pick(pets);
+        var v = pick(verbs);
+        var o = pick(objects);
+        var t = pick(tails);
+
+        out.style.display = 'block';
+        out.innerHTML =
+            '<strong>Sorry, I can\'t come to ' + escapeHtml(event) + '.</strong><br><br>' +
+            'Because ' + p + ' ' + v + ' ' + o + ' ' + t;
+    });
+
+    function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+})();
+
+/* ─── HELPERS ─── */
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+        return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c];
+    });
+}
 
 /* ─── CURSOR ─── */
 (function () {
@@ -679,10 +1004,10 @@ setTimeout(bindAll, 0);
     document.addEventListener('mouseleave', function () { cursor.style.opacity = '0'; });
 
     document.addEventListener('mouseover', function (e) {
-        if (e.target.closest('button, a, input, audio')) cursor.classList.add('hover');
+        if (e.target.closest('button, a, input, audio, textarea')) cursor.classList.add('hover');
     });
     document.addEventListener('mouseout', function (e) {
-        if (e.target.closest('button, a, input, audio')) cursor.classList.remove('hover');
+        if (e.target.closest('button, a, input, audio, textarea')) cursor.classList.remove('hover');
     });
     document.addEventListener('mousedown', function () { cursor.classList.add('click'); });
     document.addEventListener('mouseup', function () { cursor.classList.remove('click'); });
@@ -703,7 +1028,6 @@ setTimeout(bindAll, 0);
     if (typeof auth === 'undefined') return;
 
     auth.onAuthStateChanged(function (user) {
-        // Header account area
         if (area) {
             if (user) {
                 area.innerHTML = ' &middot; <strong>' + user.email + '</strong> ' +
@@ -720,13 +1044,9 @@ setTimeout(bindAll, 0);
             }
         }
 
-        // Chat lock
         if (frame) {
-            if (user) {
-                frame.classList.remove('locked');
-            } else {
-                frame.classList.add('locked');
-            }
+            if (user) frame.classList.remove('locked');
+            else      frame.classList.add('locked');
         }
     });
 })();
