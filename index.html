@@ -195,6 +195,62 @@ a, button, input {
 
 .box-body a:hover { color: #CC0000; }
 
+/* ─── GUESTBOOK FORM ─── */
+.guestbook-form label {
+    font-weight: bold;
+    display: block;
+    margin-top: 4px;
+    margin-bottom: 2px;
+    font-size: 10px;
+}
+
+.guestbook-form input[type="text"],
+.guestbook-form textarea {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #B0B0A8;
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 11px;
+    background: #FFFFFF;
+    color: #000000;
+    outline: none;
+}
+
+.guestbook-form input[type="text"]:focus,
+.guestbook-form textarea:focus {
+    border-color: #0000CC;
+}
+
+.guestbook-form textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.guestbook-form button {
+    margin-top: 8px;
+    padding: 4px 14px;
+    background: #D4D0C8;
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: #000000;
+    cursor: pointer;
+    width: 100%;
+}
+
+.guestbook-form button:hover { background: #E0DCD0; color: #0000CC; }
+
+.guestbook-form button:active {
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+}
+
 /* ─── PLAYLIST ITEM IN FEATURED CONTENT ─── */
 .playlist-feature {
     display: flex;
@@ -587,8 +643,23 @@ a.product-item:hover {
                 </div>
             </div>
 
-            <!-- RIGHT SIDEBAR (empty) -->
-            <div class="right-col"></div>
+            <!-- RIGHT SIDEBAR -->
+            <div class="right-col">
+                <div class="box">
+                    <div class="box-title">Sign the Guestbook</div>
+                    <div class="box-body">
+                        <form action="https://formspree.io/f/xzedyozj" method="POST" class="guestbook-form">
+                            <label for="name">Your Name:</label>
+                            <input type="text" id="name" name="name" required />
+
+                            <label for="message">Your Message:</label>
+                            <textarea id="message" name="message" rows="4" required></textarea>
+
+                            <button type="submit">Sign Guestbook</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
