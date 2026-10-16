@@ -379,6 +379,13 @@ a, button, input {
     border: 1px solid #B0B0A8;
     margin-bottom: 8px;
     gap: 12px;
+    text-decoration: none;
+    color: #000000;
+    transition: background 0.15s ease;
+}
+
+a.product-item:hover {
+    background: #EEEEEE;
 }
 
 .product-name {
@@ -394,6 +401,50 @@ a, button, input {
     font-weight: bold;
     color: #008000;
     white-space: nowrap;
+}
+
+/* ─── TEMPLATES PAGE ─── */
+.templates-title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #C8C8C0;
+}
+
+.templates-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+@media (max-width: 600px) {
+    .templates-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.template-item {
+    display: block;
+    background: #FFFFFF;
+    border: 1px solid #B0B0A8;
+    padding: 10px;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.template-item:hover {
+    background: #EEEEEE;
+}
+
+.template-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #C8C8C0;
 }
 
 /* ─── FOOTER ─── */
@@ -510,8 +561,6 @@ a, button, input {
 <!-- DOWNLOAD PAGE -->
 <div id="downloadPage" style="display:none;">
     <div class="page-wrap">
-
-        <!-- HEADER -->
         <div class="header">
             <h1 style="font-family:'Times New Roman',Times,serif;font-size:2.2rem;font-weight:bold;color:#000;min-height:1.2em;line-height:1.2;">
                 Download Page
@@ -521,24 +570,19 @@ a, button, input {
             </div>
         </div>
 
-        <!-- DOWNLOAD ITEM -->
         <div class="download-item">
             <a href="https://github.com/JKAnderson/DSR-Gadget" target="_blank" rel="noopener">DSR-Gadget</a>
         </div>
 
-        <!-- FOOTER -->
         <div class="footer">
             <a href="#">Terms of Service</a>
         </div>
-
     </div>
 </div>
 
 <!-- PLAYLIST PAGE -->
 <div id="playlistPage" style="display:none;">
     <div class="page-wrap">
-
-        <!-- HEADER -->
         <div class="header">
             <h1 class="playlist-title">Playlist of the Week</h1>
             <div class="header-right">
@@ -546,22 +590,17 @@ a, button, input {
             </div>
         </div>
 
-        <!-- SONG LIST -->
         <div id="songList"></div>
 
-        <!-- FOOTER -->
         <div class="footer">
             <a href="#">Terms of Service</a>
         </div>
-
     </div>
 </div>
 
 <!-- PRODUCTS PAGE -->
 <div id="productsPage" style="display:none;">
     <div class="page-wrap">
-
-        <!-- HEADER -->
         <div class="header">
             <h1 class="products-title">Products</h1>
             <div class="header-right">
@@ -577,24 +616,42 @@ a, button, input {
             <div class="product-price">0.99 €</div>
         </div>
 
-        <div class="product-item">
-            <div class="product-name">Cleetus Ai Agents</div>
-            <div class="product-price">1 €</div>
-        </div>
+        <!-- WEBSITE TEMPLATES CATEGORY -->
+        <div class="category-title">Build Your Own Webpage With Cleetus Templates</div>
 
-        <!-- EXPLOITS CATEGORY -->
-        <div class="category-title">Exploits</div>
+        <a href="#" class="product-item" id="templatesLink">
+            <div class="product-name">Cleetus Templates</div>
+            <div class="product-price">2.00 €</div>
+        </a>
 
-        <div class="product-item">
-            <div class="product-name">Cs2 ESP11 Monthly Subscription</div>
-            <div class="product-price">4 €</div>
-        </div>
-
-        <!-- FOOTER -->
         <div class="footer">
             <a href="#">Terms of Service</a>
         </div>
+    </div>
+</div>
 
+<!-- TEMPLATES PAGE -->
+<div id="templatesPage" style="display:none;">
+    <div class="page-wrap">
+        <div class="header">
+            <h1 class="templates-title">Templates</h1>
+            <div class="header-right">
+                <a href="#" class="back-link" data-target="productsPage">&laquo; Back to Products</a>
+            </div>
+        </div>
+
+        <div class="templates-grid">
+            <a href="https://t.me/thycleetus" target="_blank" rel="noopener" class="template-item">
+                <img src="po.png" alt="Template 1" />
+            </a>
+            <a href="https://t.me/thycleetus" target="_blank" rel="noopener" class="template-item">
+                <img src="pi.png" alt="Template 2" />
+            </a>
+        </div>
+
+        <div class="footer">
+            <a href="#">Terms of Service</a>
+        </div>
     </div>
 </div>
 
@@ -617,12 +674,10 @@ var SONGS = [
 function renderPlaylist() {
     var list = $('songList');
     if (!list) return;
-
     if (!SONGS.length) {
         list.innerHTML = '<div class="playlist-empty">No songs in the playlist.</div>';
         return;
     }
-
     var html = '';
     for (var i = 0; i < SONGS.length; i++) {
         var s = SONGS[i];
@@ -669,7 +724,7 @@ function renderPlaylist() {
 
 /* ─── PAGE NAVIGATION ─── */
 function showPage(targetId) {
-    var pages = ['mainPage', 'downloadPage', 'playlistPage', 'productsPage'];
+    var pages = ['mainPage', 'downloadPage', 'playlistPage', 'productsPage', 'templatesPage'];
     for (var i = 0; i < pages.length; i++) {
         var el = $(pages[i]);
         if (el) el.style.display = (pages[i] === targetId) ? 'block' : 'none';
@@ -681,6 +736,7 @@ function bindAll() {
     var dl = $('downloadLink');
     var pl = $('playlistLink');
     var pr = $('productsLink');
+    var tp = $('templatesLink');
     var backs = document.querySelectorAll('.back-link');
 
     if (dl && !dl.dataset.bound) {
@@ -694,6 +750,10 @@ function bindAll() {
     if (pr && !pr.dataset.bound) {
         pr.addEventListener('click', function (e) { e.preventDefault(); showPage('productsPage'); });
         pr.dataset.bound = '1';
+    }
+    if (tp && !tp.dataset.bound) {
+        tp.addEventListener('click', function (e) { e.preventDefault(); showPage('templatesPage'); });
+        tp.dataset.bound = '1';
     }
     for (var i = 0; i < backs.length; i++) {
         var b = backs[i];
