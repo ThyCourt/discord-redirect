@@ -8,11 +8,7 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
     min-height: 100vh;
@@ -29,10 +25,7 @@ body {
     color: #000000;
 }
 
-a, button, input {
-    cursor: none;
-    font-family: Verdana, Tahoma, Arial, sans-serif;
-}
+a, button, input { cursor: none; font-family: Verdana, Tahoma, Arial, sans-serif; }
 
 @media (hover: none), (pointer: coarse) {
     body, a, button, input { cursor: auto; }
@@ -41,117 +34,66 @@ a, button, input {
 
 /* ─── CURSOR ─── */
 .custom-cursor {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 24px;
-    height: 24px;
-    margin-left: -12px;
-    margin-top: -12px;
-    pointer-events: none;
-    z-index: 999999;
+    position: fixed; top: 0; left: 0;
+    width: 24px; height: 24px;
+    margin-left: -12px; margin-top: -12px;
+    pointer-events: none; z-index: 999999;
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M4 2 L4 24 L10 18 L14 28 L18 26 L14 16 L22 16 Z' fill='%23FFFFFF' stroke='%23000' stroke-width='1.4' stroke-linejoin='round'/></svg>") no-repeat center;
     background-size: contain;
 }
-
 .custom-cursor.hover { filter: drop-shadow(0 0 3px #0000CC); }
 .custom-cursor.click { width: 18px; height: 18px; margin-left: -9px; margin-top: -9px; }
 
 /* ─── BANNER ─── */
 .banner-wrap {
-    width: 100%;
-    background: #F5F5F0;
-    text-align: center;
-    padding: 0;
-    border-bottom: 1px solid #C8C8C0;
+    width: 100%; background: #F5F5F0; text-align: center;
+    padding: 0; border-bottom: 1px solid #C8C8C0;
 }
-
-.banner-wrap img {
-    display: block;
-    width: 100%;
-    max-width: 2172px;
-    height: auto;
-    margin: 0 auto;
-}
+.banner-wrap img { display: block; width: 100%; max-width: 2172px; height: auto; margin: 0 auto; }
 
 /* ─── LAYOUT ─── */
 .page-wrap {
-    max-width: 1000px;
-    margin: 0 auto;
+    max-width: 1000px; margin: 0 auto;
     padding: 20px 14px 40px;
-    background: #F5F5F0;
-    min-height: 100vh;
+    background: #F5F5F0; min-height: 100vh;
 }
 
 /* ─── HEADER ─── */
 .header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+    display: flex; align-items: flex-end; justify-content: space-between;
     padding: 10px 4px 12px;
-    border-bottom: 1px solid #C8C8C0;
-    margin-bottom: 12px;
+    border-bottom: 1px solid #C8C8C0; margin-bottom: 12px;
 }
 
 #typewriter {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 2.2rem;
-    font-weight: bold;
-    color: #000000;
-    letter-spacing: 0.5px;
-    min-height: 1.2em;
-    line-height: 1.2;
+    font-size: 2.2rem; font-weight: bold;
+    color: #000000; letter-spacing: 0.5px;
+    min-height: 1.2em; line-height: 1.2;
 }
-
 #typed-text { color: #000000; }
-
 #typewriter .cursor {
-    display: inline-block;
-    width: 3px;
-    height: 0.85em;
-    margin-left: 2px;
-    background: #000000;
-    animation: blink 0.9s step-end infinite;
-    vertical-align: middle;
+    display: inline-block; width: 3px; height: 0.85em;
+    margin-left: 2px; background: #000000;
+    animation: blink 0.9s step-end infinite; vertical-align: middle;
 }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
 
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0; }
-}
-
-.header-right {
-    font-size: 10px;
-    color: #666666;
-    text-align: right;
-}
-
-.header-right a {
-    color: #0000CC;
-    text-decoration: underline;
-}
-
+.header-right { font-size: 10px; color: #666666; text-align: right; }
+.header-right a { color: #0000CC; text-decoration: underline; }
 .header-right strong { color: #000000; }
 
 /* ─── LINK BAR ─── */
 .link-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 18px;
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
     padding: 8px 0 10px;
-    border-bottom: 1px solid #C8C8C0;
-    margin-bottom: 12px;
+    border-bottom: 1px solid #C8C8C0; margin-bottom: 12px;
 }
-
 .link-bar a {
-    color: #0000CC;
-    text-decoration: underline;
-    font-size: 11px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
+    color: #0000CC; text-decoration: underline;
+    font-size: 11px; font-weight: bold;
+    text-transform: uppercase; letter-spacing: 0.3px;
 }
-
 .link-bar a:hover { color: #CC0000; }
 
 /* ─── MAIN LAYOUT ─── */
@@ -160,12 +102,7 @@ a, button, input {
     grid-template-columns: 200px 1fr 200px;
     gap: 12px;
 }
-
-@media (max-width: 800px) {
-    .main-grid {
-        grid-template-columns: 1fr;
-    }
-}
+@media (max-width: 800px) { .main-grid { grid-template-columns: 1fr; } }
 
 /* ─── BOXES ─── */
 .box {
@@ -173,127 +110,140 @@ a, button, input {
     border: 1px solid #B0B0A8;
     margin-bottom: 10px;
 }
-
 .box-title {
     background: #E8E4D8;
     border-bottom: 1px solid #B0B0A8;
     padding: 4px 8px;
-    font-size: 11px;
-    font-weight: bold;
-    color: #000000;
+    font-size: 11px; font-weight: bold; color: #000000;
 }
-
 .box-body {
     padding: 8px 10px;
-    font-size: 11px;
-    line-height: 1.5;
-    color: #333333;
+    font-size: 11px; line-height: 1.5; color: #333333;
 }
-
-.box-body a {
-    color: #0000CC;
-    text-decoration: underline;
-}
-
+.box-body a { color: #0000CC; text-decoration: underline; }
 .box-body a:hover { color: #CC0000; }
 
-/* ─── LIVE CHAT (CBOX) ─── */
+/* ─── LIVE CHAT ─── */
 .chat-box-body {
     padding: 4px;
     line-height: 0;
+    position: relative;
 }
-
-.chat-box-body iframe {
-    display: block;
+.chat-frame {
+    position: relative;
     width: 100%;
     height: 450px;
+    overflow: hidden;
+}
+.chat-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
     border: 0;
+    transition: filter 0.25s ease;
 }
-
-/* ─── PLAYLIST ITEM IN FEATURED CONTENT ─── */
-.playlist-feature {
-    display: flex;
-    flex-direction: column;
+.chat-frame.locked iframe {
+    filter: blur(7px) grayscale(0.6);
+    pointer-events: none;
+}
+.chat-overlay {
+    position: absolute; inset: 0;
+    display: none;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
     text-align: center;
-    text-decoration: none;
-    color: #000000;
-    padding: 4px 0;
+    padding: 14px;
+    background: rgba(245,245,240,0.35);
+    z-index: 5;
 }
+.chat-frame.locked .chat-overlay { display: flex; }
 
-.playlist-feature img {
-    width: 100px;
-    height: auto;
-    border: 1px solid #B0B0A8;
-    padding: 2px;
-    background: #F5F5F0;
-    transition: transform 0.2s ease;
-}
-
-.playlist-feature:hover img {
-    transform: scale(1.05);
-}
-
-.playlist-feature .playlist-label {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #0000CC;
-    text-decoration: underline;
-}
-
-.playlist-feature:hover .playlist-label {
-    color: #CC0000;
-}
-
-/* ─── CENTER COLUMN ─── */
-.center-col {
+.chat-overlay .panel {
     background: #FFFFFF;
     border: 1px solid #B0B0A8;
     padding: 12px 14px;
+    max-width: 170px;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+}
+.chat-overlay .title {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1rem; font-weight: bold;
+    margin-bottom: 6px; color: #000000;
+}
+.chat-overlay p {
+    font-size: 10px; line-height: 1.5;
+    color: #333333; margin-bottom: 8px;
+}
+.chat-overlay .signin-btn {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #D4D0C8;
+    border-top: 1px solid #FFFFFF;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    color: #000000;
+    font-weight: bold;
+    font-size: 11px;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+}
+.chat-overlay .signin-btn:hover { background: #E0DCD0; color: #0000CC; }
+.chat-overlay .signin-btn:active {
+    border-top: 1px solid #808080;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
 }
 
+/* ─── PLAYLIST FEATURE ─── */
+.playlist-feature {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px; text-align: center; text-decoration: none;
+    color: #000000; padding: 4px 0;
+}
+.playlist-feature img {
+    width: 100px; height: auto;
+    border: 1px solid #B0B0A8; padding: 2px;
+    background: #F5F5F0;
+    transition: transform 0.2s ease;
+}
+.playlist-feature:hover img { transform: scale(1.05); }
+.playlist-feature .playlist-label {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1rem; font-weight: bold;
+    color: #0000CC; text-decoration: underline;
+}
+.playlist-feature:hover .playlist-label { color: #CC0000; }
+
+/* ─── CENTER COLUMN ─── */
+.center-col {
+    background: #FFFFFF; border: 1px solid #B0B0A8;
+    padding: 12px 14px;
+}
 .center-title {
-    font-size: 12px;
-    font-weight: bold;
-    color: #000000;
-    padding-bottom: 6px;
-    border-bottom: 1px solid #E0E0D8;
+    font-size: 12px; font-weight: bold; color: #000000;
+    padding-bottom: 6px; border-bottom: 1px solid #E0E0D8;
     margin-bottom: 10px;
 }
-
 .link-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4px 20px;
-    margin-bottom: 14px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4px 20px; margin-bottom: 14px;
 }
-
 .link-grid a {
-    color: #0000CC;
-    text-decoration: underline;
-    font-size: 11px;
-    line-height: 1.6;
+    color: #0000CC; text-decoration: underline;
+    font-size: 11px; line-height: 1.6;
 }
-
 .link-grid a:hover { color: #CC0000; }
 
 /* ─── BUTTONS ROW ─── */
 .btn-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-    padding-top: 12px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 12px; padding-top: 12px;
     border-top: 1px dotted #C8C8C0;
 }
-
-.btn-discord,
-.btn-telegram {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
+.btn-discord, .btn-telegram {
+    display: inline-flex; align-items: center; gap: 5px;
     padding: 4px 14px;
     background: #D4D0C8;
     border-top: 1px solid #FFFFFF;
@@ -301,219 +251,107 @@ a, button, input {
     border-right: 1px solid #808080;
     border-bottom: 1px solid #808080;
     font-family: Verdana, Tahoma, Arial, sans-serif;
-    font-size: 11px;
-    font-weight: bold;
-    color: #000000;
-    text-decoration: none;
+    font-size: 11px; font-weight: bold;
+    color: #000000; text-decoration: none;
     letter-spacing: 0.3px;
 }
-
-.btn-discord:hover,
-.btn-telegram:hover { background: #E0DCD0; color: #0000CC; }
-
-.btn-discord:active,
-.btn-telegram:active {
+.btn-discord:hover, .btn-telegram:hover { background: #E0DCD0; color: #0000CC; }
+.btn-discord:active, .btn-telegram:active {
     border-top: 1px solid #808080;
     border-left: 1px solid #808080;
     border-right: 1px solid #FFFFFF;
     border-bottom: 1px solid #FFFFFF;
 }
-
-.discord-icon {
-    width: 12px;
-    height: 12px;
-    fill: #5865F2;
-    flex-shrink: 0;
-}
-
-.telegram-icon {
-    width: 12px;
-    height: 12px;
-    fill: #0088CC;
-    flex-shrink: 0;
-}
+.discord-icon { width: 12px; height: 12px; fill: #5865F2; flex-shrink: 0; }
+.telegram-icon { width: 12px; height: 12px; fill: #0088CC; flex-shrink: 0; }
 
 /* ─── DOWNLOAD PAGE ─── */
 .download-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 14px;
-    background: #FFFFFF;
-    border: 1px solid #B0B0A8;
-    margin-bottom: 8px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px; background: #FFFFFF;
+    border: 1px solid #B0B0A8; margin-bottom: 8px;
 }
-
 .download-item a {
-    color: #0000CC;
-    text-decoration: underline;
-    font-size: 12px;
-    font-weight: bold;
+    color: #0000CC; text-decoration: underline;
+    font-size: 12px; font-weight: bold;
 }
-
 .download-item a:hover { color: #CC0000; }
 
 /* ─── PLAYLIST PAGE ─── */
-.playlist-title {
+.playlist-title, .products-title, .templates-title {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #000000;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
+    font-size: 2rem; font-weight: bold; color: #000000;
+    margin-bottom: 16px; padding-bottom: 8px;
     border-bottom: 1px solid #C8C8C0;
 }
-
 .song-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 12px 14px;
-    background: #FFFFFF;
-    border: 1px solid #B0B0A8;
-    margin-bottom: 8px;
+    display: flex; flex-direction: column; gap: 8px;
+    padding: 12px 14px; background: #FFFFFF;
+    border: 1px solid #B0B0A8; margin-bottom: 8px;
 }
-
 .song-title {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1.05rem;
-    font-weight: bold;
-    color: #000000;
+    font-size: 1.05rem; font-weight: bold; color: #000000;
 }
-
-.song-item audio {
-    width: 100%;
-    height: 30px;
-    outline: none;
-}
-
+.song-item audio { width: 100%; height: 30px; outline: none; }
 .playlist-empty {
-    padding: 20px 14px;
-    background: #FFFFFF;
-    border: 1px solid #B0B0A8;
-    color: #888888;
-    font-size: 11px;
-    text-align: center;
-    font-style: italic;
+    padding: 20px 14px; background: #FFFFFF;
+    border: 1px solid #B0B0A8; color: #888888;
+    font-size: 11px; text-align: center; font-style: italic;
 }
 
 /* ─── PRODUCTS PAGE ─── */
-.products-title {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #000000;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #C8C8C0;
-}
-
 .category-title {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: #000000;
-    margin: 18px 0 10px;
-    padding-bottom: 4px;
+    font-size: 1.3rem; font-weight: bold; color: #000000;
+    margin: 18px 0 10px; padding-bottom: 4px;
     border-bottom: 1px dotted #C8C8C0;
 }
-
-.category-title:first-of-type {
-    margin-top: 0;
-}
-
+.category-title:first-of-type { margin-top: 0; }
 .product-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 14px;
-    background: #FFFFFF;
-    border: 1px solid #B0B0A8;
-    margin-bottom: 8px;
-    gap: 12px;
-    text-decoration: none;
-    color: #000000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px; background: #FFFFFF;
+    border: 1px solid #B0B0A8; margin-bottom: 8px; gap: 12px;
+    text-decoration: none; color: #000000;
     transition: background 0.15s ease;
 }
-
-a.product-item:hover {
-    background: #EEEEEE;
-}
-
+a.product-item:hover { background: #EEEEEE; }
 .product-name {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1.05rem;
-    font-weight: bold;
-    color: #000000;
+    font-size: 1.05rem; font-weight: bold; color: #000000;
 }
-
 .product-price {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1.05rem;
-    font-weight: bold;
-    color: #008000;
-    white-space: nowrap;
+    font-size: 1.05rem; font-weight: bold;
+    color: #008000; white-space: nowrap;
 }
 
 /* ─── TEMPLATES PAGE ─── */
-.templates-title {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #000000;
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #C8C8C0;
-}
-
 .templates-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 12px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px; margin-top: 12px;
 }
-
-@media (max-width: 600px) {
-    .templates-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
+@media (max-width: 600px) { .templates-grid { grid-template-columns: 1fr; } }
 .template-item {
-    display: block;
-    background: #FFFFFF;
-    border: 1px solid #B0B0A8;
-    padding: 10px;
+    display: block; background: #FFFFFF;
+    border: 1px solid #B0B0A8; padding: 10px;
     text-decoration: none;
     transition: background 0.15s ease;
 }
-
-.template-item:hover {
-    background: #EEEEEE;
-}
-
+.template-item:hover { background: #EEEEEE; }
 .template-item img {
-    display: block;
-    width: 100%;
-    height: auto;
+    display: block; width: 100%; height: auto;
     border: 1px solid #C8C8C0;
 }
 
 /* ─── FOOTER ─── */
 .footer {
-    margin-top: 24px;
-    padding: 12px 4px;
+    margin-top: 24px; padding: 12px 4px;
     border-top: 1px solid #C8C8C0;
-    font-size: 10px;
-    color: #888888;
-    text-align: center;
-    line-height: 1.6;
+    font-size: 10px; color: #888888;
+    text-align: center; line-height: 1.6;
 }
-
-.footer a {
-    color: #0000CC;
-    text-decoration: underline;
-}
+.footer a { color: #0000CC; text-decoration: underline; }
 
 /* ─── MOBILE ─── */
 @media (max-width: 480px) {
@@ -585,7 +423,6 @@ a.product-item:hover {
                     <a href="#" id="productsLink">Products</a>
                 </div>
 
-                <!-- Buttons row -->
                 <div class="btn-row">
                     <a href="https://discord.gg/8qCDcjFH7c" class="btn-discord" target="_blank" rel="noopener">
                         <svg class="discord-icon" viewBox="0 0 127.14 96.36" xmlns="http://www.w3.org/2000/svg">
@@ -608,14 +445,22 @@ a.product-item:hover {
                 <div class="box">
                     <div class="box-title">Live Chat</div>
                     <div class="box-body chat-box-body">
-                        <iframe src="https://www5.cbox.ws/box/?boxid=968021&boxtag=AnKX5H" width="100%" height="450" allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>
+                        <div class="chat-frame locked" id="chatFrame">
+                            <iframe src="https://www5.cbox.ws/box/?boxid=968021&boxtag=AnKX5H" width="100%" height="450" allowtransparency="yes" allow="autoplay" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"></iframe>
+                            <div class="chat-overlay">
+                                <div class="panel">
+                                    <div class="title">Members Only</div>
+                                    <p>Sign in to join the live chat.</p>
+                                    <a href="login.html" class="signin-btn">Sign In</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
 
-        <!-- FOOTER -->
         <div class="footer">
             <a href="#">Terms of Service</a>
         </div>
@@ -639,9 +484,7 @@ a.product-item:hover {
             <a href="https://github.com/JKAnderson/DSR-Gadget" target="_blank" rel="noopener">DSR-Gadget</a>
         </div>
 
-        <div class="footer">
-            <a href="#">Terms of Service</a>
-        </div>
+        <div class="footer"><a href="#">Terms of Service</a></div>
     </div>
 </div>
 
@@ -654,12 +497,8 @@ a.product-item:hover {
                 <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
             </div>
         </div>
-
         <div id="songList"></div>
-
-        <div class="footer">
-            <a href="#">Terms of Service</a>
-        </div>
+        <div class="footer"><a href="#">Terms of Service</a></div>
     </div>
 </div>
 
@@ -674,22 +513,18 @@ a.product-item:hover {
         </div>
 
         <div class="category-title">Subscriptions</div>
-
         <div class="product-item">
             <div class="product-name">Cleetus Subscription</div>
             <div class="product-price">0.99 €</div>
         </div>
 
         <div class="category-title">Build Your Own Webpage With Cleetus Templates</div>
-
         <a href="#" class="product-item" id="templatesLink">
             <div class="product-name">Cleetus Templates</div>
             <div class="product-price">2.00 €</div>
         </a>
 
-        <div class="footer">
-            <a href="#">Terms of Service</a>
-        </div>
+        <div class="footer"><a href="#">Terms of Service</a></div>
     </div>
 </div>
 
@@ -712,9 +547,7 @@ a.product-item:hover {
             </a>
         </div>
 
-        <div class="footer">
-            <a href="#">Terms of Service</a>
-        </div>
+        <div class="footer"><a href="#">Terms of Service</a></div>
     </div>
 </div>
 
@@ -862,24 +695,38 @@ setTimeout(bindAll, 0);
 <script src="firebase-config.js"></script>
 
 <script>
-/* ─── ACCOUNT AREA ─── */
+/* ─── ACCOUNT AREA + CHAT LOCK ─── */
 (function () {
-    var area = document.getElementById('accountArea');
-    if (!area || typeof auth === 'undefined') return;
+    var area  = document.getElementById('accountArea');
+    var frame = document.getElementById('chatFrame');
+
+    if (typeof auth === 'undefined') return;
 
     auth.onAuthStateChanged(function (user) {
-        if (user) {
-            area.innerHTML = ' &middot; <strong>' + user.email + '</strong> ' +
-                             '(<a href="#" id="signOutLink">Sign Out</a>)';
-            var so = document.getElementById('signOutLink');
-            if (so) {
-                so.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    auth.signOut().then(function () { window.location.reload(); });
-                });
+        // Header account area
+        if (area) {
+            if (user) {
+                area.innerHTML = ' &middot; <strong>' + user.email + '</strong> ' +
+                                 '(<a href="#" id="signOutLink">Sign Out</a>)';
+                var so = document.getElementById('signOutLink');
+                if (so) {
+                    so.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        auth.signOut().then(function () { window.location.reload(); });
+                    });
+                }
+            } else {
+                area.innerHTML = ' &middot; <a href="login.html">Sign In</a>';
             }
-        } else {
-            area.innerHTML = ' &middot; <a href="login.html">Sign In</a>';
+        }
+
+        // Chat lock
+        if (frame) {
+            if (user) {
+                frame.classList.remove('locked');
+            } else {
+                frame.classList.add('locked');
+            }
         }
     });
 })();
