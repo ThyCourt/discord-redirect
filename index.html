@@ -195,6 +195,43 @@ a, button, input {
 
 .box-body a:hover { color: #CC0000; }
 
+/* ─── PLAYLIST ITEM IN FEATURED CONTENT ─── */
+.playlist-feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    text-decoration: none;
+    color: #000000;
+    padding: 4px 0;
+}
+
+.playlist-feature img {
+    width: 100px;
+    height: auto;
+    border: 1px solid #B0B0A8;
+    padding: 2px;
+    background: #F5F5F0;
+    transition: transform 0.2s ease;
+}
+
+.playlist-feature:hover img {
+    transform: scale(1.05);
+}
+
+.playlist-feature .playlist-label {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #0000CC;
+    text-decoration: underline;
+}
+
+.playlist-feature:hover .playlist-label {
+    color: #CC0000;
+}
+
 /* ─── CENTER COLUMN ─── */
 .center-col {
     background: #FFFFFF;
@@ -470,6 +507,7 @@ a.product-item:hover {
     #typewriter { font-size: 1.6rem; }
     .link-grid { grid-template-columns: 1fr; }
     .product-item { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .playlist-feature img { width: 80px; }
 }
 </style>
 </head>
@@ -512,7 +550,12 @@ a.product-item:hover {
             <div class="left-col">
                 <div class="box">
                     <div class="box-title">Featured Content</div>
-                    <div class="box-body"></div>
+                    <div class="box-body">
+                        <a href="#" class="playlist-feature" id="playlistLink">
+                            <img src="ipod.png" alt="Playlist of the Week" />
+                            <span class="playlist-label">Playlist of the Week</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -523,7 +566,6 @@ a.product-item:hover {
                 <div class="link-grid">
                     <a href="#" id="downloadLink">Download Page</a>
                     <a href="#">Members Arena</a>
-                    <a href="#" id="playlistLink">Playlist</a>
                     <a href="#" id="productsLink">Products</a>
                 </div>
 
@@ -608,7 +650,6 @@ a.product-item:hover {
             </div>
         </div>
 
-        <!-- SUBSCRIPTIONS CATEGORY -->
         <div class="category-title">Subscriptions</div>
 
         <div class="product-item">
@@ -616,7 +657,6 @@ a.product-item:hover {
             <div class="product-price">0.99 €</div>
         </div>
 
-        <!-- WEBSITE TEMPLATES CATEGORY -->
         <div class="category-title">Build Your Own Webpage With Cleetus Templates</div>
 
         <a href="#" class="product-item" id="templatesLink">
