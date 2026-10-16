@@ -131,6 +131,8 @@ a, button, input {
     text-decoration: underline;
 }
 
+.header-right strong { color: #000000; }
+
 /* ─── LINK BAR ─── */
 .link-bar {
     display: flex;
@@ -545,6 +547,7 @@ a.product-item:hover {
             <div class="header-right">
                 <a href="#">Advanced Search</a> &middot;
                 <a href="#">Site Map</a>
+                <span id="accountArea"> &middot; <a href="login.html">Sign In</a></span>
             </div>
         </div>
 
@@ -850,6 +853,35 @@ setTimeout(bindAll, 0);
     });
     document.addEventListener('mousedown', function () { cursor.classList.add('click'); });
     document.addEventListener('mouseup', function () { cursor.classList.remove('click'); });
+})();
+</script>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+/* ─── ACCOUNT AREA ─── */
+(function () {
+    var area = document.getElementById('accountArea');
+    if (!area || typeof auth === 'undefined') return;
+
+    auth.onAuthStateChanged(function (user) {
+        if (user) {
+            area.innerHTML = ' &middot; <strong>' + user.email + '</strong> ' +
+                             '(<a href="#" id="signOutLink">Sign Out</a>)';
+            var so = document.getElementById('signOutLink');
+            if (so) {
+                so.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    auth.signOut().then(function () { window.location.reload(); });
+                });
+            }
+        } else {
+            area.innerHTML = ' &middot; <a href="login.html">Sign In</a>';
+        }
+    });
 })();
 </script>
 
