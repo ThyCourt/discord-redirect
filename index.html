@@ -259,7 +259,7 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
 .download-item a:hover { color: #CC0000; }
 
 /* ─── SHARED PAGE TITLES ─── */
-.playlist-title, .products-title, .templates-title, .tools-title {
+.playlist-title, .products-title, .templates-title, .exploits-title {
     font-family: 'Times New Roman', Times, serif;
     font-size: 2rem; font-weight: bold; color: #000000;
     margin-bottom: 16px; padding-bottom: 8px;
@@ -327,97 +327,58 @@ a.product-item:hover { background: #EEEEEE; }
     border: 1px solid #C8C8C0;
 }
 
-/* ─── TOOLS PAGE ─── */
-.tools-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-}
-@media (max-width: 700px) { .tools-grid { grid-template-columns: 1fr; } }
-
-.tool-box {
+/* ─── EXPLOITS PAGE ─── */
+.exploit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
     background: #FFFFFF;
     border: 1px solid #B0B0A8;
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 8px;
 }
-.tool-box-title {
-    background: #E8E4D8;
-    border-bottom: 1px solid #B0B0A8;
-    padding: 4px 8px;
-    font-size: 11px; font-weight: bold;
+.exploit-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 3px;
+    border: 1px solid rgba(0,0,0,0.25);
 }
-.tool-box-body {
-    padding: 12px;
-    font-size: 11px; line-height: 1.5;
-    color: #333333;
+.exploit-dot.green  { background: #00CC00; }
+.exploit-dot.red    { background: #CC0000; }
+.exploit-dot.yellow { background: #E6C200; }
+
+.exploit-info {
     flex: 1;
+    min-width: 0;
 }
-
-.tool-input {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #B0B0A8;
-    font-family: Verdana, Tahoma, Arial, sans-serif;
-    font-size: 11px;
-    background: #FFFFFF; color: #000000;
-    outline: none;
-}
-.tool-input:focus { border-color: #0000CC; }
-
-.tool-btn {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 4px 14px;
-    background: #D4D0C8;
-    border-top: 1px solid #FFFFFF;
-    border-left: 1px solid #FFFFFF;
-    border-right: 1px solid #808080;
-    border-bottom: 1px solid #808080;
-    font-family: Verdana, Tahoma, Arial, sans-serif;
-    font-size: 11px; font-weight: bold;
-    color: #000000;
-    cursor: pointer;
-}
-.tool-btn:hover { background: #E0DCD0; color: #0000CC; }
-.tool-btn:active {
-    border-top: 1px solid #808080;
-    border-left: 1px solid #808080;
-    border-right: 1px solid #FFFFFF;
-    border-bottom: 1px solid #FFFFFF;
-}
-
-.tool-output {
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px dashed #B0B0A8;
-    background: #F9F9F5;
-    font-size: 11px;
-    line-height: 1.5;
-    min-height: 40px;
-    color: #000000;
-    word-wrap: break-word;
-}
-.tool-output strong { color: #0000CC; }
-
-.cool-score {
+.exploit-name {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 2rem;
+    font-size: 1.05rem;
     font-weight: bold;
-    text-align: center;
-    margin: 6px 0;
-    color: #CC0000;
-}
-.cool-verdict {
-    text-align: center;
-    font-weight: bold;
-    font-size: 12px;
+    color: #000000;
     margin-bottom: 4px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
-.cool-label {
-    text-align: center;
+.exploit-status {
     font-size: 10px;
     color: #666666;
+    font-style: italic;
+}
+.exploit-code {
+    display: block;
+    margin-top: 4px;
+    padding: 4px 6px;
+    background: #F5F5F0;
+    border: 1px solid #D0D0C8;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10px;
+    color: #000000;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 /* ─── TERMS MODAL ─── */
@@ -453,13 +414,9 @@ a.product-item:hover { background: #EEEEEE; }
     border-left: 1px solid #FFFFFF;
     border-right: 1px solid #808080;
     border-bottom: 1px solid #808080;
-    width: 16px;
-    height: 16px;
-    font-size: 11px;
-    font-weight: bold;
-    line-height: 1;
-    cursor: pointer;
-    padding: 0;
+    width: 16px; height: 16px;
+    font-size: 11px; font-weight: bold;
+    line-height: 1; cursor: pointer; padding: 0;
     color: #000000;
 }
 .tos-close:active {
@@ -476,14 +433,11 @@ a.product-item:hover { background: #EEEEEE; }
 }
 .tos-body .big {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1.4rem;
-    font-weight: bold;
-    color: #000000;
-    margin-bottom: 10px;
+    font-size: 1.4rem; font-weight: bold;
+    color: #000000; margin-bottom: 10px;
 }
 .tos-body .msg {
-    font-weight: bold;
-    color: #CC0000;
+    font-weight: bold; color: #CC0000;
     margin-bottom: 14px;
 }
 .tos-ok {
@@ -494,9 +448,7 @@ a.product-item:hover { background: #EEEEEE; }
     border-right: 1px solid #808080;
     border-bottom: 1px solid #808080;
     font-family: Verdana, Tahoma, Arial, sans-serif;
-    font-size: 11px;
-    font-weight: bold;
-    cursor: pointer;
+    font-size: 11px; font-weight: bold; cursor: pointer;
 }
 .tos-ok:hover { background: #E0DCD0; color: #0000CC; }
 .tos-ok:active {
@@ -551,16 +503,14 @@ a.product-item:hover { background: #EEEEEE; }
             </div>
         </div>
 
-        <!-- LINK BAR (Forums removed) -->
         <div class="link-bar">
             <a href="#">Home</a>
-            <a href="#" id="toolsLinkBar">Tools</a>
+            <a href="#" id="exploitsLinkBar">Exploits</a>
             <a href="#">Subscription</a>
         </div>
 
         <div class="main-grid">
 
-            <!-- LEFT SIDEBAR -->
             <div class="left-col">
                 <div class="box">
                     <div class="box-title">Featured Content</div>
@@ -573,14 +523,13 @@ a.product-item:hover { background: #EEEEEE; }
                 </div>
             </div>
 
-            <!-- CENTER COLUMN (Members Arena removed) -->
             <div class="center-col">
                 <div class="center-title">Quick Links</div>
 
                 <div class="link-grid">
                     <a href="#" id="downloadLink">Download Page</a>
                     <a href="#" id="productsLink">Products</a>
-                    <a href="#" id="toolsLink">Tools</a>
+                    <a href="#" id="exploitsLink">Exploits</a>
                 </div>
 
                 <div class="btn-row">
@@ -600,7 +549,6 @@ a.product-item:hover { background: #EEEEEE; }
                 </div>
             </div>
 
-            <!-- RIGHT SIDEBAR -->
             <div class="right-col">
                 <div class="box">
                     <div class="box-title">Live Chat</div>
@@ -711,42 +659,59 @@ a.product-item:hover { background: #EEEEEE; }
     </div>
 </div>
 
-<!-- TOOLS PAGE -->
-<div id="toolsPage" style="display:none;">
+<!-- EXPLOITS PAGE -->
+<div id="exploitsPage" style="display:none;">
     <div class="page-wrap">
         <div class="header">
-            <h1 class="tools-title">Tools</h1>
+            <h1 class="exploits-title">Exploits</h1>
             <div class="header-right">
                 <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
             </div>
         </div>
 
-        <div class="tools-grid">
-
-            <!-- COOL TEST -->
-            <div class="tool-box">
-                <div class="tool-box-title">Am I Cool? Test</div>
-                <div class="tool-box-body">
-                    <p>Answer one simple question and we'll tell you the truth about your coolness.</p>
-                    <label style="display:block;margin-top:8px;margin-bottom:3px;font-weight:bold;">What's your name?</label>
-                    <input type="text" class="tool-input" id="coolName" placeholder="Enter your name" maxlength="30" />
-                    <button class="tool-btn" id="coolBtn">Test my coolness</button>
-                    <div class="tool-output" id="coolOutput" style="display:none;"></div>
-                </div>
+        <!-- 1. Cleetus Universal — green (working) -->
+        <div class="exploit-item">
+            <span class="exploit-dot green"></span>
+            <div class="exploit-info">
+                <div class="exploit-name">cleetus universal</div>
+                <code class="exploit-code">loadstring(game:HttpGet("https://paste.msk-scripts.de/raw/7egDmQLa"))()</code>
             </div>
+        </div>
 
-            <!-- EXCUSE GENERATOR -->
-            <div class="tool-box">
-                <div class="tool-box-title">Excuse Generator</div>
-                <div class="tool-box-body">
-                    <p>Need a reason to bail? We've got you covered.</p>
-                    <label style="display:block;margin-top:8px;margin-bottom:3px;font-weight:bold;">What are you skipping?</label>
-                    <input type="text" class="tool-input" id="excuseEvent" placeholder="e.g. work, the party, dinner" maxlength="40" />
-                    <button class="tool-btn" id="excuseBtn">Generate excuse</button>
-                    <div class="tool-output" id="excuseOutput" style="display:none;"></div>
-                </div>
+        <!-- 2. Cleetus Scuba Diving at Quill Lake — red (discontinued) -->
+        <div class="exploit-item">
+            <span class="exploit-dot red"></span>
+            <div class="exploit-info">
+                <div class="exploit-name">cleetus scuba diving at quill lake</div>
+                <div class="exploit-status">discontinued</div>
             </div>
+        </div>
 
+        <!-- 3. ESP11 — red (discontinued) -->
+        <div class="exploit-item">
+            <span class="exploit-dot red"></span>
+            <div class="exploit-info">
+                <div class="exploit-name">ESP11</div>
+                <div class="exploit-status">discontinued</div>
+            </div>
+        </div>
+
+        <!-- 4. ESP11 Injector — red (discontinued) -->
+        <div class="exploit-item">
+            <span class="exploit-dot red"></span>
+            <div class="exploit-info">
+                <div class="exploit-name">ESP11 Injector</div>
+                <div class="exploit-status">discontinued</div>
+            </div>
+        </div>
+
+        <!-- 5. Cleetus's GPP — yellow (updating) -->
+        <div class="exploit-item">
+            <span class="exploit-dot yellow"></span>
+            <div class="exploit-info">
+                <div class="exploit-name">cleetus's gpp</div>
+                <div class="exploit-status">updating</div>
+            </div>
         </div>
 
         <div class="footer"><a href="#" class="tos-link">Terms of Service</a></div>
@@ -837,7 +802,7 @@ function renderPlaylist() {
 
 /* ─── PAGE NAVIGATION ─── */
 function showPage(targetId) {
-    var pages = ['mainPage', 'downloadPage', 'playlistPage', 'productsPage', 'templatesPage', 'toolsPage'];
+    var pages = ['mainPage', 'downloadPage', 'playlistPage', 'productsPage', 'templatesPage', 'exploitsPage'];
     for (var i = 0; i < pages.length; i++) {
         var el = $(pages[i]);
         if (el) el.style.display = (pages[i] === targetId) ? 'block' : 'none';
@@ -851,8 +816,8 @@ function bindAll() {
     var pl = $('playlistLink');
     var pr = $('productsLink');
     var tp = $('templatesLink');
-    var tl = $('toolsLink');
-    var tlb = $('toolsLinkBar');
+    var ex = $('exploitsLink');
+    var exb = $('exploitsLinkBar');
     var backs = document.querySelectorAll('.back-link');
     var tosLinks = document.querySelectorAll('.tos-link');
 
@@ -872,13 +837,13 @@ function bindAll() {
         tp.addEventListener('click', function (e) { e.preventDefault(); showPage('templatesPage'); });
         tp.dataset.bound = '1';
     }
-    if (tl && !tl.dataset.bound) {
-        tl.addEventListener('click', function (e) { e.preventDefault(); showPage('toolsPage'); });
-        tl.dataset.bound = '1';
+    if (ex && !ex.dataset.bound) {
+        ex.addEventListener('click', function (e) { e.preventDefault(); showPage('exploitsPage'); });
+        ex.dataset.bound = '1';
     }
-    if (tlb && !tlb.dataset.bound) {
-        tlb.addEventListener('click', function (e) { e.preventDefault(); showPage('toolsPage'); });
-        tlb.dataset.bound = '1';
+    if (exb && !exb.dataset.bound) {
+        exb.addEventListener('click', function (e) { e.preventDefault(); showPage('exploitsPage'); });
+        exb.dataset.bound = '1';
     }
     for (var i = 0; i < backs.length; i++) {
         var b = backs[i];
@@ -916,78 +881,6 @@ setTimeout(bindAll, 0);
         if (e.target === overlay) close();
     });
 })();
-
-/* ─── COOL TEST ─── */
-(function () {
-    var btn = $('coolBtn');
-    var out = $('coolOutput');
-    var nameInput = $('coolName');
-    if (!btn) return;
-
-    var verdicts = [
-        { min: 90, text: 'Certified Legend',        sub: 'You walk into a room and the room gets cooler.' },
-        { min: 75, text: 'Pretty Damn Cool',        sub: 'People copy your vibe. You know it.' },
-        { min: 55, text: 'Solidly Cool',            sub: 'Not trying too hard. Respect.' },
-        { min: 35, text: 'Somewhat Cool',           sub: 'You have your moments. Cherish them.' },
-        { min: 15, text: 'Barely Cool',             sub: 'Almost cool. Almost.' },
-        { min: 0,  text: 'Not Cool At All',         sub: 'Hey, at least you took the test.' }
-    ];
-
-    btn.addEventListener('click', function () {
-        var name = (nameInput.value || '').trim() || 'Mystery Person';
-        var score = Math.floor(Math.random() * 101);
-        var v = verdicts.find(function (x) { return score >= x.min; });
-
-        out.style.display = 'block';
-        out.innerHTML =
-            '<div class="cool-label">' + escapeHtml(name) + "'s Coolness Score" + '</div>' +
-            '<div class="cool-score">' + score + ' / 100</div>' +
-            '<div class="cool-verdict">' + v.text + '</div>' +
-            '<div class="cool-label">' + v.sub + '</div>';
-    });
-})();
-
-/* ─── EXCUSE GENERATOR ─── */
-(function () {
-    var btn = $('excuseBtn');
-    var out = $('excuseOutput');
-    var eventInput = $('excuseEvent');
-    if (!btn) return;
-
-    var pets = ['my dog', 'my cat', 'my goldfish', 'my neighbor\'s parrot', 'a raccoon', 'my hamster'];
-    var verbs = ['ate', 'destroyed', 'hacked into', 'sat on', 'set fire to', 'peed on'];
-    var objects = ['my homework', 'my phone', 'my car keys', 'the router', 'my shoes', 'the front door'];
-    var tails = [
-        'and I have to deal with it right now.',
-        'so I can\'t leave the house.',
-        'and the police are asking questions.',
-        'and I\'m still emotionally recovering.',
-        'and the insurance company needs a statement.',
-        'and it\'s somehow my fault.'
-    ];
-
-    btn.addEventListener('click', function () {
-        var event = (eventInput.value || '').trim() || 'that';
-        var p = pick(pets);
-        var v = pick(verbs);
-        var o = pick(objects);
-        var t = pick(tails);
-
-        out.style.display = 'block';
-        out.innerHTML =
-            '<strong>Sorry, I can\'t come to ' + escapeHtml(event) + '.</strong><br><br>' +
-            'Because ' + p + ' ' + v + ' ' + o + ' ' + t;
-    });
-
-    function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-})();
-
-/* ─── HELPERS ─── */
-function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-        return ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' })[c];
-    });
-}
 
 /* ─── CURSOR ─── */
 (function () {
