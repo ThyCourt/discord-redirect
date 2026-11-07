@@ -123,6 +123,45 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
 .box-body a { color: #0000CC; text-decoration: underline; }
 .box-body a:hover { color: #CC0000; }
 
+/* ─── MARQUEE (Featured Content) ─── */
+.marquee-container {
+    overflow: hidden;
+    background: #F5F5F0;
+    padding: 14px 0;
+    white-space: nowrap;
+    position: relative;
+}
+.marquee-track {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: marquee 22s linear infinite;
+}
+.marquee-container:hover .marquee-track {
+    animation-play-state: paused;
+}
+.marquee-track a {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #0000CC;
+    text-decoration: underline;
+    letter-spacing: 0.5px;
+}
+.marquee-track a:hover {
+    color: #CC0000;
+}
+.marquee-sep {
+    color: #888888;
+    margin: 0 14px;
+    font-weight: bold;
+    font-size: 1rem;
+}
+@keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
 /* ─── LIVE CHAT ─── */
 .chat-box-body { padding: 4px; line-height: 0; position: relative; }
 .chat-frame {
@@ -177,26 +216,6 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
     border-bottom: 1px solid #FFFFFF;
 }
 
-/* ─── PLAYLIST FEATURE ─── */
-.playlist-feature {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 8px; text-align: center; text-decoration: none;
-    color: #000000; padding: 4px 0;
-}
-.playlist-feature img {
-    width: 100px; height: auto;
-    border: 1px solid #B0B0A8; padding: 2px;
-    background: #F5F5F0;
-    transition: transform 0.2s ease;
-}
-.playlist-feature:hover img { transform: scale(1.05); }
-.playlist-feature .playlist-label {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1rem; font-weight: bold;
-    color: #0000CC; text-decoration: underline;
-}
-.playlist-feature:hover .playlist-label { color: #CC0000; }
-
 /* ─── CENTER COLUMN ─── */
 .center-col {
     background: #FFFFFF; border: 1px solid #B0B0A8;
@@ -223,7 +242,7 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
     margin-top: 12px; padding-top: 12px;
     border-top: 1px dotted #C8C8C0;
 }
-.btn-discord, .btn-telegram {
+.btn-discord, .btn-telegram, .btn-uc {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 4px 14px;
     background: #D4D0C8;
@@ -236,8 +255,8 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
     color: #000000; text-decoration: none;
     letter-spacing: 0.3px;
 }
-.btn-discord:hover, .btn-telegram:hover { background: #E0DCD0; color: #0000CC; }
-.btn-discord:active, .btn-telegram:active {
+.btn-discord:hover, .btn-telegram:hover, .btn-uc:hover { background: #E0DCD0; color: #0000CC; }
+.btn-discord:active, .btn-telegram:active, .btn-uc:active {
     border-top: 1px solid #808080;
     border-left: 1px solid #808080;
     border-right: 1px solid #FFFFFF;
@@ -245,42 +264,14 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
 }
 .discord-icon { width: 12px; height: 12px; fill: #5865F2; flex-shrink: 0; }
 .telegram-icon { width: 12px; height: 12px; fill: #0088CC; flex-shrink: 0; }
-
-/* ─── DOWNLOAD PAGE ─── */
-.download-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 14px; background: #FFFFFF;
-    border: 1px solid #B0B0A8; margin-bottom: 8px;
-}
-.download-item a {
-    color: #0000CC; text-decoration: underline;
-    font-size: 12px; font-weight: bold;
-}
-.download-item a:hover { color: #CC0000; }
+.uc-icon { width: 14px; height: 14px; fill: #000000; flex-shrink: 0; }
 
 /* ─── SHARED PAGE TITLES ─── */
-.playlist-title, .products-title, .templates-title, .exploits-title {
+.products-title, .templates-title, .exploits-title {
     font-family: 'Times New Roman', Times, serif;
     font-size: 2rem; font-weight: bold; color: #000000;
     margin-bottom: 16px; padding-bottom: 8px;
     border-bottom: 1px solid #C8C8C0;
-}
-
-/* ─── PLAYLIST PAGE ─── */
-.song-item {
-    display: flex; flex-direction: column; gap: 8px;
-    padding: 12px 14px; background: #FFFFFF;
-    border: 1px solid #B0B0A8; margin-bottom: 8px;
-}
-.song-title {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.05rem; font-weight: bold; color: #000000;
-}
-.song-item audio { width: 100%; height: 30px; outline: none; }
-.playlist-empty {
-    padding: 20px 14px; background: #FFFFFF;
-    border: 1px solid #B0B0A8; color: #888888;
-    font-size: 11px; text-align: center; font-style: italic;
 }
 
 /* ─── PRODUCTS PAGE ─── */
@@ -475,7 +466,6 @@ a.product-item:hover { background: #EEEEEE; }
     #typewriter { font-size: 1.6rem; }
     .link-grid { grid-template-columns: 1fr; }
     .product-item { flex-direction: column; align-items: flex-start; gap: 6px; }
-    .playlist-feature img { width: 80px; }
 }
 </style>
 </head>
@@ -511,25 +501,37 @@ a.product-item:hover { background: #EEEEEE; }
 
         <div class="main-grid">
 
+            <!-- LEFT SIDEBAR: Featured Content → scrolling ad links -->
             <div class="left-col">
                 <div class="box">
                     <div class="box-title">Featured Content</div>
-                    <div class="box-body">
-                        <a href="#" class="playlist-feature" id="playlistLink">
-                            <img src="ipod.png" alt="Playlist of the Week" />
-                            <span class="playlist-label">Playlist of the Week</span>
-                        </a>
+                    <div class="box-body" style="padding: 0;">
+                        <div class="marquee-container">
+                            <div class="marquee-track">
+                                <a href="https://whatwhatboy.com" target="_blank" rel="noopener">whatwhatboy.com</a>
+                                <span class="marquee-sep">•</span>
+                                <a href="https://wearentdevs.net" target="_blank" rel="noopener">wearentdevs.net</a>
+                                <span class="marquee-sep">•</span>
+                                <a href="https://getsolara.dev" target="_blank" rel="noopener">getsolara.dev</a>
+                                <span class="marquee-sep">•</span>
+                                <a href="https://yimmenu-gta5.com" target="_blank" rel="noopener">yimmenu-gta5.com</a>
+                                <span class="marquee-sep">•</span>
+                                <a href="https://getwave.gg" target="_blank" rel="noopener">getwave.gg</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <!-- CENTER COLUMN -->
             <div class="center-col">
                 <div class="center-title">Quick Links</div>
 
                 <div class="link-grid">
-                    <a href="#" id="downloadLink">Download Page</a>
                     <a href="#" id="productsLink">Products</a>
                     <a href="#" id="exploitsLink">Exploits</a>
+                    <a href="#">School Projects</a>
+                    <a href="#">Agents</a>
                 </div>
 
                 <div class="btn-row">
@@ -538,6 +540,13 @@ a.product-item:hover { background: #EEEEEE; }
                             <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S53.9,46,53.9,53,48.77,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.21,60,73.21,53s5-12.74,11.44-12.74S96.12,46,96.12,53,91,65.69,84.69,65.69Z"/>
                         </svg>
                         <span>Discord</span>
+                    </a>
+
+                    <a href="https://unknowncheats.me" class="btn-uc" target="_blank" rel="noopener">
+                        <svg class="uc-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                        </svg>
+                        <span>UnKnoWnCheaTs</span>
                     </a>
 
                     <a href="https://t.me/thycleetus" class="btn-telegram" target="_blank" rel="noopener">
@@ -549,6 +558,7 @@ a.product-item:hover { background: #EEEEEE; }
                 </div>
             </div>
 
+            <!-- RIGHT SIDEBAR: Live Chat -->
             <div class="right-col">
                 <div class="box">
                     <div class="box-title">Live Chat</div>
@@ -573,40 +583,6 @@ a.product-item:hover { background: #EEEEEE; }
             <a href="#" class="tos-link">Terms of Service</a>
         </div>
 
-    </div>
-</div>
-
-<!-- DOWNLOAD PAGE -->
-<div id="downloadPage" style="display:none;">
-    <div class="page-wrap">
-        <div class="header">
-            <h1 style="font-family:'Times New Roman',Times,serif;font-size:2.2rem;font-weight:bold;color:#000;min-height:1.2em;line-height:1.2;">
-                Download Page
-            </h1>
-            <div class="header-right">
-                <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
-            </div>
-        </div>
-
-        <div class="download-item">
-            <a href="https://github.com/JKAnderson/DSR-Gadget" target="_blank" rel="noopener">DSR-Gadget</a>
-        </div>
-
-        <div class="footer"><a href="#" class="tos-link">Terms of Service</a></div>
-    </div>
-</div>
-
-<!-- PLAYLIST PAGE -->
-<div id="playlistPage" style="display:none;">
-    <div class="page-wrap">
-        <div class="header">
-            <h1 class="playlist-title">Playlist of the Week</h1>
-            <div class="header-right">
-                <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
-            </div>
-        </div>
-        <div id="songList"></div>
-        <div class="footer"><a href="#" class="tos-link">Terms of Service</a></div>
     </div>
 </div>
 
@@ -669,7 +645,7 @@ a.product-item:hover { background: #EEEEEE; }
             </div>
         </div>
 
-        <!-- 1. Cleetus Universal — green (working) -->
+        <!-- Working -->
         <div class="exploit-item">
             <span class="exploit-dot green"></span>
             <div class="exploit-info">
@@ -678,7 +654,6 @@ a.product-item:hover { background: #EEEEEE; }
             </div>
         </div>
 
-        <!-- 2. Cleetus Arsenal GUI — green (working) -->
         <div class="exploit-item">
             <span class="exploit-dot green"></span>
             <div class="exploit-info">
@@ -687,11 +662,52 @@ a.product-item:hover { background: #EEEEEE; }
             </div>
         </div>
 
-        <!-- 3. ESP11 — red (discontinued) -->
+        <!-- Updating -->
+        <div class="exploit-item">
+            <span class="exploit-dot yellow"></span>
+            <div class="exploit-info">
+                <div class="exploit-name">NeverDo#x</div>
+                <div class="exploit-status">updating</div>
+            </div>
+        </div>
+
+        <!-- Discontinued -->
         <div class="exploit-item">
             <span class="exploit-dot red"></span>
             <div class="exploit-info">
                 <div class="exploit-name">ESP11</div>
+                <div class="exploit-status">discontinued</div>
+            </div>
+        </div>
+
+        <div class="exploit-item">
+            <span class="exploit-dot red"></span>
+            <div class="exploit-info">
+                <div class="exploit-name">ESP11 Source</div>
+                <div class="exploit-status">discontinued</div>
+            </div>
+        </div>
+
+        <div class="exploit-item">
+            <span class="exploit-dot red"></span>
+            <div class="exploit-info">
+                <div class="exploit-name">Base</div>
+                <div class="exploit-status">discontinued</div>
+            </div>
+        </div>
+
+        <div class="exploit-item">
+            <span class="exploit-dot red"></span>
+            <div class="exploit-info">
+                <div class="exploit-name">Cleetus fisch gui</div>
+                <div class="exploit-status">discontinued</div>
+            </div>
+        </div>
+
+        <div class="exploit-item">
+            <span class="exploit-dot red"></span>
+            <div class="exploit-info">
+                <div class="exploit-name">Cleetus dahood gui</div>
                 <div class="exploit-status">discontinued</div>
             </div>
         </div>
@@ -724,32 +740,6 @@ try {
 } catch (e) {}
 
 function $(id) { return document.getElementById(id); }
-
-/* ─── PLAYLIST SONGS ─── */
-var SONGS = [
-    { title: '03 What Went Wrong',        file: '03%20What%20Went%20Wrong.mp3' },
-    { title: '06 When You Fucked Grandpa', file: '06%20When%20You%20Fucked%20Grandpa.mp3' }
-];
-
-function renderPlaylist() {
-    var list = $('songList');
-    if (!list) return;
-    if (!SONGS.length) {
-        list.innerHTML = '<div class="playlist-empty">No songs in the playlist.</div>';
-        return;
-    }
-    var html = '';
-    for (var i = 0; i < SONGS.length; i++) {
-        var s = SONGS[i];
-        html += '<div class="song-item">' +
-                    '<div class="song-title">' + s.title + '</div>' +
-                    '<audio controls preload="none">' +
-                        '<source src="' + s.file + '" type="audio/mpeg" />' +
-                    '</audio>' +
-                '</div>';
-    }
-    list.innerHTML = html;
-}
 
 /* ─── TYPEWRITER ─── */
 (function typewriter() {
@@ -784,7 +774,7 @@ function renderPlaylist() {
 
 /* ─── PAGE NAVIGATION ─── */
 function showPage(targetId) {
-    var pages = ['mainPage', 'downloadPage', 'playlistPage', 'productsPage', 'templatesPage', 'exploitsPage'];
+    var pages = ['mainPage', 'productsPage', 'templatesPage', 'exploitsPage'];
     for (var i = 0; i < pages.length; i++) {
         var el = $(pages[i]);
         if (el) el.style.display = (pages[i] === targetId) ? 'block' : 'none';
@@ -794,8 +784,6 @@ function showPage(targetId) {
 }
 
 function bindAll() {
-    var dl = $('downloadLink');
-    var pl = $('playlistLink');
     var pr = $('productsLink');
     var tp = $('templatesLink');
     var ex = $('exploitsLink');
@@ -803,14 +791,6 @@ function bindAll() {
     var backs = document.querySelectorAll('.back-link');
     var tosLinks = document.querySelectorAll('.tos-link');
 
-    if (dl && !dl.dataset.bound) {
-        dl.addEventListener('click', function (e) { e.preventDefault(); showPage('downloadPage'); });
-        dl.dataset.bound = '1';
-    }
-    if (pl && !pl.dataset.bound) {
-        pl.addEventListener('click', function (e) { e.preventDefault(); renderPlaylist(); showPage('playlistPage'); });
-        pl.dataset.bound = '1';
-    }
     if (pr && !pr.dataset.bound) {
         pr.addEventListener('click', function (e) { e.preventDefault(); showPage('productsPage'); });
         pr.dataset.bound = '1';
