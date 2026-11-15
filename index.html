@@ -123,6 +123,21 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
 .box-body a { color: #0000CC; text-decoration: underline; }
 .box-body a:hover { color: #CC0000; }
 
+/* ─── C++ LOGO (inline, transparent) ─── */
+.logo-frame {
+    position: relative;
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    background: transparent;
+}
+.logo-frame canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
 /* ─── MARQUEE (Featured Content) ─── */
 .marquee-container {
     overflow: hidden;
@@ -466,6 +481,7 @@ a.product-item:hover { background: #EEEEEE; }
     #typewriter { font-size: 1.6rem; }
     .link-grid { grid-template-columns: 1fr; }
     .product-item { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .logo-frame { height: 120px; }
 }
 </style>
 </head>
@@ -501,7 +517,7 @@ a.product-item:hover { background: #EEEEEE; }
 
         <div class="main-grid">
 
-            <!-- LEFT SIDEBAR: Featured Content → scrolling ad links -->
+            <!-- LEFT SIDEBAR: Featured Content → scrolling ad links + C++ logo animation -->
             <div class="left-col">
                 <div class="box">
                     <div class="box-title">Featured Content</div>
@@ -520,6 +536,11 @@ a.product-item:hover { background: #EEEEEE; }
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- C++ logo animation, no box, transparent bg -->
+                <div class="logo-frame">
+                    <canvas id="cppLogo"></canvas>
                 </div>
             </div>
 
@@ -866,6 +887,254 @@ setTimeout(bindAll, 0);
     });
     document.addEventListener('mousedown', function () { cursor.classList.add('click'); });
     document.addEventListener('mouseup', function () { cursor.classList.remove('click'); });
+})();
+</script>
+
+<!-- C++ LOGO ANIMATION (inline, transparent) -->
+<script>
+(function () {
+    var canvas = document.getElementById('cppLogo');
+    if (!canvas) return;
+
+    var gl = canvas.getContext('webgl', {
+        antialias: false,
+        alpha: true,
+        premultipliedAlpha: false,
+        depth: false,
+        stencil: false,
+        preserveDrawingBuffer: false
+    }) || canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: false });
+
+    if (!gl) return;
+
+    var VS = `
+        attribute vec2 aPos;
+        void main() { gl_Position = vec4(aPos, 0.0, 1.0); }
+    `;
+
+    var FS = `
+        precision highp float;
+
+        uniform vec2  uRes;
+        uniform float uT;
+
+        const float AP = 0.8660254;
+        const float HH = 0.20;
+
+        float Cl(float v) { return clamp(v, 0.0, 1.0); }
+
+        void faceColor(float x, float y, out float r, out float g, out float b) {
+            float k = Cl(0.5 + 0.5 * x * 0.8 - 0.25 * y);
+            r = 0.00 + 0.02 * k;
+            g = 0.36 - 0.10 * k;
+            b = 0.62 - 0.12 * k;
+
+            float ex = x + 0.28;
+            float rr = sqrt(ex * ex + y * y);
+            float an = abs(atan(y, ex));
+            bool w = (rr < 0.47 && rr > 0.29 && an > 0.78);
+
+            float c1 = x - 0.36;
+            float c2 = x - 0.63;
+            if (abs(c1) < 0.11 && abs(y) < 0.04) w = true;
+            if (abs(c1) < 0.04 && abs(y) < 0.11) w = true;
+            if (abs(c2) < 0.11 && abs(y) < 0.04) w = true;
+            if (abs(c2) < 0.04 && abs(y) < 0.11) w = true;
+
+            if (w) { r = 0.97; g = 0.98; b = 1.0; }
+        }
+
+        void shade(vec3 o, vec3 d, float ang, float tilt,
+                   out vec3 col, out float alpha) {
+
+            float ca = cos(ang), sa = sin(ang);
+            float ct = cos(tilt), st = sin(tilt);
+
+            vec3 po;
+            po.x =  o.x * ca - o.z * sa;
+            po.z =  o.x * sa + o.z * ca;
+            po.y =  o.y * ct + po.z * st;
+            po.z = -o.y * st + po.z * ct;
+
+            vec3 pd;
+            pd.x =  d.x * ca - d.z * sa;
+            pd.z =  d.x * sa + d.z * ca;
+            pd.y =  d.y * ct + pd.z * st;
+            pd.z = -d.y * st + pd.z * ct;
+
+            vec3 L = vec3(-0.35, 0.55, 0.76);
+            vec3 L2;
+            L2.x =  L.x * ca - L.z * sa;
+            L2.z =  L.x * sa + L.z * ca;
+            L2.y =  L.y * ct + L2.z * st;
+            L2.z = -L.y * st + L2.z * ct;
+
+            float tin  = -1e9;
+            float tout =  1e9;
+            int  face  = -1;
+            bool hit   = true;
+
+            for (int k = 0; k < 6; k++) {
+                float nx = 0.0;
+                float ny = 0.0;
+                if      (k == 0) { nx =  1.0; ny =  0.0; }
+                else if (k == 1) { nx =  0.5; ny =  0.8660254; }
+                else if (k == 2) { nx = -0.5; ny =  0.8660254; }
+                else if (k == 3) { nx = -1.0; ny =  0.0; }
+                else if (k == 4) { nx = -0.5; ny = -0.8660254; }
+                else             { nx =  0.5; ny = -0.8660254; }
+
+                float den = nx * pd.x + ny * pd.y;
+                float num = AP - (nx * po.x + ny * po.y);
+
+                if (abs(den) < 1e-6) {
+                    if (num < 0.0) hit = false;
+                    continue;
+                }
+                float tt = num / den;
+                if (den < 0.0) { if (tt > tin)  { tin  = tt; face = k; } }
+                else           { if (tt < tout) { tout = tt; } }
+            }
+
+            if (hit) {
+                if (abs(pd.z) < 1e-6) {
+                    if (abs(po.z) > HH) hit = false;
+                } else {
+                    float t1 = (-HH - po.z) / pd.z;
+                    float t2 = ( HH - po.z) / pd.z;
+                    float te = min(t1, t2);
+                    float tx = max(t1, t2);
+                    if (te > tin)  { tin  = te; face = (pd.z > 0.0) ? 6 : 7; }
+                    if (tx < tout) { tout = tx; }
+                }
+            }
+
+            col   = vec3(0.0);
+            alpha = 0.0;
+
+            if (!hit || tin > tout || tout < 0.0 || face < 0) return;
+
+            float hx = po.x + pd.x * tin;
+            float hy = po.y + pd.y * tin;
+
+            vec3 n;
+            vec3 albedo;
+
+            if (face < 6) {
+                float nx = 0.0;
+                float ny = 0.0;
+                if      (face == 0) { nx =  1.0; ny =  0.0; }
+                else if (face == 1) { nx =  0.5; ny =  0.8660254; }
+                else if (face == 2) { nx = -0.5; ny =  0.8660254; }
+                else if (face == 3) { nx = -1.0; ny =  0.0; }
+                else if (face == 4) { nx = -0.5; ny = -0.8660254; }
+                else                { nx =  0.5; ny = -0.8660254; }
+
+                n = vec3(nx, ny, 0.0);
+                float s = 0.5 + 0.5 * hy;
+                albedo = vec3(0.00, 0.20 + 0.12 * s, 0.38 + 0.18 * s);
+            } else {
+                n = vec3(0.0, 0.0, (face == 7) ? 1.0 : -1.0);
+                float fx = (face == 7) ? hx : -hx;
+                float r, g, b;
+                faceColor(fx, hy, r, g, b);
+                albedo = vec3(r, g, b);
+            }
+
+            float dif = Cl(dot(n, L2));
+
+            vec3  Hv   = normalize(L2 - pd);
+            float spec = pow(Cl(dot(n, Hv)), 40.0) * 0.55;
+
+            float sweep = exp(-pow((hx * 0.8 + hy * 0.6 - (sin(uT * 0.9) * 1.1)) * 5.0, 2.0)) * 0.22;
+            float lit   = 0.42 + 0.62 * dif;
+
+            float sideMask = (face >= 6) ? 1.0 : 0.3;
+            col   = albedo * lit + vec3(spec) + vec3(sweep * sideMask);
+            alpha = 1.0;
+        }
+
+        void main() {
+            vec2 uv = (gl_FragCoord.xy / uRes) * 2.0 - 1.0;
+            float aspect = uRes.x / uRes.y;
+
+            float th = max(1.35, 1.7 / aspect) / 4.4;
+
+            vec3  accum = vec3(0.0);
+            float aAcc  = 0.0;
+            for (int sy = 0; sy < 2; sy++) {
+                for (int sx = 0; sx < 2; sx++) {
+                    vec2 off = (vec2(float(sx), float(sy)) - 0.5) * 0.5 / uRes;
+                    vec2 p = uv + off * 2.0;
+                    vec2 q = vec2(p.x * aspect * th, p.y * th);
+                    float l = sqrt(q.x * q.x + q.y * q.y + 1.0);
+                    vec3 rd = vec3(q.x / l, q.y / l, -1.0 / l);
+
+                    vec3 c; float a;
+                    shade(vec3(0.0, 0.0, 4.4), rd,
+                          uT * 1.5, 0.22 * sin(uT * 0.7), c, a);
+                    accum += c;
+                    aAcc  += a;
+                }
+            }
+            accum /= 4.0;
+            aAcc  /= 4.0;
+
+            gl_FragColor = vec4(accum, aAcc);
+        }
+    `;
+
+    function compile(type, src) {
+        var s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        return s;
+    }
+
+    var vs = compile(gl.VERTEX_SHADER, VS);
+    var fs = compile(gl.FRAGMENT_SHADER, FS);
+    var prog = gl.createProgram();
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    var buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1,  1, -1, -1,  1,  1,  1]),
+        gl.STATIC_DRAW);
+    var aPos = gl.getAttribLocation(prog, 'aPos');
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+    var uRes = gl.getUniformLocation(prog, 'uRes');
+    var uT   = gl.getUniformLocation(prog, 'uT');
+
+    function resize() {
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var w = Math.max(1, Math.floor(canvas.clientWidth  * dpr));
+        var h = Math.max(1, Math.floor(canvas.clientHeight * dpr));
+        if (canvas.width !== w || canvas.height !== h) {
+            canvas.width  = w;
+            canvas.height = h;
+            gl.viewport(0, 0, w, h);
+        }
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    var t0 = performance.now();
+    function frame(now) {
+        resize();
+        gl.uniform2f(uRes, canvas.width, canvas.height);
+        gl.uniform1f(uT, (now - t0) / 1000.0);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
 })();
 </script>
 
