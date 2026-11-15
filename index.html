@@ -99,10 +99,18 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
 /* ─── MAIN LAYOUT ─── */
 .main-grid {
     display: grid;
-    grid-template-columns: 200px 1fr 200px;
+    grid-template-columns: 200px minmax(0, 1fr) 240px;
     gap: 12px;
+    align-items: start;
 }
-@media (max-width: 800px) { .main-grid { grid-template-columns: 1fr; } }
+@media (max-width: 980px) {
+    .main-grid { grid-template-columns: 200px minmax(0, 1fr); }
+    .right-col { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .left-col, .center-col, .right-col { grid-column: auto; }
+}
 
 /* ─── BOXES ─── */
 .box {
@@ -138,6 +146,68 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
     background: transparent;
 }
 
+/* ─── SAMPAD 3D LOGO (iframe-isolated CSS stack) ─── */
+.sampad-frame {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+    background: transparent;
+}
+.sampad-frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: transparent;
+}
+
+/* ─── SCHOOL PAGE HEADER ─── */
+.school-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #C8C8C0;
+}
+.school-header .sampad-frame {
+    flex-shrink: 0;
+    margin-top: -4px;
+}
+.school-body {
+    padding: 20px 4px;
+}
+.school-project-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: #FFFFFF;
+    border: 1px solid #B0B0A8;
+    margin-bottom: 8px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #000000;
+}
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,0.25);
+}
+.status-dot.red { background: #CC0000; }
+.status-text {
+    font-family: Verdana, Tahoma, Arial, sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    color: #666666;
+    font-style: italic;
+    margin-left: 8px;
+}
+
 /* ─── MARQUEE (Featured Content) ─── */
 .marquee-container {
     overflow: hidden;
@@ -163,9 +233,7 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
     text-decoration: underline;
     letter-spacing: 0.5px;
 }
-.marquee-track a:hover {
-    color: #CC0000;
-}
+.marquee-track a:hover { color: #CC0000; }
 .marquee-sep {
     color: #888888;
     margin: 0 14px;
@@ -282,37 +350,11 @@ a, button, input, textarea, select { cursor: none; font-family: Verdana, Tahoma,
 .uc-icon { width: 14px; height: 14px; fill: #000000; flex-shrink: 0; }
 
 /* ─── SHARED PAGE TITLES ─── */
-.products-title, .templates-title, .exploits-title {
+.templates-title, .exploits-title {
     font-family: 'Times New Roman', Times, serif;
     font-size: 2rem; font-weight: bold; color: #000000;
     margin-bottom: 16px; padding-bottom: 8px;
     border-bottom: 1px solid #C8C8C0;
-}
-
-/* ─── PRODUCTS PAGE ─── */
-.category-title {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.3rem; font-weight: bold; color: #000000;
-    margin: 18px 0 10px; padding-bottom: 4px;
-    border-bottom: 1px dotted #C8C8C0;
-}
-.category-title:first-of-type { margin-top: 0; }
-.product-item {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 14px; background: #FFFFFF;
-    border: 1px solid #B0B0A8; margin-bottom: 8px; gap: 12px;
-    text-decoration: none; color: #000000;
-    transition: background 0.15s ease;
-}
-a.product-item:hover { background: #EEEEEE; }
-.product-name {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.05rem; font-weight: bold; color: #000000;
-}
-.product-price {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.05rem; font-weight: bold;
-    color: #008000; white-space: nowrap;
 }
 
 /* ─── TEMPLATES PAGE ─── */
@@ -481,7 +523,42 @@ a.product-item:hover { background: #EEEEEE; }
     #typewriter { font-size: 1.6rem; }
     .link-grid { grid-template-columns: 1fr; }
     .product-item { flex-direction: column; align-items: flex-start; gap: 6px; }
-    .logo-frame { height: 120px; }
+}
+
+/* ─── PHONE: FRAMES FIT INSIDE VIEWPORT ─── */
+@media (max-width: 700px) {
+    .logo-frame {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 10;
+    }
+    .sampad-frame {
+        width: 100%;
+        max-width: 160px;
+        height: auto;
+        aspect-ratio: 1;
+        margin: 0 auto;
+    }
+    .school-header {
+        flex-direction: column;
+        align-items: center;
+    }
+    .school-header .sampad-frame {
+        margin-top: 0;
+    }
+    .chat-frame {
+        height: 320px;
+    }
+}
+
+@media (max-width: 400px) {
+    .chat-frame {
+        height: 260px;
+    }
+    .sampad-frame {
+        max-width: 120px;
+    }
 }
 </style>
 </head>
@@ -512,12 +589,11 @@ a.product-item:hover { background: #EEEEEE; }
         <div class="link-bar">
             <a href="#">Home</a>
             <a href="#" id="exploitsLinkBar">Exploits</a>
-            <a href="#">Subscription</a>
         </div>
 
         <div class="main-grid">
 
-            <!-- LEFT SIDEBAR: Featured Content → scrolling ad links + C++ logo animation -->
+            <!-- LEFT SIDEBAR -->
             <div class="left-col">
                 <div class="box">
                     <div class="box-title">Featured Content</div>
@@ -538,7 +614,7 @@ a.product-item:hover { background: #EEEEEE; }
                     </div>
                 </div>
 
-                <!-- C++ logo animation, no box, transparent bg -->
+                <!-- C++ logo animation -->
                 <div class="logo-frame">
                     <canvas id="cppLogo"></canvas>
                 </div>
@@ -549,9 +625,8 @@ a.product-item:hover { background: #EEEEEE; }
                 <div class="center-title">Quick Links</div>
 
                 <div class="link-grid">
-                    <a href="#" id="productsLink">Products</a>
                     <a href="#" id="exploitsLink">Exploits</a>
-                    <a href="#">School Projects</a>
+                    <a href="#" id="schoolLink">School Projects</a>
                     <a href="#">Agents</a>
                 </div>
 
@@ -607,39 +682,13 @@ a.product-item:hover { background: #EEEEEE; }
     </div>
 </div>
 
-<!-- PRODUCTS PAGE -->
-<div id="productsPage" style="display:none;">
-    <div class="page-wrap">
-        <div class="header">
-            <h1 class="products-title">Products</h1>
-            <div class="header-right">
-                <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
-            </div>
-        </div>
-
-        <div class="category-title">Subscriptions</div>
-        <div class="product-item">
-            <div class="product-name">Cleetus Subscription</div>
-            <div class="product-price">0.99 €</div>
-        </div>
-
-        <div class="category-title">Build Your Own Webpage With Cleetus Templates</div>
-        <a href="#" class="product-item" id="templatesLink">
-            <div class="product-name">Cleetus Templates</div>
-            <div class="product-price">2.00 €</div>
-        </a>
-
-        <div class="footer"><a href="#" class="tos-link">Terms of Service</a></div>
-    </div>
-</div>
-
 <!-- TEMPLATES PAGE -->
 <div id="templatesPage" style="display:none;">
     <div class="page-wrap">
         <div class="header">
             <h1 class="templates-title">Templates</h1>
             <div class="header-right">
-                <a href="#" class="back-link" data-target="productsPage">&laquo; Back to Products</a>
+                <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
             </div>
         </div>
 
@@ -666,7 +715,6 @@ a.product-item:hover { background: #EEEEEE; }
             </div>
         </div>
 
-        <!-- Working -->
         <div class="exploit-item">
             <span class="exploit-dot green"></span>
             <div class="exploit-info">
@@ -683,53 +731,29 @@ a.product-item:hover { background: #EEEEEE; }
             </div>
         </div>
 
-        <!-- Updating -->
-        <div class="exploit-item">
-            <span class="exploit-dot yellow"></span>
-            <div class="exploit-info">
-                <div class="exploit-name">NeverDo#x</div>
-                <div class="exploit-status">updating</div>
+        <div class="footer"><a href="#" class="tos-link">Terms of Service</a></div>
+    </div>
+</div>
+
+<!-- SCHOOL PROJECTS PAGE -->
+<div id="schoolPage" style="display:none;">
+    <div class="page-wrap">
+        <div class="header">
+            <div class="school-header">
+                <div class="sampad-frame">
+                    <iframe id="sampadFrame" scrolling="no" frameborder="0" title="Sampad emblem"></iframe>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="#" class="back-link" data-target="mainPage">&laquo; Back to Home</a>
             </div>
         </div>
 
-        <!-- Discontinued -->
-        <div class="exploit-item">
-            <span class="exploit-dot red"></span>
-            <div class="exploit-info">
-                <div class="exploit-name">ESP11</div>
-                <div class="exploit-status">discontinued</div>
-            </div>
-        </div>
-
-        <div class="exploit-item">
-            <span class="exploit-dot red"></span>
-            <div class="exploit-info">
-                <div class="exploit-name">ESP11 Source</div>
-                <div class="exploit-status">discontinued</div>
-            </div>
-        </div>
-
-        <div class="exploit-item">
-            <span class="exploit-dot red"></span>
-            <div class="exploit-info">
-                <div class="exploit-name">Base</div>
-                <div class="exploit-status">discontinued</div>
-            </div>
-        </div>
-
-        <div class="exploit-item">
-            <span class="exploit-dot red"></span>
-            <div class="exploit-info">
-                <div class="exploit-name">Cleetus fisch gui</div>
-                <div class="exploit-status">discontinued</div>
-            </div>
-        </div>
-
-        <div class="exploit-item">
-            <span class="exploit-dot red"></span>
-            <div class="exploit-info">
-                <div class="exploit-name">Cleetus dahood gui</div>
-                <div class="exploit-status">discontinued</div>
+        <div class="school-body">
+            <div class="school-project-item">
+                <span class="status-dot red"></span>
+                <span>Autism incorporated</span>
+                <span class="status-text">down for maintenance</span>
             </div>
         </div>
 
@@ -795,7 +819,7 @@ function $(id) { return document.getElementById(id); }
 
 /* ─── PAGE NAVIGATION ─── */
 function showPage(targetId) {
-    var pages = ['mainPage', 'productsPage', 'templatesPage', 'exploitsPage'];
+    var pages = ['mainPage', 'templatesPage', 'exploitsPage', 'schoolPage'];
     for (var i = 0; i < pages.length; i++) {
         var el = $(pages[i]);
         if (el) el.style.display = (pages[i] === targetId) ? 'block' : 'none';
@@ -805,21 +829,12 @@ function showPage(targetId) {
 }
 
 function bindAll() {
-    var pr = $('productsLink');
-    var tp = $('templatesLink');
     var ex = $('exploitsLink');
     var exb = $('exploitsLinkBar');
+    var sch = $('schoolLink');
     var backs = document.querySelectorAll('.back-link');
     var tosLinks = document.querySelectorAll('.tos-link');
 
-    if (pr && !pr.dataset.bound) {
-        pr.addEventListener('click', function (e) { e.preventDefault(); showPage('productsPage'); });
-        pr.dataset.bound = '1';
-    }
-    if (tp && !tp.dataset.bound) {
-        tp.addEventListener('click', function (e) { e.preventDefault(); showPage('templatesPage'); });
-        tp.dataset.bound = '1';
-    }
     if (ex && !ex.dataset.bound) {
         ex.addEventListener('click', function (e) { e.preventDefault(); showPage('exploitsPage'); });
         ex.dataset.bound = '1';
@@ -827,6 +842,10 @@ function bindAll() {
     if (exb && !exb.dataset.bound) {
         exb.addEventListener('click', function (e) { e.preventDefault(); showPage('exploitsPage'); });
         exb.dataset.bound = '1';
+    }
+    if (sch && !sch.dataset.bound) {
+        sch.addEventListener('click', function (e) { e.preventDefault(); showPage('schoolPage'); });
+        sch.dataset.bound = '1';
     }
     for (var i = 0; i < backs.length; i++) {
         var b = backs[i];
@@ -890,21 +909,16 @@ setTimeout(bindAll, 0);
 })();
 </script>
 
-<!-- C++ LOGO ANIMATION (inline, transparent) -->
+<!-- C++ LOGO ANIMATION -->
 <script>
 (function () {
     var canvas = document.getElementById('cppLogo');
     if (!canvas) return;
 
     var gl = canvas.getContext('webgl', {
-        antialias: false,
-        alpha: true,
-        premultipliedAlpha: false,
-        depth: false,
-        stencil: false,
-        preserveDrawingBuffer: false
+        antialias: false, alpha: true, premultipliedAlpha: false,
+        depth: false, stencil: false, preserveDrawingBuffer: false
     }) || canvas.getContext('experimental-webgl', { alpha: true, premultipliedAlpha: false });
-
     if (!gl) return;
 
     var VS = `
@@ -914,13 +928,10 @@ setTimeout(bindAll, 0);
 
     var FS = `
         precision highp float;
-
         uniform vec2  uRes;
         uniform float uT;
-
         const float AP = 0.8660254;
         const float HH = 0.20;
-
         float Cl(float v) { return clamp(v, 0.0, 1.0); }
 
         void faceColor(float x, float y, out float r, out float g, out float b) {
@@ -928,40 +939,32 @@ setTimeout(bindAll, 0);
             r = 0.00 + 0.02 * k;
             g = 0.36 - 0.10 * k;
             b = 0.62 - 0.12 * k;
-
             float ex = x + 0.28;
             float rr = sqrt(ex * ex + y * y);
             float an = abs(atan(y, ex));
             bool w = (rr < 0.47 && rr > 0.29 && an > 0.78);
-
             float c1 = x - 0.36;
             float c2 = x - 0.63;
             if (abs(c1) < 0.11 && abs(y) < 0.04) w = true;
             if (abs(c1) < 0.04 && abs(y) < 0.11) w = true;
             if (abs(c2) < 0.11 && abs(y) < 0.04) w = true;
             if (abs(c2) < 0.04 && abs(y) < 0.11) w = true;
-
             if (w) { r = 0.97; g = 0.98; b = 1.0; }
         }
 
-        void shade(vec3 o, vec3 d, float ang, float tilt,
-                   out vec3 col, out float alpha) {
-
+        void shade(vec3 o, vec3 d, float ang, float tilt, out vec3 col, out float alpha) {
             float ca = cos(ang), sa = sin(ang);
             float ct = cos(tilt), st = sin(tilt);
-
             vec3 po;
             po.x =  o.x * ca - o.z * sa;
             po.z =  o.x * sa + o.z * ca;
             po.y =  o.y * ct + po.z * st;
             po.z = -o.y * st + po.z * ct;
-
             vec3 pd;
             pd.x =  d.x * ca - d.z * sa;
             pd.z =  d.x * sa + d.z * ca;
             pd.y =  d.y * ct + pd.z * st;
             pd.z = -d.y * st + pd.z * ct;
-
             vec3 L = vec3(-0.35, 0.55, 0.76);
             vec3 L2;
             L2.x =  L.x * ca - L.z * sa;
@@ -975,27 +978,20 @@ setTimeout(bindAll, 0);
             bool hit   = true;
 
             for (int k = 0; k < 6; k++) {
-                float nx = 0.0;
-                float ny = 0.0;
+                float nx = 0.0, ny = 0.0;
                 if      (k == 0) { nx =  1.0; ny =  0.0; }
                 else if (k == 1) { nx =  0.5; ny =  0.8660254; }
                 else if (k == 2) { nx = -0.5; ny =  0.8660254; }
                 else if (k == 3) { nx = -1.0; ny =  0.0; }
                 else if (k == 4) { nx = -0.5; ny = -0.8660254; }
                 else             { nx =  0.5; ny = -0.8660254; }
-
                 float den = nx * pd.x + ny * pd.y;
                 float num = AP - (nx * po.x + ny * po.y);
-
-                if (abs(den) < 1e-6) {
-                    if (num < 0.0) hit = false;
-                    continue;
-                }
+                if (abs(den) < 1e-6) { if (num < 0.0) hit = false; continue; }
                 float tt = num / den;
                 if (den < 0.0) { if (tt > tin)  { tin  = tt; face = k; } }
                 else           { if (tt < tout) { tout = tt; } }
             }
-
             if (hit) {
                 if (abs(pd.z) < 1e-6) {
                     if (abs(po.z) > HH) hit = false;
@@ -1011,25 +1007,21 @@ setTimeout(bindAll, 0);
 
             col   = vec3(0.0);
             alpha = 0.0;
-
             if (!hit || tin > tout || tout < 0.0 || face < 0) return;
 
             float hx = po.x + pd.x * tin;
             float hy = po.y + pd.y * tin;
-
             vec3 n;
             vec3 albedo;
 
             if (face < 6) {
-                float nx = 0.0;
-                float ny = 0.0;
+                float nx = 0.0, ny = 0.0;
                 if      (face == 0) { nx =  1.0; ny =  0.0; }
                 else if (face == 1) { nx =  0.5; ny =  0.8660254; }
                 else if (face == 2) { nx = -0.5; ny =  0.8660254; }
                 else if (face == 3) { nx = -1.0; ny =  0.0; }
                 else if (face == 4) { nx = -0.5; ny = -0.8660254; }
                 else                { nx =  0.5; ny = -0.8660254; }
-
                 n = vec3(nx, ny, 0.0);
                 float s = 0.5 + 0.5 * hy;
                 albedo = vec3(0.00, 0.20 + 0.12 * s, 0.38 + 0.18 * s);
@@ -1042,13 +1034,10 @@ setTimeout(bindAll, 0);
             }
 
             float dif = Cl(dot(n, L2));
-
             vec3  Hv   = normalize(L2 - pd);
             float spec = pow(Cl(dot(n, Hv)), 40.0) * 0.55;
-
             float sweep = exp(-pow((hx * 0.8 + hy * 0.6 - (sin(uT * 0.9) * 1.1)) * 5.0, 2.0)) * 0.22;
             float lit   = 0.42 + 0.62 * dif;
-
             float sideMask = (face >= 6) ? 1.0 : 0.3;
             col   = albedo * lit + vec3(spec) + vec3(sweep * sideMask);
             alpha = 1.0;
@@ -1057,9 +1046,7 @@ setTimeout(bindAll, 0);
         void main() {
             vec2 uv = (gl_FragCoord.xy / uRes) * 2.0 - 1.0;
             float aspect = uRes.x / uRes.y;
-
             float th = max(1.35, 1.7 / aspect) / 4.4;
-
             vec3  accum = vec3(0.0);
             float aAcc  = 0.0;
             for (int sy = 0; sy < 2; sy++) {
@@ -1069,17 +1056,14 @@ setTimeout(bindAll, 0);
                     vec2 q = vec2(p.x * aspect * th, p.y * th);
                     float l = sqrt(q.x * q.x + q.y * q.y + 1.0);
                     vec3 rd = vec3(q.x / l, q.y / l, -1.0 / l);
-
                     vec3 c; float a;
-                    shade(vec3(0.0, 0.0, 4.4), rd,
-                          uT * 1.5, 0.22 * sin(uT * 0.7), c, a);
+                    shade(vec3(0.0, 0.0, 4.4), rd, uT * 1.5, 0.22 * sin(uT * 0.7), c, a);
                     accum += c;
                     aAcc  += a;
                 }
             }
             accum /= 4.0;
             aAcc  /= 4.0;
-
             gl_FragColor = vec4(accum, aAcc);
         }
     `;
@@ -1090,7 +1074,6 @@ setTimeout(bindAll, 0);
         gl.compileShader(s);
         return s;
     }
-
     var vs = compile(gl.VERTEX_SHADER, VS);
     var fs = compile(gl.FRAGMENT_SHADER, FS);
     var prog = gl.createProgram();
@@ -1101,9 +1084,7 @@ setTimeout(bindAll, 0);
 
     var buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER,
-        new Float32Array([-1, -1,  1, -1, -1,  1,  1,  1]),
-        gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
     var aPos = gl.getAttribLocation(prog, 'aPos');
     gl.enableVertexAttribArray(aPos);
     gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
@@ -1138,13 +1119,56 @@ setTimeout(bindAll, 0);
 })();
 </script>
 
+<!-- SAMPAD 3D LOGO ANIMATION (8-slice CSS stack, isolated in iframe) -->
+<script>
+(function () {
+    var frame = document.getElementById('sampadFrame');
+    if (!frame) return;
+
+    var mark = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAAClCAYAAADS6VbkAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAABMwSURBVHhe7Z0tsC07EUYRrwozAoXBYHEoHFV4HA6LxKKxSDwKh8JiXxUGiUFjUXgk1DqcvtW3O5lJMumemb0jVr13+8yen8yX7qTzM9/Ztu07iyn8ctu2Hxfsiw6cYTHEj7Zt+++2bX/ctu27hb8vGnGGRTff27btT5+ChF8Vjlk04gyLbn6jxCjgMe1xiwacYdHFTwpihD9/ek57/OIAZ1g08822bf8siFH4deE3iwOcYdEEYvx9QYQWPKj97WIHZ1g08dNt2/5TEKDl29Xr7sMZFod8vyC8PX5bOMeigjMsDvlDQXRH/LxwnkUBZ1js8ouC2Fr4d+FciwLOsKjCsOC/CmJrhVSQPefC4AyLKgjKiqwXPKw970LhDIsiDAdacY2Ah/1B4fyLT5xh4Tgbqi2kguw1Fp84w+IrGP6bEaotTFWz11osQR5SmjgxA4Yc19zJAs6w+AKCsUKaCZ53jeIYnGHxAaH6LwURzWZNwDA4w+KDqFBdYk3AUDjDYvtZQTSR4InX3MlPnOHNoU3394JoosEj23t5S5zhzRmZODELprTZ+3k7nCEAvM4TepOjEydm8Y/PqW32vt4KZwgAMVLYtJWYG8hUrB8WjrsS2nBWIFdA+TAb3d7fHaCy8O5oY9u/TcMZAkCQtuAF2mu/+/RO9DZZrceDZ3pUBJCR4mnlqgkYlANlzzsgB8t9UEEY6tT3F5qqcoYAeFAW0NuCL8GYMQlj1qvQ0GeIDaFG9kK5hr2Pq8kI3ZSpCI+yxjFQ9nsL15jX+XgPCWfyehQCIR9virCZeUNBUqB40jMhDm/AC5Dz19h7ST2wDsee28K9UCHtvY5A2VBGlBXPStnRcfvb53V6J43wm9DmljMEQdvDPtwMKCAKmIKm5uJNmd7VGvJ5YS2CnpWb/Gugt+eZEQtlwP1SJgibMrL3MQpCttedijMEUVtQPxs8EO1BPCkhiPYOL+dsrZ4pyFnhmPOQKuIZeVYqJucnotjrzoKytfcxFWcIAkFQu+wDZnF2kdVdBElThXPY82YRnsB3hiDshkxZ0Eaa0Wu9iyBpXlzZCQvt0IAzBEJYsQ8YzVnPKNxFkMKsJRW9nG36HOIMgZzpafdCO2qWGOFugoQrRpZaO4vDOEMgUT1tC2KcEaY1dxQkZIqSBHlLRuIUzhAIebCW/XDOMluMcFdBQlb4psllrz0dZwgmMiUR4RmFOwsSeO7IsoWosv0KZwhmZpLWwguJmsJ1d0FC9NS5qLL9CmcIpmVPxbNErOa7uyDxXpHNIYZOU7apdoZgMhrhFN7sfNmdBZmRl2TSxez7LuIMwcjnM6JBlDMXT91VkFmZCyJbeMoHnCEYXoZ92EhmifKOgszwjELapqvOEAxDiJljsXjKGY3xuwkyU4yQtvWLMwSD28/o2GgYzz7b0bmTILPCtGZWpDnEGRLISuRaznjKuwgy2zMC6bSU9iM4QwJX1HAgBzoqyjsIMiNDUYIIY+8lDGdIAPffO3V+FuTqRsL31YK8qhID0wbt/YThDAkwhcmuZMuEytDbJrpSkFeEaU3oKkOLMyRAe+SKyboawnePKK8S5JWeURht5gzhDElk97RLEL5bh8OuEORVbUZL6/1OwRmSIAzYB9eQiI3YStnSOqKTLcisMH1UxpRP1CrJIs6QBGHAPrwgowK0NTN2lCB8H3V0MgWZFaZZmYnY9sTPMWkpH3CGJGp76dghKl5eRnvzqPedJcisMG17zjVRhq8ytDhDIvbhrRgFxJvRK9/r6GQIMkuMzJssLUUoiTJlUq7GGRLR67SZHl8qJCErVVSb9xctyFnnP+Joo33btue+7DGhOEMisgqx5hktmWu7raecJZiSIEueKYLWby2Kp8ZhlCpnKM6QCA/eu6kS+/ZkdHTY9Em3KaMEmdWBIUzveUYLlQRBpvawwRkSoYB6CknI6n0zqUAWxkcIMkuMeMa95lCN9HANzvAQeKlHObQZyBe39tJUPSBIvE5WB4a0jS27W+MMDyLLUyKiWbtucL9Z0+96w/QtcIaHQZsyw1POWtEXvXZasHnGx+AMD4TwneEpnwKe0ZbRY3CGBCLCCOmJjDzl3cEzRpRvGs4QCI15wqvN8c0iK3wLjOxQCbimBm+NPXKXjhKtecZeaKvb3GkYzhAEvUpeEG2ovTHjs1BwdELsy5oFvW4S+TwPXrnmjWSTefJ5jEJFtx1rw4EzIMPApOaZ2xtWcYYA9EalGR8uRwgRokRceOHeF8/x/G5WT91yNBx4Ftkfno5d66jaMM4wEWqWDVsZgoRZeUpeQmnGC2GMUSYZyUB0eBARBv8tfeWVf/NS7XVGiQrTGvvBAkaxwmaRO8MEeBm18dksQcLZjfb31t4gQDoQIGGZ38gnSvgvlbHmuaQJY6/ZQ1ae0QpS4LmnX98ZTnLUscgUJIyGbzolRxML8MIiKtmMQCZ/tExM4O+johwdDhyhJkjgeXnn9jfDOMMg1JSW4bBsQQIF1pMSItTaXiUvHwHJl7HsNTie35Y8qgin1Anid4RAew97ZCe99wQp6ObKKZxhAAq1dbPMKwQJiKE1fFvPxguhvch9I27bftLrzEufIeF3tB35HeexvVV+3/rpuvQlBY2CBDRg28zdOEMnzAjpCTtXCRJaxr7tDBepaNgRAv+23tO2l+1e3DKPE0/Jeego2fPYc5TI6MCUaBUknNkd5ANnaITCHPnujHgQvFA2CHJvGplOaXCshFI6Kdj4e2nRvBWTFSRIR4f/l2ln9uXtfTG3d97oTHAg9n6OoKxsxW3CGRrgBo88zR68CPsF1CxoS5YmSmCTAiQscyx2nhPPhkD5d8m7twiSc/A38cDiefXObHINC+WFoKnIVzCaP8Wjl8prF2fYgZA1enN3R3KNPKPed0hEijBrkxZaBAl4QEliI3pp0/JfmQj8iuXLMzW3e52hAiEvaz3LFYjwdNJaREotZ+ivlCCHVkFKqBavoX8nYqe9Fj3MeAVURjRky8ThDAUIF629wCdCYUlaR8SAlxSvJcKpNdZbBSkhWdqqdHakaQBcXxLu9h5fATREWdly+QpnUBwluV8F2kk8b8k7Ihpp79VSGq2CxAtLxRabDtHyLeqZQ4t3ZDeZ7gyf8JJa83ZPhs6MJLN1qJRcIQUnbUpbRkKrIBG0dAZF3JJQBzovkq+09/lqoC2bj/3AGmYP/t8det2IDsRGGJU2pe752rISegQp4ViHf6kIVA564Rxn7/NVQWtfdXh0gUnj3f7olZEZ1npJqoRO0HlLKzCBaKLPWZuipQUpuU3Q+VzJc9r7fGW++iiBFNQrphtakGWipR6vtdcmM1hB1nrjOmRrL6pXIb6jIAXK4RseftbcwSci4tPC04LSYqk1xK0gS6M5Us4SgfTIi/bO7yxI+FYXGIVfGsV4ZcRDalFoQWqxFRvhhR0oaqkN0jpyjPaQS5D/52NEyhYaje136F0LRAZCqRaLbgPqHm+tbWgFKWkki/a2ug2pfy9itvf56tC5/Mj72kITKPx38JYybCdjzaDnG+pedmmeJMgMHjnOzhgSdIdRj/HKFnjkKLneO/Wy3QiYLTRb0O/gLSUFI7NtqK1SBrojAqWwLavy7Pk0dgqX/psk3ilrKXd7j68I5eomNNuCs+hUxasiIVZCJ3lI3YHRm3jK7B9dRng7PbRamuGivzphN4ASu7Qf3yEPTHmUos2hIAVeVs9E3CchuUgqn2QbdDuQ9qV+dttpQYD673YSge2Fyxi5nBsbIZ9/cx+v7ACIAqUI8gVn2IGC3JtE+mTEI4qXxEtpT6iT14jHikpPktDeFZHrv3EePTIh5xWRE8Jete2OV9TlVsQZDqAw7T7UT6L2snUaRiqdLjyeWx8vn9Tgbxyn29pakNrb4UW19+T3hHq9nPVVwzVRwjZ1ijhDIxTsyKxxelUIGredDd7HjjsL2utRcDybHZO2Q6sIiWPtqkZpG9mvldkOEeWgNxPQqScNouU4rnEFZzq2VMhDr6hxhg5Ghhz3Ft9HczQihQClFvNsrOe2ozNW0LJ2RJ+X3+oQD3Y4kZeEoPXLqrUdZe0N98LxmXDN0V4/uVapbM04wwB6GegRHEfh2nNEg2haOmXaiyFO69XA7oCLGKWdiDezoi8NJfKSdS/TntOiZyBlU/PcNfCqpUxDE84wCIXV0v65QpDU8hYxCraXXKIl68Cz2h55CcTZUqERu/XYGfQI0k0n68UZTmJTHJZsQVJRetu6etHVHpy7tkFCa9uJY46ErcH7ZHvKFkFSWUrRpBtnmAC1uPaiMgXJi2vxPCUQiQ471HrOh4B4QRS+bSdaKAOO43h+x++19+jZsUKjl+xmcCRI2QTB/m4IZ5gIbScriCxBUinO9A4FGZemcY646JwgRHrQwL8Jy9Ih4b+0B7HLMRzPv/m9CIljbNn0YEeTIqkJkvuvTSQZxhkmw8NoL5AhSMRDaLMFOIpNZgP/1jbJU1qvan+HII88ays8Y3cvdoCSIMMqhDMEgYcg1ECkICNnyvAMhF4rsiO4J16ezUvOIlqUWpA4FD11bjrOEAhtJsJobXrWWWyCOgIqFB6OMM3zlNpyCJZ74e+yp489z0x45hBv9YkIsjg7ZzbOEAwvMKLwOO+MNmMPNEW4Ji+K3CPIiAr2M23EXrheqXLMgGYIlSraE3/gDA+EF1Ebo34nonrf03rQLTjDw8gI008iOnyH4wwPAm/Qk1QehdA7wwPPOEcLlEmEp0zBGR4CXmAkqdyLdMJmeGHul566nh8ZBaJ8pKd0hgdA7Z8hkBZ4qbM6TExdo5dK6sj+LYLaorRb4wyJlGbBHEFPLyP04WFkLHrWqA+ClJQXPdeM5+CaI71jfnOJmJ0hEQqstta5xCxhHEFo1TN+Zl1XCxKyRMm994RvxMiM+OnDgi04QxIUkBRYiyhnDwfuYWfpRAkSEKU9LoLWYUZSPDKiZCcVp+AMSdjdHuyiKk3kcKCm1hGIFCTgjbOS6HuiZIRJT9Wr7akeijMkUVr6UKqRWXlGu5LQ3kOkICHLUyK4UqVDqHasXbaZsceG4gxJ2IcXtCgpjBlCaGFvlniGICFLlDZ84xlL4+08c62ShuEMCVAYdt2JBlEigozNU3VvukaWIMGubIyC5+Y9IMba4jI4ut/pOEMCCGDvBdOeyhiBgSMxQqYgIctT4hRKnlGT3tN2hgSYD5mR7tgD0e+FaU22ICFLlEeM5IpP4QwJHC0Ei8buIHHEFYKErPC9h95VIwVnSODqrVhawrTmKkHC1Z5S2pr2vsJwhmBqPboMWjowJa4UJGSN6NRIHUJ0hmCobVkdFo0dDuzhakGC3fA0k/BlCxpnCCZr1MUyKka4gyDhKlGGLuqyOEMw2YU6GqY1dxEkXNHR0Xuuh+MMwRxtqjSbM55RuJMgIbujQ3PH3kMYzhBMZodmhhjhboKEzEjDfaelfpwhmIxw05tnPOKOggREmVGeoHfkCMUZAqGWZRTg2Taj5a6ChKzwnTaE6AyBROfTzqR29rizIIGhWHut2bRMop6CMwRit0OeTVSh3V2QgCgjJ/kyXbA2gXoqzhBIaVLubCJE+QRBMgM/sjnEzKCUERtnCEKv1YhmtijvLsjoyAOzO4pVnCEIatfepNzZzBTlnQVp1yZFErmN4hecIQhqV8aODZpZoryrIDPFCFP2ED/CGYLI6AmWsB8/GuGOgswI05ZZFXwXZwgiuzZrzoryboK8qixLX8KdjjMEkdHDLkFukskBZxrkdxLk1bPtw4cQnSEA+XagfbhZ0Dalw0QvnrDCS0OAs2rznQRJ55ABBkK2fA2Css3YCQ7CUz/OEIB8oWAWeDwRHm1TxDdSUAhWloLucbRKshUESbjlnFx3j1ZPJB//RKSIHaFSNlEO4GyFOsQZAkAs9sH24MVR4/F8FCwFLB+fFJHYa4yCZ+Va5Nn2mDXkeXQt/s6Iy9ln1JWJios35WOico3R5yntLjIVZwiAWmUfTMNOCkxLQ3jMlxTx2fNEwHV4SfaeriTSC+FRESmemsV2lDk7nbWm5KjA9pxTcYYAeGh5IGo/7R6Ex/QpQo14Pvu7LK5IodQ4mxEYgSYCIpWwjxes7WZB08X+firOEAAPSTvvStEdkTlxuIbdc+cOcD/yvR08KUINjV7O8KZQ8Fk91Rqpq/tOMCt7UcQZ3pgrc3zhnYWn4AxvzhUJfMLg3UL1ZTjDm3NF6E5br/IEnGGRtk4F0ncXuzvOsPggY/04oTq0g/BEnGHxAaE7avgNSMafmfDxsjjD4guRX9wiGW+vt1iCPCQidKfulfM0nGHxFYwuMUJhRTUKoXr2RgYvhTMsHAho1gSMlHUpT8YZFkVmLBu4YuLE43CGRZXaDJhW1mhMA86wqDL63Wwmw67RmEacYbHL0WTjEinLR18FZ1gc0rMlDDOx7zwP9HY4w6KJ1in/azSmE2dYNEHoPtptbE2cGMAZFs3otUKW9E+yvQrOsOii9nH5NRoziDMsuijNnVwTJ07gDItu9DJaeuArVJ/AGRbdIEBGcVj6sEL1SZxhMYRsWWLti07+B+BlD4W6e1wlAAAAAElFTkSuQmCC";
+
+    var SAMPAD_HTML = '<!doctype html><html lang="en"><head><meta charset="utf-8">' +
+'<style>' +
+'*{box-sizing:border-box;}' +
+'html,body{width:100%;height:100%;margin:0;overflow:hidden;background:transparent;}' +
+'body{display:grid;place-items:center;}' +
+'.scene{width:min(90vmin,220px);aspect-ratio:1;display:grid;place-items:center;perspective:1050px;perspective-origin:50% 46%;background:transparent;}' +
+'.spin{width:76%;height:76%;position:relative;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;animation:rotate 4.8s linear infinite;}' +
+'.stack{position:absolute;inset:0;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;}' +
+'.slice,.face{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none;}' +
+'.slice{filter:brightness(.72);transform:translateZ(var(--z));}' +
+'.back,.front{-webkit-backface-visibility:hidden;backface-visibility:hidden;}' +
+'.back{transform:translateZ(-4.5px) rotateY(180deg);filter:brightness(.55);}' +
+'.front{transform:translateZ(4.5px);filter:brightness(1.25);}' +
+'@keyframes rotate{' +
+'0%{transform:rotateX(-8deg) rotateY(-10deg) rotateZ(0deg);}' +
+'25%{transform:rotateX(-2deg) rotateY(-3deg) rotateZ(90deg);}' +
+'50%{transform:rotateX(8deg) rotateY(10deg) rotateZ(180deg);}' +
+'75%{transform:rotateX(2deg) rotateY(3deg) rotateZ(270deg);}' +
+'100%{transform:rotateX(-8deg) rotateY(-10deg) rotateZ(360deg);}' +
+'}' +
+'@media (prefers-reduced-motion: reduce){.spin{animation:none;transform:rotateX(-8deg) rotateY(-10deg) rotateZ(-8deg);}}' +
+'</style></head><body>' +
+'<main class="scene" aria-label="Spinning three-dimensional Sampad emblem">' +
+'<div class="spin"><div class="stack" id="stack"></div></div></main>' +
+'<script>' +
+'var mark="' + mark + '";' +
+'var stack=document.getElementById("stack");' +
+'for(var i=0;i<8;i++){var s=document.createElement("img");s.className="slice";s.src=mark;s.alt="";s.draggable=false;s.style.setProperty("--z",(-3.5+i)+"px");stack.appendChild(s);}' +
+'var b=document.createElement("img");b.className="face back";b.src=mark;b.alt="";b.draggable=false;stack.appendChild(b);' +
+'var f=document.createElement("img");f.className="face front";f.src=mark;f.alt="";f.draggable=false;stack.appendChild(f);' +
+'<\/script></body></html>';
+
+    frame.srcdoc = SAMPAD_HTML;
+})();
+</script>
+
 <!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
 <script src="firebase-config.js"></script>
 
 <script>
-/* ─── ACCOUNT AREA + CHAT LOCK ─── */
 (function () {
     var area  = document.getElementById('accountArea');
     var frame = document.getElementById('chatFrame');
